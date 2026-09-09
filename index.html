@@ -78,32 +78,42 @@
 
     html, body {
       width: 100%;
-      height: 100%;
-      background-color: #0F1216; /* Backdrop on wide screens */
+      min-height: 100%;
+      background-color: #0F1216; /* Frame backdrop on wide screens */
       color: var(--dark-grey);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 15px;
       line-height: 1.45;
-      overflow: hidden;
-      touch-action: pan-y;
+      margin: 0;
+      padding: 0;
       -webkit-font-smoothing: antialiased;
     }
 
+    @media (max-width: 500px) {
+      html, body {
+        background-color: var(--page-bg);
+      }
+    }
+
     /* ==========================================================================
-       MOBILE SHELL ARCHITECTURE (ZERO-GLITCH STANDALONE VIEWPORT)
+       MOBILE CONTAINER ARCHITECTURE
        ========================================================================== */
     #phone-container {
       width: 100%;
-      max-width: 480px; /* Generous modern mobile width */
-      height: 100dvh; /* Dynamic viewport height handles iOS & Android URL bar */
-      height: 100vh; /* Fallback */
+      max-width: 480px;
+      min-height: 100vh;
+      min-height: 100dvh;
       margin: 0 auto;
       background-color: var(--page-bg);
       position: relative;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.65);
+      box-sizing: border-box;
+      /* Top padding ensures content starts comfortably below fixed header */
+      padding-top: calc(max(18px, env(safe-area-inset-top, 18px)) + 56px);
+      /* Bottom padding fits bottom nav precisely without huge empty void */
+      padding-bottom: calc(max(12px, env(safe-area-inset-bottom, 12px)) + 58px + 16px);
     }
 
     @media (max-width: 500px) {
@@ -114,22 +124,28 @@
     }
 
     /* ==========================================================================
-       FIXED HEADER BAR
+       FIXED HEADER BAR (BALANCED TOP SPACING FOR ALL PHONES)
        ========================================================================== */
     .app-header {
-      flex-shrink: 0;
-      height: calc(var(--header-height) + env(safe-area-inset-top, 0px));
-      padding: env(safe-area-inset-top, 0px) 16px 0 16px;
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      box-sizing: border-box;
+      padding-top: max(18px, env(safe-area-inset-top, 18px));
+      padding-bottom: 12px;
+      padding-left: 16px;
+      padding-right: 16px;
       background: linear-gradient(135deg, var(--dark-grey) 0%, #16191F 100%);
       color: var(--white);
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 3px solid var(--ipwea-red);
-      z-index: 500;
+      z-index: 1000;
       box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
-      contain: layout style;
-      transform: translateZ(0);
     }
 
     .header-branding {
@@ -200,21 +216,17 @@
     }
 
     /* ==========================================================================
-       SCROLLABLE CONTENT AREA
+       CONTENT AREA
        ========================================================================== */
     .view-content {
+      width: 100%;
       flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-y: contain;
-      padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 20px);
-      contain: layout;
+      padding: 0;
     }
 
     .app-view {
       display: none;
-      padding: 16px 16px 30px 16px;
+      padding: 14px 16px 16px 16px;
       animation: tabFadeIn 0.2s ease-out forwards;
     }
     .app-view.active {
@@ -227,35 +239,37 @@
     }
 
     /* ==========================================================================
-       ROCK-SOLID BOTTOM APP NAVIGATION BAR (NO GLITCH / HOMESCREEN SECURE)
+       FIXED BOTTOM APP NAVIGATION BAR (NO GLITCH, NO BOTTOM VOID)
        ========================================================================== */
     .bottom-nav {
-      position: absolute;
+      position: fixed;
       bottom: 0;
-      left: 0;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 100%;
-      height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+      max-width: 480px;
+      box-sizing: border-box;
+      padding-top: 8px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+      padding-left: 8px;
+      padding-right: 8px;
       background: var(--dark-grey);
       border-top: 1.5px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 500;
+      z-index: 1000;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
-      contain: layout style;
-      transform: translateZ(0);
     }
 
     .nav-tab {
       flex: 1;
-      height: 100%;
+      padding: 4px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 3px;
       color: #9CA3AF;
       background: transparent;
       border: none;
@@ -1386,8 +1400,8 @@
        TOAST NOTIFICATIONS & MODALS
        ========================================================================== */
     #toast-notice {
-      position: absolute;
-      bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 16px);
+      position: fixed;
+      bottom: calc(max(12px, env(safe-area-inset-bottom, 12px)) + 66px);
       left: 50%;
       transform: translateX(-50%) translateY(40px);
       background: var(--dark-grey);
@@ -1398,7 +1412,7 @@
       font-weight: 800;
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
       border: 1px solid rgba(255,255,255,0.18);
-      z-index: 1200;
+      z-index: 2000;
       pointer-events: none;
       opacity: 0;
       transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1413,14 +1427,14 @@
     }
 
     .modal-overlay {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(4px);
-      z-index: 1100;
+      z-index: 1500;
       display: none;
       align-items: flex-end;
       justify-content: center;
@@ -1430,13 +1444,16 @@
     }
     .modal-sheet {
       width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
       background: var(--white);
       border-radius: 24px 24px 0 0;
-      padding: 20px 18px calc(24px + env(safe-area-inset-bottom, 0px)) 18px;
+      padding: 20px 18px calc(max(16px, env(safe-area-inset-bottom, 16px)) + 12px) 18px;
       max-height: 86vh;
       overflow-y: auto;
       animation: sheetUp 0.22s ease-out;
       box-shadow: 0 -10px 35px rgba(0,0,0,0.3);
+      box-sizing: border-box;
     }
     @keyframes sheetUp {
       from { transform: translateY(100%); }
