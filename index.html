@@ -1,0 +1,4278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>IPWEA-QNT 2026 Annual Conference</title>
+  <meta name="theme-color" content="#9E1B32" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* --- CSS RESET & THEME VARIABLES (IPWEA Red, Dark Grey, White) --- */
+    :root {
+      --ipwea-red: #9E1B32;
+      --ipwea-red-dark: #7B1123;
+      --ipwea-red-light: #C0263E;
+      --ipwea-red-soft: #FDF1F3;
+      --ipwea-red-glow: rgba(158, 27, 50, 0.22);
+      
+      --dark-grey: #1E2228;
+      --dark-grey-light: #2A303A;
+      --dark-grey-lighter: #3D4452;
+      --mid-grey: #6B7280;
+      --light-grey: #F3F4F6;
+      --border-grey: #E5E7EB;
+      
+      --white: #FFFFFF;
+      --page-bg: #F8F9FA;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.07);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+      --shadow-red: 0 6px 18px rgba(158, 27, 50, 0.28);
+      
+      --header-height: 60px;
+      --bottom-nav-height: 68px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0E1116; /* Frame backdrop for desktop view */
+      color: var(--dark-grey);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+      line-height: 1.45;
+    }
+
+    /* --- MOBILE-FIRST CONTAINER (JUST FOR PHONE) --- */
+    #phone-container {
+      width: 100%;
+      max-width: 440px; /* Exact smartphone viewport boundary */
+      min-height: 100vh;
+      background-color: var(--page-bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        background-color: var(--page-bg);
+      }
+      #phone-container {
+        max-width: 100%;
+        box-shadow: none;
+      }
+    }
+
+    /* --- APP HEADER --- */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(135deg, var(--dark-grey) 0%, #15181D 100%);
+      color: var(--white);
+      padding: 10px 16px;
+      padding-top: calc(10px + env(safe-area-inset-top, 0px));
+      border-bottom: 2.5px solid var(--ipwea-red);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 38px;
+      height: 38px;
+      background: var(--ipwea-red);
+      color: var(--white);
+      border-radius: 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      box-shadow: 0 2px 6px rgba(158, 27, 50, 0.4);
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .logo-badge span:first-child { font-size: 13px; font-weight: 900; }
+    .logo-badge span:last-child { font-size: 8px; opacity: 0.9; letter-spacing: 0.5px; }
+
+    .header-text h1 {
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-text p {
+      font-size: 10.5px;
+      color: #9CA3AF;
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--dark-grey-light);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .header-icon-btn:hover {
+      background: var(--ipwea-red);
+    }
+    .status-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      background: #10B981;
+      border-radius: 50%;
+      border: 1.5px solid var(--dark-grey);
+    }
+
+    /* --- VIEW CONTAINER & TAB SYSTEM --- */
+    .view-content {
+      flex: 1;
+      padding-bottom: calc(var(--bottom-nav-height) + 24px + env(safe-area-inset-bottom, 0px));
+      overflow-y: auto;
+    }
+
+    .app-view {
+      display: none;
+      animation: fadeIn 0.22s ease-out forwards;
+      padding: 14px 14px 20px 14px;
+    }
+
+    .app-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- BOTTOM APP NAVIGATION BAR --- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: var(--dark-grey);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: var(--bottom-nav-height);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 1000;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+    }
+
+    .nav-tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: #8E95A5;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      height: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-tab svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-tab.active {
+      color: var(--white);
+    }
+
+    .nav-tab.active svg {
+      stroke: var(--ipwea-red-light);
+      transform: translateY(-2px);
+    }
+
+    .nav-tab.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 32px;
+      height: 3px;
+      background: var(--ipwea-red);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 0 8px var(--ipwea-red);
+    }
+
+    .saved-counter-badge {
+      position: absolute;
+      top: 8px;
+      right: calc(50% - 18px);
+      background: var(--ipwea-red);
+      color: var(--white);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 10px;
+      min-width: 16px;
+      text-align: center;
+      display: none;
+    }
+
+    /* --- HOME VIEW COMPONENTS --- */
+    .hero-banner {
+      background: linear-gradient(145deg, var(--dark-grey) 0%, #171A21 60%, var(--ipwea-red-dark) 100%);
+      color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(158, 27, 50, 0.45) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #FCA5A5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      color: #CBD5E1;
+      margin-bottom: 12px;
+    }
+
+    .hero-dates-loc {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11.5px;
+      color: #E2E8F0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .meta-row svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ipwea-red-light);
+      flex-shrink: 0;
+    }
+
+    /* Countdown Strip */
+    .countdown-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-grey);
+    }
+    .countdown-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--dark-grey);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .countdown-digits {
+      display: flex;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--ipwea-red);
+    }
+    .digit-box {
+      background: var(--ipwea-red-soft);
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(158, 27, 50, 0.15);
+    }
+
+    /* Section Header */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .section-head h2 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-head h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--ipwea-red);
+      border-radius: 2px;
+    }
+    .section-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ipwea-red);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Shortcuts Grid */
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .shortcut-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-grey);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: var(--dark-grey);
+    }
+    .shortcut-card:active {
+      transform: scale(0.96);
+      border-color: var(--ipwea-red);
+      background: var(--ipwea-red-soft);
+    }
+    .shortcut-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--ipwea-red-soft);
+      color: var(--ipwea-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .shortcut-icon-box.dark {
+      background: var(--dark-grey);
+      color: var(--white);
+    }
+    .shortcut-icon-box svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2;
+    }
+    .shortcut-title {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Quick Live Card */
+    .live-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      border: 1px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .live-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--ipwea-red);
+      color: var(--white);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--white);
+      border-radius: 50%;
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
+    .live-time {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ipwea-red);
+      margin-bottom: 2px;
+    }
+    .live-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--dark-grey);
+      margin-bottom: 4px;
+      padding-right: 60px;
+    }
+    .live-meta {
+      font-size: 11px;
+      color: var(--mid-grey);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    /* Highlight Banner (Gala & Welcome Function) */
+    .special-card {
+      background: linear-gradient(135deg, var(--dark-grey) 0%, var(--dark-grey-light) 100%);
+      color: var(--white);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--ipwea-red);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .special-tag {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #FCA5A5;
+    }
+    .special-title {
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+    .special-desc {
+      font-size: 11px;
+      color: #D1D5DB;
+    }
+
+    /* --- PROGRAM VIEW COMPONENTS --- */
+    .day-selector-wrap {
+      background: var(--dark-grey);
+      padding: 8px;
+      border-radius: var(--radius-md);
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .day-btn {
+      flex: 1;
+      padding: 8px 4px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: #9CA3AF;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.2s ease;
+    }
+    .day-btn .day-title {
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .day-btn .day-sub {
+      font-size: 9.5px;
+      font-weight: 500;
+    }
+    .day-btn.active {
+      background: var(--ipwea-red);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(158, 27, 50, 0.4);
+    }
+    .day-btn.active .day-sub {
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Search & Filter Pills */
+    .filter-section {
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-grey);
+      font-size: 12px;
+      font-family: inherit;
+      background: var(--white);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--ipwea-red);
+      box-shadow: 0 0 0 2px var(--ipwea-red-glow);
+    }
+    .search-box svg {
+      position: absolute;
+      left: 11px;
+      top: 10px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--mid-grey);
+    }
+
+    .filter-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+
+    .stream-pill {
+      white-space: nowrap;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--white);
+      border: 1px solid var(--border-grey);
+      color: var(--dark-grey);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .stream-pill.active {
+      background: var(--dark-grey);
+      color: var(--white);
+      border-color: var(--dark-grey);
+    }
+    .stream-pill.saved-filter.active {
+      background: var(--ipwea-red);
+      border-color: var(--ipwea-red);
+    }
+
+    /* Session Timeline Cards */
+    .program-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .time-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0 4px 0;
+    }
+    .time-divider-badge {
+      background: var(--dark-grey);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+    .time-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-grey);
+    }
+
+    .session-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      border: 1px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .session-card:hover {
+      border-color: #CBD5E1;
+    }
+    .session-card.bookmarked {
+      border-left: 3.5px solid var(--ipwea-red);
+    }
+
+    .session-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .stream-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .tag-plenary { background: #FEF2F2; color: #9E1B32; border: 1px solid #FECACA; }
+    .tag-roads { background: #EFF6FF; color: #1E3A8A; border: 1px solid #BFDBFE; }
+    .tag-bridges { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; }
+    .tag-safety { background: #FEFCE8; color: #854D0E; border: 1px solid #FEF08A; }
+    .tag-asset { background: #FAF5FF; color: #6B21A8; border: 1px solid #E9D5FF; }
+    .tag-tech { background: #ECFEFF; color: #155E75; border: 1px solid #A5F3FC; }
+    .tag-social { background: #FFF7ED; color: #9A3412; border: 1px solid #FFEDD5; }
+    .tag-tour { background: #FDF2F8; color: #9E1B32; border: 1px solid #FBCFE8; }
+
+    .bookmark-btn {
+      background: none;
+      border: none;
+      color: #9CA3AF;
+      cursor: pointer;
+      padding: 4px;
+      margin: -4px -4px 0 0;
+      transition: color 0.15s, transform 0.15s;
+    }
+    .bookmark-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      fill: none;
+      stroke: currentColor;
+    }
+    .bookmark-btn.active {
+      color: var(--ipwea-red);
+    }
+    .bookmark-btn.active svg {
+      fill: var(--ipwea-red);
+    }
+
+    .session-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark-grey);
+      line-height: 1.35;
+    }
+
+    .session-speakers {
+      font-size: 11.5px;
+      color: #4B5563;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .session-speaker-org {
+      font-size: 10px;
+      color: #6B7280;
+    }
+
+    .session-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #F3F4F6;
+      padding-top: 6px;
+      margin-top: 4px;
+      font-size: 10.5px;
+      color: #6B7280;
+    }
+    .session-room {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      color: var(--dark-grey-light);
+    }
+    .session-room svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--ipwea-red);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--mid-grey);
+    }
+    .empty-state svg {
+      width: 42px;
+      height: 42px;
+      stroke: #CBD5E1;
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      font-size: 12px;
+    }
+
+    /* --- BADGE VIEW COMPONENTS --- */
+    .badge-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lanyard-strap {
+      width: 44px;
+      height: 18px;
+      background: var(--dark-grey);
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: -10px;
+      z-index: 2;
+    }
+    .lanyard-hole {
+      width: 24px;
+      height: 6px;
+      background: #D1D5DB;
+      border-radius: 3px;
+    }
+
+    /* Physical Badge Card */
+    .badge-card {
+      width: 100%;
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    .badge-header {
+      background: linear-gradient(135deg, var(--ipwea-red-dark) 0%, var(--ipwea-red) 100%);
+      color: var(--white);
+      padding: 16px 16px 14px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .badge-conference-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      opacity: 0.95;
+    }
+    .badge-conference-sub {
+      font-size: 9.5px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+    .badge-type-pill {
+      display: inline-block;
+      margin-top: 8px;
+      background: var(--dark-grey);
+      color: var(--white);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.8px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .badge-body {
+      padding: 18px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .badge-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--dark-grey);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      border: 3px solid var(--white);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .badge-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      line-height: 1.2;
+    }
+    .badge-role {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ipwea-red);
+      margin-top: 2px;
+    }
+    .badge-org {
+      font-size: 11.5px;
+      color: var(--mid-grey);
+      margin-top: 2px;
+    }
+
+    /* Scannable QR Code Canvas Box */
+    .badge-qr-box {
+      background: var(--white);
+      padding: 12px;
+      border-radius: var(--radius-md);
+      margin: 16px 0 10px 0;
+      border: 1.5px dashed var(--border-grey);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    #qrcode-container {
+      width: 170px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #qrcode-container svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .badge-scan-tip {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--mid-grey);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+    }
+    .badge-scan-tip svg {
+      width: 13px;
+      height: 13px;
+      stroke: var(--ipwea-red);
+    }
+
+    .badge-footer {
+      border-top: 1px solid #F3F4F6;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #9CA3AF;
+      font-weight: 600;
+    }
+
+    /* Badge Controls */
+    .badge-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--ipwea-red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-red);
+      transition: all 0.2s;
+    }
+    .btn-primary:active {
+      background: var(--ipwea-red-dark);
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 11px 16px;
+      background: var(--white);
+      color: var(--dark-grey);
+      border: 1px solid var(--border-grey);
+      border-radius: var(--radius-md);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .btn-secondary:active {
+      background: #F3F4F6;
+    }
+
+    /* Edit Profile Sheet / Drawer */
+    .edit-profile-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      border: 1px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+      display: none;
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+    .edit-profile-card.open {
+      display: block;
+    }
+    .edit-profile-card h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dark-grey-light);
+      margin-bottom: 4px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-grey);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--dark-grey);
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--ipwea-red);
+    }
+
+    /* --- VENUE VIEW COMPONENTS --- */
+    .venue-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      border: 1px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+    .venue-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      margin-bottom: 4px;
+    }
+    .venue-addr {
+      font-size: 11.5px;
+      color: var(--mid-grey);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .venue-addr svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--ipwea-red);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Interactive Floor Plan Map */
+    .floorplan-wrapper {
+      background: #11141A;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+    .floorplan-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .floorplan-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9CA3AF;
+    }
+    .floor-switch {
+      display: flex;
+      gap: 4px;
+      background: var(--dark-grey-light);
+      padding: 2px;
+      border-radius: 6px;
+    }
+    .floor-btn {
+      padding: 3px 8px;
+      background: transparent;
+      border: none;
+      color: #9CA3AF;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .floor-btn.active {
+      background: var(--ipwea-red);
+      color: var(--white);
+    }
+
+    .svg-map-box {
+      width: 100%;
+      height: 220px;
+      background: #1A1E26;
+      border-radius: var(--radius-sm);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .map-room {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .map-room rect, .map-room polygon, .map-room path {
+      fill: #272C38;
+      stroke: #3E4556;
+      stroke-width: 1.5;
+      transition: all 0.2s;
+    }
+    .map-room text {
+      fill: #CBD5E1;
+      font-size: 8.5px;
+      font-weight: 700;
+      font-family: inherit;
+      pointer-events: none;
+    }
+    .map-room:hover rect, .map-room:hover polygon {
+      fill: #333B4D;
+    }
+    .map-room.active rect, .map-room.active polygon {
+      fill: var(--ipwea-red);
+      stroke: #F87171;
+    }
+    .map-room.active text {
+      fill: var(--white);
+    }
+
+    .room-info-sheet {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid var(--border-grey);
+    }
+    .room-info-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--dark-grey);
+    }
+    .room-info-desc {
+      font-size: 11px;
+      color: var(--mid-grey);
+      margin: 4px 0 8px 0;
+    }
+    .room-sessions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .room-session-item {
+      font-size: 10.5px;
+      padding: 4px 6px;
+      background: var(--page-bg);
+      border-radius: 4px;
+      border-left: 2px solid var(--ipwea-red);
+    }
+
+    /* Wi-Fi & Amenities */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .amenity-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      border: 1px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .amenity-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--dark-grey);
+    }
+    .amenity-icon-title svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--ipwea-red);
+    }
+    .amenity-detail {
+      font-size: 10.5px;
+      color: var(--mid-grey);
+    }
+    .copy-chip {
+      background: var(--ipwea-red-soft);
+      border: 1px dashed var(--ipwea-red);
+      color: var(--ipwea-red);
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+    .copy-chip:active {
+      background: #FCE4E8;
+    }
+
+    /* --- TOAST NOTIFICATIONS --- */
+    #toast-notice {
+      position: fixed;
+      bottom: calc(var(--bottom-nav-height) + 16px);
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      background: var(--dark-grey);
+      color: var(--white);
+      padding: 9px 18px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.15);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    #toast-notice.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* --- MODAL DIALOG --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 2000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-sheet {
+      width: 100%;
+      max-width: 440px;
+      background: var(--white);
+      border-radius: 20px 20px 0 0;
+      padding: 18px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s ease-out;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      background: #D1D5DB;
+      border-radius: 2px;
+      margin: 0 auto 14px auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .modal-close-btn {
+      background: #F3F4F6;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-grey);
+    }
+  </style>
+</head>
+<body>
+
+<div id="phone-container">
+
+  <!-- STICKY MOBILE APP HEADER -->
+  <header class="app-header">
+    <div class="header-branding">
+      <div class="logo-badge">
+        <span>IPWEA</span>
+        <span>QNT</span>
+      </div>
+      <div class="header-text">
+        <h1>2026 Annual Conference</h1>
+        <p>Sunshine Coast • 30 Sep – 2 Oct 2026</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="header-icon-btn" onclick="openWifiModal()" title="Conference Wi-Fi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </button>
+      <button class="header-icon-btn" onclick="switchTab('badge')" title="My Badge">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+          <circle cx="9" cy="10" r="2"></circle>
+          <line x1="15" y1="8" x2="17" y2="8"></line>
+          <line x1="15" y1="12" x2="17" y2="12"></line>
+          <line x1="7" y1="16" x2="17" y2="16"></line>
+        </svg>
+        <span class="status-dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="view-content">
+
+    <!-- ============================================== -->
+    <!-- 1. HOME VIEW                                   -->
+    <!-- ============================================== -->
+    <section id="view-home" class="app-view active">
+      
+      <!-- HERO BANNER -->
+      <div class="hero-banner">
+        <div class="hero-badge-pill">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+          Annual Flagship Event
+        </div>
+        <h1 class="hero-title">IPWEA-QNT 2026 Annual Conference</h1>
+        <p class="hero-subtitle">Connecting public works leaders, engineering innovators, and community builders.</p>
+        
+        <div class="hero-dates-loc">
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Wednesday 30 Sep – Friday 2 Oct 2026</span>
+          </div>
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Sunshine Coast Convention Centre, QLD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN TIMER -->
+      <div class="countdown-bar">
+        <div class="countdown-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Day 1 Opening</span>
+        </div>
+        <div class="countdown-digits" id="countdown-display">
+          <div class="digit-box"><span id="cd-days">--</span>d</div>
+          <div class="digit-box"><span id="cd-hours">--</span>h</div>
+          <div class="digit-box"><span id="cd-mins">--</span>m</div>
+        </div>
+      </div>
+
+      <!-- QUICK SHORTCUTS GRID -->
+      <div class="section-head">
+        <h2>Quick Shortcuts</h2>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-card" onclick="switchTab('badge')">
+          <div class="shortcut-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+          </div>
+          <span class="shortcut-title">My Badge &amp; QR</span>
+        </div>
+
+        <div class="shortcut-card" onclick="switchTab('program')">
+          <div class="shortcut-icon-box dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <span class="shortcut-title">Full Program</span>
+        </div>
+
+        <div class="shortcut-card" onclick="switchTab('venue')">
+          <div class="shortcut-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          </div>
+          <span class="shortcut-title">Venue &amp; Maps</span>
+        </div>
+
+        <div class="shortcut-card" onclick="filterSavedOnly()">
+          <div class="shortcut-icon-box dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="shortcut-title">My Schedule</span>
+        </div>
+
+        <div class="shortcut-card" onclick="openWifiModal()">
+          <div class="shortcut-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </div>
+          <span class="shortcut-title">Event Wi-Fi</span>
+        </div>
+
+        <div class="shortcut-card" onclick="viewDay3Tours()">
+          <div class="shortcut-icon-box dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <span class="shortcut-title">Tech Tours</span>
+        </div>
+      </div>
+
+      <!-- HAPPENING NOW / UP NEXT -->
+      <div class="section-head">
+        <h2>Happening Now</h2>
+        <span class="section-link" onclick="switchTab('program')">View Agenda &rarr;</span>
+      </div>
+      <div class="live-card" onclick="openSessionDetails(101)">
+        <div class="live-tag">
+          <span class="pulse-dot"></span> LIVE NOW
+        </div>
+        <div class="live-time">8:30 AM – 6:00 PM • Day 1</div>
+        <div class="live-title">Registrations Desk &amp; Public Works Exhibition Open</div>
+        <div class="live-meta">
+          <span>📍 SCCC Foyer &amp; Wandiny Room</span>
+          <span style="color:var(--ipwea-red); font-weight:700;">Tap details &rarr;</span>
+        </div>
+      </div>
+
+      <!-- HIGHLIGHT NETWORKING FUNCTIONS -->
+      <div class="section-head">
+        <h2>Evening Functions</h2>
+      </div>
+      <div class="special-card" onclick="openSessionDetails(134)">
+        <div class="special-tag">Wednesday Night • 5:00 PM – 8:00 PM</div>
+        <div class="special-title">Meets, Eats &amp; Beats — The Welcome Function</div>
+        <div class="special-desc">Sponsored by GENENG SOLUTIONS. Reconnect with colleagues over great food, drinks, and live music.</div>
+      </div>
+
+      <div class="special-card" onclick="openSessionDetails(235)">
+        <div class="special-tag">Thursday Night • 6:00 PM – 11:00 PM</div>
+        <div class="special-title">Excellence Awards Gala Dinner &amp; Ceremony</div>
+        <div class="special-desc">Sponsored by NORTHLANE CONSULTING ENGINEERS. Minyama Hall 1–3. Pre-dinner drinks at 6:00 PM, followed by Dinner &amp; Awards.</div>
+      </div>
+
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 2. PROGRAM VIEW                                -->
+    <!-- ============================================== -->
+    <section id="view-program" class="app-view">
+      
+      <!-- DAY SWITCHER TABS -->
+      <div class="day-selector-wrap">
+        <button class="day-btn active" id="btn-day-1" onclick="selectDay(1)">
+          <span class="day-title">Day 1</span>
+          <span class="day-sub">Wed 30 Sep</span>
+        </button>
+        <button class="day-btn" id="btn-day-2" onclick="selectDay(2)">
+          <span class="day-title">Day 2</span>
+          <span class="day-sub">Thu 1 Oct</span>
+        </button>
+        <button class="day-btn" id="btn-day-3" onclick="selectDay(3)">
+          <span class="day-title">Day 3</span>
+          <span class="day-sub">Fri 2 Oct</span>
+        </button>
+      </div>
+
+      <!-- SEARCH & FILTER CONTROLS -->
+      <div class="filter-section">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="program-search" placeholder="Search sessions, speakers, topics..." oninput="handleSearchInput()" />
+        </div>
+
+        <div class="filter-scroll" id="stream-filters">
+          <button class="stream-pill active" onclick="setStreamFilter('all')">All Sessions</button>
+          <button class="stream-pill saved-filter" id="pill-saved" onclick="toggleSavedFilter()">
+            ⭐ My Saved (<span id="saved-pill-count">0</span>)
+          </button>
+          <button class="stream-pill" onclick="setStreamFilter('Plenary')">Plenary</button>
+          <button class="stream-pill" onclick="setStreamFilter('Roads')">Roads</button>
+          <button class="stream-pill" onclick="setStreamFilter('Bridges')">Bridges &amp; Struct.</button>
+          <button class="stream-pill" onclick="setStreamFilter('Road Safety')">Road Safety</button>
+          <button class="stream-pill" onclick="setStreamFilter('Asset Management')">Asset Mgmt</button>
+          <button class="stream-pill" onclick="setStreamFilter('Innovation')">Innovation &amp; Tech</button>
+          <button class="stream-pill" onclick="setStreamFilter('AI')">Artificial Intelligence</button>
+          <button class="stream-pill" onclick="setStreamFilter('Disaster Recovery')">Disaster Recovery</button>
+          <button class="stream-pill" onclick="setStreamFilter('Water')">Water &amp; Waste</button>
+          <button class="stream-pill" onclick="setStreamFilter('Environment')">Environment</button>
+          <button class="stream-pill" onclick="setStreamFilter('Tours')">Technical Tours</button>
+        </div>
+      </div>
+
+      <!-- SESSION LIST -->
+      <div id="program-list" class="program-list">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 3. BADGE VIEW                                  -->
+    <!-- ============================================== -->
+    <section id="view-badge" class="app-view">
+      
+      <div class="badge-screen">
+        <!-- LANYARD CLIP -->
+        <div class="lanyard-strap">
+          <div class="lanyard-hole"></div>
+        </div>
+
+        <!-- PHYSICAL CONFERENCE PASS CARD -->
+        <div class="badge-card" id="digital-badge">
+          <div class="badge-header">
+            <div class="badge-conference-title">IPWEA-QNT 2026 Annual Conference</div>
+            <div class="badge-conference-sub">Sunshine Coast Convention Centre</div>
+            <div class="badge-type-pill" id="badge-display-tier">FULL DELEGATE</div>
+          </div>
+
+          <div class="badge-body">
+            <div class="badge-avatar" id="badge-display-avatar">SD</div>
+            <div class="badge-name" id="badge-display-name">Sabrina Dragani</div>
+            <div class="badge-role" id="badge-display-title">Public Works &amp; Asset Lead</div>
+            <div class="badge-org" id="badge-display-org">IPWEA-QNT</div>
+
+            <!-- SCANNABLE QR CODE -->
+            <div class="badge-qr-box">
+              <div id="qrcode-container"></div>
+              <div class="badge-scan-tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Scan with phone camera to save contact</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="badge-footer">
+            <span id="badge-display-id">ID: IPW-2026-8942</span>
+            <span>30 SEP – 02 OCT 2026</span>
+          </div>
+        </div>
+
+        <!-- BADGE ACTIONS -->
+        <div class="badge-actions">
+          <button class="btn-primary" onclick="toggleEditProfile()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Edit My Badge Info
+          </button>
+          
+          <button class="btn-secondary" onclick="downloadVCard()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Contact Card (.vcf)
+          </button>
+
+          <button class="btn-secondary" onclick="testScanVCard()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Preview Contact Data Encoded
+          </button>
+        </div>
+
+        <!-- EDIT PROFILE DRAWER -->
+        <div class="edit-profile-card" id="edit-profile-drawer">
+          <h3>
+            <span>Attendee Contact Details</span>
+            <button class="modal-close-btn" onclick="toggleEditProfile()">&times;</button>
+          </h3>
+          <p style="font-size:11px; color:var(--mid-grey); margin-bottom:12px;">
+            These details are encoded directly into your QR code as a vCard. Any delegate who scans your badge will receive this exact contact info.
+          </p>
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="input-name" value="Sabrina Dragani" />
+          </div>
+
+          <div class="form-group">
+            <label>Job Title</label>
+            <input type="text" id="input-title" value="Public Works & Asset Lead" />
+          </div>
+
+          <div class="form-group">
+            <label>Organisation / Council</label>
+            <input type="text" id="input-org" value="IPWEA-QNT" />
+          </div>
+
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="input-email" value="sabrina.dragani@ipwea.org" />
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="input-phone" value="+61 400 123 456" />
+          </div>
+
+          <div class="form-group">
+            <label>Delegate Pass Category</label>
+            <select id="input-tier">
+              <option value="FULL DELEGATE" selected>Full Delegate</option>
+              <option value="KEYNOTE SPEAKER">Keynote Speaker</option>
+              <option value="PRESENTER">Presenter</option>
+              <option value="IPWEA COMMITTEE">IPWEA Committee</option>
+              <option value="EXHIBITOR">Exhibitor / Sponsor</option>
+            </select>
+          </div>
+
+          <button class="btn-primary" style="margin-top:10px;" onclick="saveProfileChanges()">
+            Save &amp; Update QR Code
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================================== -->
+    <!-- 4. VENUE VIEW                                  -->
+    <!-- ============================================== -->
+    <section id="view-venue" class="app-view">
+      
+      <!-- VENUE CARD -->
+      <div class="venue-card">
+        <div class="venue-name">Sunshine Coast Convention Centre</div>
+        <div class="venue-addr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>270 Ocean Drive, Twin Waters, Sunshine Coast QLD 4564</span>
+        </div>
+        
+        <div style="display:flex; gap:8px;">
+          <a href="https://maps.google.com/?q=Sunshine+Coast+Convention+Centre+Twin+Waters+QLD" target="_blank" class="btn-primary" style="text-decoration:none; font-size:11.5px; padding:8px 12px; flex:1;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Open in Maps
+          </a>
+          <button class="btn-secondary" onclick="openWifiModal()" style="font-size:11.5px; padding:8px 12px; flex:1;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            Wi-Fi Info
+          </button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE FLOOR PLAN -->
+      <div class="floorplan-wrapper">
+        <div class="floorplan-header">
+          <div class="floorplan-title">Interactive Floor Map</div>
+          <div class="floor-switch">
+            <button class="floor-btn active" id="btn-fl-ground" onclick="switchFloor('ground')">Ground Level</button>
+            <button class="floor-btn" id="btn-fl-level1" onclick="switchFloor('level1')">Level 1</button>
+          </div>
+        </div>
+
+        <p style="font-size:10px; color:#9CA3AF; margin-bottom:8px;">
+          Tap any room below to see active streams and sessions scheduled there:
+        </p>
+
+        <!-- SVG FLOOR DIAGRAM -->
+        <div class="svg-map-box">
+          <svg viewBox="0 0 380 210" width="100%" height="100%">
+            <!-- Background Outline -->
+            <rect x="5" y="5" width="370" height="200" rx="10" fill="#181B22" stroke="#2D3340" stroke-width="1.5" />
+            
+            <!-- Ground Floor Layout -->
+            <g id="map-layer-ground">
+              <!-- Minyama Hall 1 & 2 (Plenary) -->
+              <g class="map-room active" id="room-minyama" onclick="selectRoom('Minyama Hall 1 & 2')">
+                <rect x="15" y="15" width="170" height="95" rx="6" />
+                <text x="100" y="55" text-anchor="middle">MINYAMA HALL 1 &amp; 2</text>
+                <text x="100" y="70" text-anchor="middle" font-size="7" fill="#FCA5A5">Main Plenary Stage</text>
+              </g>
+
+              <!-- Wandiny Room (Exhibition & Catering) -->
+              <g class="map-room" id="room-wandiny" onclick="selectRoom('Wandiny Room')">
+                <rect x="195" y="15" width="170" height="95" rx="6" />
+                <text x="280" y="55" text-anchor="middle">WANDINY ROOM</text>
+                <text x="280" y="70" text-anchor="middle" font-size="7" fill="#FCA5A5">Public Works Exhibition &amp; Meals</text>
+              </g>
+
+              <!-- Foyer & Registration Desk -->
+              <g class="map-room" id="room-foyer" onclick="selectRoom('Foyer')">
+                <rect x="15" y="120" width="170" height="75" rx="6" />
+                <text x="100" y="155" text-anchor="middle">CONVENTION FOYER</text>
+                <text x="100" y="170" text-anchor="middle" font-size="7" fill="#FCA5A5">Registration &amp; Welcome</text>
+              </g>
+
+              <!-- Arrivals Lounge / Tech Tour Departure -->
+              <g class="map-room" id="room-arrivals" onclick="selectRoom('Arrivals Lounge')">
+                <rect x="195" y="120" width="170" height="75" rx="6" />
+                <text x="280" y="155" text-anchor="middle">ARRIVALS LOUNGE</text>
+                <text x="280" y="170" text-anchor="middle" font-size="7" fill="#FCA5A5">Tour Buses &amp; Transport</text>
+              </g>
+            </g>
+
+            <!-- Level 1 Layout (Breakout Rooms) -->
+            <g id="map-layer-level1" style="display:none;">
+              <!-- Breakout Room 1 -->
+              <g class="map-room" id="room-breakout1" onclick="selectRoom('Breakout Room 1')">
+                <rect x="15" y="25" width="110" height="155" rx="6" />
+                <text x="70" y="95" text-anchor="middle">BREAKOUT 1</text>
+                <text x="70" y="110" text-anchor="middle" font-size="7" fill="#FCA5A5">Road Safety / AI</text>
+              </g>
+
+              <!-- Breakout Room 2 -->
+              <g class="map-room" id="room-breakout2" onclick="selectRoom('Breakout Room 2')">
+                <rect x="135" y="25" width="110" height="155" rx="6" />
+                <text x="190" y="95" text-anchor="middle">BREAKOUT 2</text>
+                <text x="190" y="110" text-anchor="middle" font-size="7" fill="#FCA5A5">Roads / Disaster / Water</text>
+              </g>
+
+              <!-- Breakout Room 3 -->
+              <g class="map-room" id="room-breakout3" onclick="selectRoom('Breakout Room 3')">
+                <rect x="255" y="25" width="110" height="155" rx="6" />
+                <text x="310" y="95" text-anchor="middle">BREAKOUT 3</text>
+                <text x="310" y="110" text-anchor="middle" font-size="7" fill="#FCA5A5">Bridges / Environment</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- SELECTED ROOM DETAIL -->
+        <div class="room-info-sheet" id="room-info-box">
+          <div class="room-info-name" id="selected-room-name">Minyama Hall 1 &amp; 2</div>
+          <div class="room-info-desc" id="selected-room-desc">Main Convention Plenary Hall for Keynotes, Opening Addresses, Futures Challenge, and Plenary Panels.</div>
+          
+          <div style="font-size:10px; font-weight:800; color:var(--dark-grey); text-transform:uppercase; margin-bottom:4px;">
+            Scheduled in this space:
+          </div>
+          <div class="room-sessions-list" id="selected-room-sessions">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ESSENTIAL AMENITIES -->
+      <div class="section-head">
+        <h2>Conference Essentials</h2>
+      </div>
+      <div class="amenities-grid">
+        
+        <div class="amenity-card">
+          <div class="amenity-icon-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <span>Guest Wi-Fi</span>
+          </div>
+          <div class="amenity-detail">SSID: SCCC_Guest</div>
+          <div class="copy-chip" onclick="copyWifiPassword()">
+            <span>IPWEA2026</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </div>
+        </div>
+
+        <div class="amenity-card">
+          <div class="amenity-icon-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
+            <span>Tech Tour Bus</span>
+          </div>
+          <div class="amenity-detail">Fri 1:00 PM muster</div>
+          <div style="font-size:10px; font-weight:700; color:var(--ipwea-red); margin-top:4px;">
+            Arrivals Lounge departure
+          </div>
+        </div>
+
+        <div class="amenity-card">
+          <div class="amenity-icon-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+            <span>Meals &amp; Coffee</span>
+          </div>
+          <div class="amenity-detail">Morning &amp; Afternoon Tea, Lunch in Wandiny Room exhibition area.</div>
+        </div>
+
+        <div class="amenity-card">
+          <div class="amenity-icon-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Help Desk</span>
+          </div>
+          <div class="amenity-detail">Foyer Desk or dial on-site event team: +61 7 3632 6800</div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FIXED BOTTOM APP NAVIGATION BAR -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" id="tab-btn-home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-tab" id="tab-btn-program" onclick="switchTab('program')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Program</span>
+      <span class="saved-counter-badge" id="bottom-saved-count">0</span>
+    </button>
+    <button class="nav-tab" id="tab-btn-badge" onclick="switchTab('badge')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+      <span>Badge</span>
+    </button>
+    <button class="nav-tab" id="tab-btn-venue" onclick="switchTab('venue')">
+      <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      <span>Venue</span>
+    </button>
+  </nav>
+
+</div>
+
+
+<!-- TOAST NOTICE -->
+<div id="toast-notice">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-message">Action confirmed</span>
+</div>
+
+
+<!-- SESSION DETAIL MODAL -->
+<div class="modal-overlay" id="session-modal" onclick="closeSessionModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <div id="modal-stream-tag" class="stream-tag tag-plenary">Plenary</div>
+      <button class="modal-close-btn" onclick="closeSessionModal()">&times;</button>
+    </div>
+    
+    <h2 id="modal-title" style="font-size:16px; font-weight:800; color:var(--dark-grey); margin-bottom:8px; line-height:1.3;">Session Title</h2>
+    
+    <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:14px; font-size:11.5px; color:#4B5563;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ipwea-red)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="modal-time" style="font-weight:700;">8:30 AM – 9:00 AM</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ipwea-red)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="modal-room" style="font-weight:700;">Minyama Hall 1 &amp; 2</span>
+      </div>
+    </div>
+
+    <!-- SPEAKERS IN MODAL -->
+    <div id="modal-speakers-box" style="background:#F9FAFB; padding:10px 12px; border-radius:8px; margin-bottom:14px; border:1px solid #E5E7EB;">
+      <div style="font-size:10px; font-weight:800; color:var(--mid-grey); text-transform:uppercase; margin-bottom:4px;">Presenter / Speaker</div>
+      <div id="modal-speakers-text" style="font-size:12.5px; font-weight:700; color:var(--dark-grey);">Speaker Name</div>
+      <div id="modal-org-text" style="font-size:11px; color:#6B7280;">Organisation</div>
+    </div>
+
+    <!-- SPONSOR INFO (IF ANY) -->
+    <div id="modal-sponsor-box" style="display:none; background:#FFF1F2; padding:8px 12px; border-radius:8px; margin-bottom:14px; border:1px solid #FECDD3;">
+      <span style="font-size:10px; font-weight:800; color:var(--ipwea-red);">SPONSORED BY: </span>
+      <span id="modal-sponsor-name" style="font-size:11px; font-weight:700; color:var(--ipwea-red-dark);">SPONSOR NAME</span>
+    </div>
+
+    <!-- PERSONAL NOTES -->
+    <div style="margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <label style="font-size:11px; font-weight:700; color:var(--dark-grey);">My Session Notes</label>
+        <span style="font-size:9.5px; color:#9CA3AF;">Saved automatically</span>
+      </div>
+      <textarea id="modal-session-note" rows="3" placeholder="Jot down takeaways, questions or key contacts from this session..." style="width:100%; border:1px solid var(--border-grey); border-radius:8px; padding:8px; font-size:11.5px; font-family:inherit; outline:none; resize:none;" oninput="saveCurrentSessionNote()"></textarea>
+    </div>
+
+    <!-- MODAL ACTIONS -->
+    <div style="display:flex; gap:8px;">
+      <button class="btn-primary" id="modal-bookmark-btn" onclick="toggleModalBookmark()" style="flex:1;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span id="modal-bookmark-text">Save to My Schedule</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- WI-FI MODAL -->
+<div class="modal-overlay" id="wifi-modal" onclick="closeWifiModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <h2 style="font-size:15px; font-weight:800; color:var(--dark-grey);">Conference Wi-Fi Access</h2>
+      <button class="modal-close-btn" onclick="closeWifiModal()">&times;</button>
+    </div>
+    
+    <div style="text-align:center; padding:10px 0 16px 0;">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--ipwea-red-soft); color:var(--ipwea-red); display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+      </div>
+      <div style="font-size:12px; color:var(--mid-grey); margin-bottom:4px;">Network SSID</div>
+      <div style="font-size:16px; font-weight:800; color:var(--dark-grey); margin-bottom:12px;">SCCC_Conference_Guest</div>
+
+      <div style="font-size:12px; color:var(--mid-grey); margin-bottom:4px;">Wi-Fi Password</div>
+      <div style="background:var(--page-bg); border:1.5px dashed var(--ipwea-red); padding:10px; border-radius:8px; font-size:18px; font-weight:800; color:var(--ipwea-red); letter-spacing:1px; margin-bottom:16px;">
+        IPWEA2026
+      </div>
+
+      <button class="btn-primary" onclick="copyWifiPassword()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy Wi-Fi Password
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- VCARD RAW PREVIEW MODAL -->
+<div class="modal-overlay" id="vcard-modal" onclick="closeVCardModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <h2 style="font-size:15px; font-weight:800; color:var(--dark-grey);">Encoded vCard QR Data</h2>
+      <button class="modal-close-btn" onclick="closeVCardModal()">&times;</button>
+    </div>
+    <p style="font-size:11px; color:var(--mid-grey); margin-bottom:10px;">
+      When another delegate or vendor scans your QR code with their camera, this standard vCard format is detected instantly to create a new contact:
+    </p>
+    <pre id="vcard-preview-text" style="background:#1E2228; color:#A7F3D0; padding:12px; border-radius:8px; font-size:11px; font-family:monospace; white-space:pre-wrap; overflow-x:auto; margin-bottom:14px;"></pre>
+    <button class="btn-secondary" onclick="closeVCardModal()">Close Preview</button>
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- JAVASCRIPT LOGIC & EMBEDDED PURE QR GENERATOR  -->
+<!-- ============================================== -->
+<script>
+/**
+ * -------------------------------------------------------------------------
+ * 1. STANDALONE PURE JAVASCRIPT QR CODE GENERATOR (ZERO DEPENDENCIES)
+ * Lightweight QR Code implementation (Byte mode UTF-8, Reed-Solomon GF(256))
+ * -------------------------------------------------------------------------
+ */
+var MiniQR = (function() {
+  function QR8bitByte(data) {
+    this.mode = 4; // 8-bit byte
+    this.data = data;
+  }
+  QR8bitByte.prototype = {
+    getLength: function() { return this.data.length; },
+    write: function(buffer) {
+      for (var i = 0; i < this.data.length; i++) {
+        buffer.put(this.data.charCodeAt(i), 8);
+      }
+    }
+  };
+
+  var QRMath = {
+    glog: function(n) {
+      if (n < 1) throw new Error("glog(" + n + ")");
+      return QRMath.LOG_TABLE[n];
+    },
+    gexp: function(n) {
+      while (n < 0) n += 255;
+      while (n >= 255) n -= 255;
+      return QRMath.EXP_TABLE[n];
+    },
+    EXP_TABLE: new Array(256),
+    LOG_TABLE: new Array(256)
+  };
+  for (var i = 0; i < 8; i++) QRMath.EXP_TABLE[i] = 1 << i;
+  for (var i = 8; i < 256; i++) QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+  for (var i = 0; i < 255; i++) QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+
+  function QRPolynomial(num, shift) {
+    var offset = 0;
+    while (offset < num.length && num[offset] == 0) offset++;
+    this.num = new Array(num.length - offset + shift);
+    for (var i = 0; i < num.length - offset; i++) this.num[i] = num[i + offset];
+  }
+  QRPolynomial.prototype = {
+    get: function(index) { return this.num[index]; },
+    getLength: function() { return this.num.length; },
+    multiply: function(e) {
+      var num = new Array(this.getLength() + e.getLength() - 1);
+      for (var i = 0; i < this.getLength(); i++) {
+        for (var j = 0; j < e.getLength(); j++) {
+          num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
+        }
+      }
+      return new QRPolynomial(num, 0);
+    },
+    mod: function(e) {
+      if (this.getLength() - e.getLength() < 0) return this;
+      var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
+      var num = new Array(this.getLength());
+      for (var i = 0; i < this.getLength(); i++) num[i] = this.get(i);
+      for (var i = 0; i < e.getLength(); i++) num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
+      return new QRPolynomial(num, 0).mod(e);
+    }
+  };
+
+  var QRRSBlock = {
+    RS_BLOCK_TABLE: [
+      // 1-L
+      [1, 26, 19],
+      // 2-L
+      [1, 44, 34],
+      // 3-L
+      [1, 70, 55],
+      // 4-L
+      [1, 100, 80],
+      // 5-L
+      [1, 134, 108],
+      // 6-L
+      [2, 86, 68],
+      // 7-L
+      [2, 98, 78],
+      // 8-L
+      [2, 121, 97],
+      // 9-L
+      [2, 146, 116],
+      // 10-L
+      [2, 86, 68, 2, 87, 69]
+    ],
+    getRSBlocks: function(typeNumber) {
+      var rsBlock = QRRSBlock.RS_BLOCK_TABLE[typeNumber - 1];
+      if (!rsBlock) throw new Error("Unsupported QR version: " + typeNumber);
+      var length = rsBlock.length / 3;
+      var list = [];
+      for (var i = 0; i < length; i++) {
+        var count = rsBlock[i * 3 + 0];
+        var totalCount = rsBlock[i * 3 + 1];
+        var dataCount = rsBlock[i * 3 + 2];
+        for (var j = 0; j < count; j++) {
+          list.push({ totalCount: totalCount, dataCount: dataCount });
+        }
+      }
+      return list;
+    }
+  };
+
+  function QRBitBuffer() {
+    this.buffer = [];
+    this.length = 0;
+  }
+  QRBitBuffer.prototype = {
+    get: function(index) {
+      var bufIndex = Math.floor(index / 8);
+      return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) == 1;
+    },
+    put: function(num, length) {
+      for (var i = 0; i < length; i++) {
+        this.putBit(((num >>> (length - i - 1)) & 1) == 1);
+      }
+    },
+    putBit: function(bit) {
+      var bufIndex = Math.floor(this.length / 8);
+      if (this.buffer.length <= bufIndex) this.buffer.push(0);
+      if (bit) this.buffer[bufIndex] |= (0x80 >>> (this.length % 8));
+      this.length++;
+    }
+  };
+
+  var QRUtil = {
+    PATTERN_POSITION_TABLE: [
+      [],
+      [6, 18],
+      [6, 22],
+      [6, 26],
+      [6, 30],
+      [6, 34],
+      [6, 22, 38],
+      [6, 24, 42],
+      [6, 26, 46],
+      [6, 28, 50],
+      [6, 30, 54]
+    ],
+    getMask: function(maskPattern, i, j) {
+      switch (maskPattern) {
+        case 0: return (i + j) % 2 == 0;
+        case 1: return i % 2 == 0;
+        case 2: return j % 3 == 0;
+        case 3: return (i + j) % 3 == 0;
+        case 4: return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0;
+        case 5: return (i * j) % 2 + (i * j) % 3 == 0;
+        case 6: return ((i * j) % 2 + (i * j) % 3) % 2 == 0;
+        case 7: return ((i * j) % 3 + (i + j) % 2) % 2 == 0;
+        default: throw new Error("mask:" + maskPattern);
+      }
+    },
+    getErrorCorrectPolynomial: function(errorCorrectLength) {
+      var a = new QRPolynomial([1], 0);
+      for (var i = 0; i < errorCorrectLength; i++) {
+        a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+      }
+      return a;
+    }
+  };
+
+  function QRCodeModel(typeNumber) {
+    this.typeNumber = typeNumber;
+    this.modules = null;
+    this.moduleCount = 0;
+    this.dataList = [];
+  }
+  QRCodeModel.prototype = {
+    addData: function(data) {
+      this.dataList.push(new QR8bitByte(data));
+    },
+    isDark: function(row, col) {
+      if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+        throw new Error(row + "," + col);
+      }
+      return this.modules[row][col];
+    },
+    getModuleCount: function() { return this.moduleCount; },
+    make: function() {
+      this.makeImpl(false, 0);
+    },
+    makeImpl: function(test, maskPattern) {
+      this.moduleCount = this.typeNumber * 4 + 17;
+      this.modules = new Array(this.moduleCount);
+      for (var row = 0; row < this.moduleCount; row++) {
+        this.modules[row] = new Array(this.moduleCount);
+        for (var col = 0; col < this.moduleCount; col++) {
+          this.modules[row][col] = null;
+        }
+      }
+      this.setupPositionProbePattern(0, 0);
+      this.setupPositionProbePattern(this.moduleCount - 7, 0);
+      this.setupPositionProbePattern(0, this.moduleCount - 7);
+      this.setupPositionAdjustPattern();
+      this.setupTimingPattern();
+      this.setupTypeInfo(test, maskPattern);
+      this.mapData(this.createData(this.typeNumber), maskPattern);
+    },
+    setupPositionProbePattern: function(row, col) {
+      for (var r = -1; r <= 7; r++) {
+        if (row + r <= -1 || this.moduleCount <= row + r) continue;
+        for (var c = -1; c <= 7; c++) {
+          if (col + c <= -1 || this.moduleCount <= col + c) continue;
+          if ((0 <= r && r <= 6 && (c == 0 || c == 6)) || (0 <= c && c <= 6 && (r == 0 || r == 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
+            this.modules[row + r][col + c] = true;
+          } else {
+            this.modules[row + r][col + c] = false;
+          }
+        }
+      }
+    },
+    setupTimingPattern: function() {
+      for (var r = 8; r < this.moduleCount - 8; r++) {
+        if (this.modules[r][6] !== null) continue;
+        this.modules[r][6] = (r % 2 == 0);
+      }
+      for (var c = 8; c < this.moduleCount - 8; c++) {
+        if (this.modules[6][c] !== null) continue;
+        this.modules[6][c] = (c % 2 == 0);
+      }
+    },
+    setupPositionAdjustPattern: function() {
+      var pos = QRUtil.PATTERN_POSITION_TABLE[this.typeNumber - 1];
+      for (var i = 0; i < pos.length; i++) {
+        for (var j = 0; j < pos.length; j++) {
+          var row = pos[i];
+          var col = pos[j];
+          if (this.modules[row][col] !== null) continue;
+          for (var r = -2; r <= 2; r++) {
+            for (var c = -2; c <= 2; c++) {
+              if (r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0)) {
+                this.modules[row + r][col + c] = true;
+              } else {
+                this.modules[row + r][col + c] = false;
+              }
+            }
+          }
+        }
+      }
+    },
+    setupTypeInfo: function(test, maskPattern) {
+      var data = (1 << 3) | maskPattern; // L error correction = 01 (1)
+      var bits = (data << 10);
+      var g = 0x537;
+      for (var i = 14; i >= 10; i--) {
+        if ((bits >> i) & 1) bits ^= (g << (i - 10));
+      }
+      var d = ((data << 10) | bits) ^ 0x5412;
+      for (var i = 0; i < 15; i++) {
+        var mod = (!test && ((d >> i) & 1) == 1);
+        if (i < 6) this.modules[i][8] = mod;
+        else if (i < 8) this.modules[i + 1][8] = mod;
+        else this.modules[this.moduleCount - 15 + i][8] = mod;
+      }
+      for (var i = 0; i < 15; i++) {
+        var mod = (!test && ((d >> i) & 1) == 1);
+        if (i < 8) this.modules[8][this.moduleCount - i - 1] = mod;
+        else if (i < 9) this.modules[8][15 - i - 1 + 1] = mod;
+        else this.modules[8][15 - i - 1] = mod;
+      }
+      this.modules[this.moduleCount - 8][8] = !test;
+    },
+    mapData: function(data, maskPattern) {
+      var inc = -1;
+      var row = this.moduleCount - 1;
+      var bitIndex = 7;
+      var byteIndex = 0;
+      for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+        if (col == 6) col--;
+        while (true) {
+          for (var c = 0; c < 2; c++) {
+            if (this.modules[row][col - c] === null) {
+              var dark = false;
+              if (byteIndex < data.length) {
+                dark = (((data[byteIndex] >>> bitIndex) & 1) == 1);
+              }
+              var mask = QRUtil.getMask(maskPattern, row, col - c);
+              if (mask) dark = !dark;
+              this.modules[row][col - c] = dark;
+              bitIndex--;
+              if (bitIndex == -1) {
+                byteIndex++;
+                bitIndex = 7;
+              }
+            }
+          }
+          row += inc;
+          if (row < 0 || this.moduleCount <= row) {
+            row -= inc;
+            inc = -inc;
+            break;
+          }
+        }
+      }
+    },
+    createData: function(typeNumber) {
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber);
+      var buffer = new QRBitBuffer();
+      for (var i = 0; i < this.dataList.length; i++) {
+        var data = this.dataList[i];
+        buffer.put(data.mode, 4);
+        buffer.put(data.getLength(), 8); // 8-bit length for byte mode versions 1-9
+        data.write(buffer);
+      }
+      var totalDataCount = 0;
+      for (var i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+      if (buffer.length + 4 <= totalDataCount * 8) buffer.put(0, 4);
+      while (buffer.length % 8 != 0) buffer.putBit(false);
+      while (true) {
+        if (buffer.length >= totalDataCount * 8) break;
+        buffer.put(0xec, 8);
+        if (buffer.length >= totalDataCount * 8) break;
+        buffer.put(0x11, 8);
+      }
+
+      var offset = 0;
+      var dcdata = new Array(rsBlocks.length);
+      var ecdata = new Array(rsBlocks.length);
+      for (var r = 0; r < rsBlocks.length; r++) {
+        var dcCount = rsBlocks[r].dataCount;
+        var ecCount = rsBlocks[r].totalCount - dcCount;
+        dcdata[r] = new Array(dcCount);
+        for (var i = 0; i < dcdata[r].length; i++) {
+          dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+        }
+        offset += dcCount;
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
+        for (var i = 0; i < ecdata[r].length; i++) {
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = (modIndex >= 0) ? modPoly.get(modIndex) : 0;
+        }
+      }
+
+      var dataBytes = [];
+      var maxDcCount = 0;
+      for (var r = 0; r < rsBlocks.length; r++) maxDcCount = Math.max(maxDcCount, dcdata[r].length);
+      for (var i = 0; i < maxDcCount; i++) {
+        for (var r = 0; r < rsBlocks.length; r++) {
+          if (i < dcdata[r].length) dataBytes.push(dcdata[r][i]);
+        }
+      }
+      var maxEcCount = 0;
+      for (var r = 0; r < rsBlocks.length; r++) maxEcCount = Math.max(maxEcCount, ecdata[r].length);
+      for (var i = 0; i < maxEcCount; i++) {
+        for (var r = 0; r < rsBlocks.length; r++) {
+          if (i < ecdata[r].length) dataBytes.push(ecdata[r][i]);
+        }
+      }
+      return dataBytes;
+    }
+  };
+
+  return {
+    generateSVG: function(text, margin) {
+      if (margin === undefined) margin = 3;
+      var len = text.length;
+      // Auto-select QR version based on byte capacity
+      var ver = 4;
+      if (len > 250) ver = 9;
+      else if (len > 180) ver = 8;
+      else if (len > 140) ver = 7;
+      else if (len > 105) ver = 6;
+      else if (len > 78) ver = 5;
+      else if (len > 50) ver = 4;
+      else if (len > 32) ver = 3;
+      else if (len > 17) ver = 2;
+      else ver = 1;
+
+      var qr = new QRCodeModel(ver);
+      qr.addData(text);
+      qr.make();
+      var count = qr.getModuleCount();
+      var size = count + margin * 2;
+      
+      var rects = [];
+      for (var r = 0; r < count; r++) {
+        for (var c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            rects.push('<rect x="' + (c + margin) + '" y="' + (r + margin) + '" width="1.02" height="1.02" fill="#1E2228"/>');
+          }
+        }
+      }
+      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" shape-rendering="crispEdges">' +
+             '<rect width="100%" height="100%" fill="#FFFFFF"/>' +
+             rects.join('') +
+             '</svg>';
+    }
+  };
+})();
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 2. COMPLETE CONFERENCE PROGRAM DATA (2026 IPWEA-QNT ANNUAL CONFERENCE)
+ * -------------------------------------------------------------------------
+ */
+var conferenceProgram = [
+  // ================= DAY 1: WEDNESDAY, 30 SEPTEMBER 2026 =================
+  {
+    id: 101,
+    day: 1,
+    time: "8:30 AM – 6:00 PM",
+    timeSort: "08:30",
+    title: "Registrations Desk Open (Day 1)",
+    speakers: "Conference Secretariat",
+    org: "IPWEA-QNT",
+    room: "Foyer",
+    stream: "General",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Collect your conference pass, lanyard, and delegate satchel. Welcome to the Sunshine Coast Convention Centre!"
+  },
+  {
+    id: 102,
+    day: 1,
+    time: "8:30 AM – 5:00 PM",
+    timeSort: "08:30",
+    title: "Public Works Exhibition Opens",
+    speakers: "Exhibitors & Industry Partners",
+    org: "Wandiny Room Exhibition Hall",
+    room: "Wandiny Room",
+    stream: "Exhibition",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Explore leading-edge public works technologies, asset solutions, products, and equipment demonstrations."
+  },
+  {
+    id: 103,
+    day: 1,
+    time: "9:00 AM – 9:05 AM",
+    timeSort: "09:00",
+    title: "Introduction & Conference Opening",
+    speakers: "MC Richard Champion",
+    org: "Master of Ceremonies",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Official opening of Day 1 plenary sessions by Master of Ceremonies Richard Champion."
+  },
+  {
+    id: 104,
+    day: 1,
+    time: "9:05 AM – 9:15 AM",
+    timeSort: "09:05",
+    title: "Welcome to Country",
+    speakers: "Traditional Custodians",
+    org: "Sunshine Coast Region",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Acknowledgment of Country and traditional ceremonial welcome."
+  },
+  {
+    id: 105,
+    day: 1,
+    time: "9:15 AM – 9:25 AM",
+    timeSort: "09:15",
+    title: "Conference Official Opening",
+    speakers: "Mayor Rosanna Natoli",
+    org: "Sunshine Coast Council",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Civic address and formal opening of the 2026 IPWEA-QNT Annual Conference."
+  },
+  {
+    id: 106,
+    day: 1,
+    time: "9:25 AM – 9:35 AM",
+    timeSort: "09:25",
+    title: "IPWEA-QNT Vice President's Welcome",
+    speakers: "Jo O'Brien",
+    org: "IPWEA-QNT Vice President",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Welcome address to members, public works engineers, council leaders, and industry delegates."
+  },
+  {
+    id: 107,
+    day: 1,
+    time: "9:35 AM – 9:55 AM",
+    timeSort: "09:35",
+    title: "Built for the Games, Made for the Future",
+    speakers: "Simon Crooks",
+    org: "CEO, Games Independent Infrastructure and Coordination Authority (GIICA)",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Strategic keynote on delivering Queensland's 2032 Olympic & Paralympic infrastructure legacy."
+  },
+  {
+    id: 108,
+    day: 1,
+    time: "9:55 AM – 10:35 AM",
+    timeSort: "09:55",
+    title: "A Future Worth Building",
+    speakers: "John Baker",
+    org: "CEO, Sunshine Coast Council",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Keynote presentation exploring forward-looking infrastructure planning and sustainable community development."
+  },
+  {
+    id: 109,
+    day: 1,
+    time: "10:35 AM – 11:05 AM",
+    timeSort: "10:35",
+    title: "Morning Tea (Day 1)",
+    speakers: "Networking & Exhibition Visit",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Morning refreshments in the Exhibition Hall with trade partners and delegates."
+  },
+  {
+    id: 110,
+    day: 1,
+    time: "11:05 AM – 11:35 AM",
+    timeSort: "11:05",
+    title: "Plenary Keynote Address",
+    speakers: "Guest Keynote Speaker",
+    org: "Public Works Leadership",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Featured plenary session addressing strategic engineering innovation."
+  },
+  {
+    id: 111,
+    day: 1,
+    time: "11:35 AM – 12:35 PM",
+    timeSort: "11:35",
+    title: "2026 Futures Challenge",
+    speakers: "Chloe Guye, Kaushal Basnet, Farras Dewara",
+    org: "QUT & Griffith University",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "University research pitches including: Kaushal Basnet (Crash history analysis on motorcycle crashes & relevancy of protection rail), Chloe Guye, and Farras Dewara."
+  },
+  {
+    id: 112,
+    day: 1,
+    time: "12:35 PM – 1:35 PM",
+    timeSort: "12:35",
+    title: "Lunch (Day 1)",
+    speakers: "Networking Lunch",
+    org: "Exhibition Area",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "REDFROST PTY LTD",
+    desc: "Delegate lunch proudly sponsored by REDFROST PTY LTD in the Exhibition Area."
+  },
+
+  // Day 1 – Breakout Session One (1:35 PM – 3:05 PM)
+  {
+    id: 113,
+    day: 1,
+    time: "1:35 PM – 3:05 PM",
+    timeSort: "13:35",
+    title: "Stream 1: Emerging Leader Workshop",
+    speakers: "Lowanna Dunn (Facilitator)",
+    org: "Threeminds",
+    room: "Breakout Room 1",
+    stream: "Emerging Leaders",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Interactive leadership development workshop tailored for emerging engineers, technical leads, and future directors."
+  },
+  {
+    id: 114,
+    day: 1,
+    time: "1:35 PM – 2:05 PM",
+    timeSort: "13:35",
+    title: "3D Pavement Data for Better Road Decisions",
+    speakers: "John Yeaman",
+    org: "Pavement Management Services",
+    room: "Breakout Room 2",
+    stream: "Roads",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 2: Roads. Leveraging high-definition 3D pavement scanning to optimize road maintenance budgets and priorities."
+  },
+  {
+    id: 115,
+    day: 1,
+    time: "1:35 PM – 2:05 PM",
+    timeSort: "13:35",
+    title: "Concrete vs Plastic Drainage Pipes: Abrasion Resistance, Wall Loss & Hidden Liner Degradation",
+    speakers: "Soleyman Sahebi & Farhad Alsani",
+    org: "University of Western Australia",
+    room: "Breakout Room 3",
+    stream: "Bridges",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 3: Bridges & Structures. Accelerated slurry testing comparing pipe durability, wear life, and structural degradation."
+  },
+  {
+    id: 116,
+    day: 1,
+    time: "2:05 PM – 2:20 PM",
+    timeSort: "14:05",
+    title: "Paving the Pathway to the Perfect Pavement",
+    speakers: "John Tannock",
+    org: "City of Ipswich",
+    room: "Breakout Room 2",
+    stream: "Roads",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 2: Roads. Case study on Ipswich's best practice surfacing, asset renewal, and pavement longevity."
+  },
+  {
+    id: 117,
+    day: 1,
+    time: "2:05 PM – 2:35 PM",
+    timeSort: "14:05",
+    title: "From Funding Roadblocks to Fast-Tracked Delivery: Mahon Bridge Replacement",
+    speakers: "Olivia Newman",
+    org: "CPM Advisory and Project Management",
+    room: "Breakout Room 3",
+    stream: "Bridges",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 3: Bridges & Structures. Cross-disciplinary collaboration fast-tracking bridge replacement under tight capital constraints."
+  },
+  {
+    id: 118,
+    day: 1,
+    time: "2:20 PM – 2:35 PM",
+    timeSort: "14:20",
+    title: "Geogrid-Stabilised Pavement Design for Goondiwindi Regional Council",
+    speakers: "Will Truong",
+    org: "Tensar",
+    room: "Breakout Room 2",
+    stream: "Roads",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 2: Roads. Design principles and performance testing of geosynthetic stabilization on reactive subgrades."
+  },
+  {
+    id: 119,
+    day: 1,
+    time: "2:35 PM – 2:50 PM",
+    timeSort: "14:35",
+    title: "Temporary Road Design for Rural, Single Carriageway Roads",
+    speakers: "Cienna Beveridge",
+    org: "Harrison Infrastructure Group",
+    room: "Breakout Room 2",
+    stream: "Roads",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 2: Roads. Pragmatic detours and temporary pavements balancing safety, heavy vehicle access, and cost."
+  },
+  {
+    id: 120,
+    day: 1,
+    time: "2:35 PM – 3:05 PM",
+    timeSort: "14:35",
+    title: "Hinchcliffe Bridge Replacement Project",
+    speakers: "John Langton",
+    org: "Redfrost Pty Ltd",
+    room: "Breakout Room 3",
+    stream: "Bridges",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 3: Bridges & Structures. Engineering challenges, structural design, and construction execution."
+  },
+  {
+    id: 121,
+    day: 1,
+    time: "2:50 PM – 3:05 PM",
+    timeSort: "14:50",
+    title: "Australian Bitumen Specifications? Are they fit for purpose?",
+    speakers: "Phil Chirnside",
+    org: "Puma Energy Bitumen",
+    room: "Breakout Room 2",
+    stream: "Roads",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 2: Roads. Critical review of bitumen standards against evolving climate stress and traffic volumes."
+  },
+  {
+    id: 122,
+    day: 1,
+    time: "3:05 PM – 3:30 PM",
+    timeSort: "15:05",
+    title: "Afternoon Tea (Day 1)",
+    speakers: "Exhibition Networking",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Afternoon refreshments and trade exhibition showcase."
+  },
+
+  // Day 1 – Breakout Session Two (3:30 PM – 5:00 PM)
+  {
+    id: 123,
+    day: 1,
+    time: "3:30 PM – 4:00 PM",
+    timeSort: "15:30",
+    title: "Technical Risk Management in Local Government Infrastructure Design",
+    speakers: "Shane Elson",
+    org: "Bundaberg Regional Council",
+    room: "Breakout Room 1",
+    stream: "Road Safety",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 4: Road Safety. Embedding risk mitigation directly into engineering design workflows."
+  },
+  {
+    id: 124,
+    day: 1,
+    time: "3:30 PM – 4:00 PM",
+    timeSort: "15:30",
+    title: "Integration Roadmap: Governance, Cashflow & Service",
+    speakers: "Mostafizur Rahman & Floyd Graveling",
+    org: "Toowoomba Regional Council",
+    room: "Breakout Room 2",
+    stream: "Asset Management",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 5: Asset Management. Bridging strategic asset planning with multi-year financial forecasting."
+  },
+  {
+    id: 125,
+    day: 1,
+    time: "3:30 PM – 4:00 PM",
+    timeSort: "15:30",
+    title: "Developing Pavement Resilience through the Accelerated Loading Facility (ALF)",
+    speakers: "James Grenfell",
+    org: "NTRO",
+    room: "Breakout Room 3",
+    stream: "Innovation",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 6: Innovation & Technology. Full-scale pavement testing replicating decades of heavy vehicle loading."
+  },
+  {
+    id: 126,
+    day: 1,
+    time: "4:00 PM – 4:30 PM",
+    timeSort: "16:00",
+    title: "Bellvista Crossing: BlackSpot Funded Case Study",
+    speakers: "Sudershan Kanthakadi & Darren Meredith",
+    org: "Sunshine Coast Council",
+    room: "Breakout Room 1",
+    stream: "Road Safety",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 4: Road Safety. Multi-lane raised pedestrian crossing design and community safety outcomes."
+  },
+  {
+    id: 127,
+    day: 1,
+    time: "4:00 PM – 4:30 PM",
+    timeSort: "16:00",
+    title: "From Reactive Repairs to Resilient Communities: Quilpie Shire Asset Management",
+    speakers: "Eng Hwa Lim",
+    org: "Quilpie Shire Council",
+    room: "Breakout Room 2",
+    stream: "Asset Management",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 5: Asset Management. Integrated roads, water, sewerage & public infrastructure in remote outback QLD."
+  },
+  {
+    id: 128,
+    day: 1,
+    time: "4:00 PM – 4:30 PM",
+    timeSort: "16:00",
+    title: "Review of Stabilising Binder Working Times in Australia",
+    speakers: "Scott Young",
+    org: "Stabilised Pavements of Australia",
+    room: "Breakout Room 3",
+    stream: "Innovation",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 6: Innovation & Technology. Laboratory & field investigations into binder hydration and compaction windows."
+  },
+  {
+    id: 129,
+    day: 1,
+    time: "4:30 PM – 4:45 PM",
+    timeSort: "16:30",
+    title: "Signalling Risk within Filtered Right Turns",
+    speakers: "Jason Deller",
+    org: "Transoft Solutions Australia",
+    room: "Breakout Room 1",
+    stream: "Road Safety",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 4: Road Safety. Data-driven crash risk modeling at signalized intersections."
+  },
+  {
+    id: 130,
+    day: 1,
+    time: "4:30 PM – 4:45 PM",
+    timeSort: "16:30",
+    title: "Review And Analysis of Post Installation Pipe Defects",
+    speakers: "Ruifeng (Ray) Dong",
+    org: "Hynds Pipe Systems",
+    room: "Breakout Room 2",
+    stream: "Asset Management",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 5: Asset Management. Root causes of underground pipe cracking, joint deflection, and bedding failures."
+  },
+  {
+    id: 131,
+    day: 1,
+    time: "4:30 PM – 4:45 PM",
+    timeSort: "16:30",
+    title: "Concrete Blinder Replacement System",
+    speakers: "Lance Simkin",
+    org: "Neoferma Australia Pty Ltd",
+    room: "Breakout Room 3",
+    stream: "Innovation",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 6: Innovation & Technology. Modern sub-base blinders reducing installation time and carbon footprint."
+  },
+  {
+    id: 132,
+    day: 1,
+    time: "4:45 PM – 5:00 PM",
+    timeSort: "16:45",
+    title: "Practical Innovation in Asset Management: From Field Evidence to Action",
+    speakers: "James Esson",
+    org: "Asset Vision Pty Ltd",
+    room: "Breakout Room 2",
+    stream: "Asset Management",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 5: Asset Management. Mobile field inspection tools driving immediate maintenance actions."
+  },
+  {
+    id: 133,
+    day: 1,
+    time: "4:45 PM – 5:00 PM",
+    timeSort: "16:45",
+    title: "Pavement Wear Tester Data: Road Making Materials from Blackall QLD",
+    speakers: "Frank Dyrssen",
+    org: "Five Elements Laboratories",
+    room: "Breakout Room 3",
+    stream: "Innovation",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 6: Innovation & Technology. Testing local gravels under accelerated mechanical wear."
+  },
+  {
+    id: 134,
+    day: 1,
+    time: "5:00 PM – 8:00 PM",
+    timeSort: "17:00",
+    title: "Meets, Eats & Beats — The Welcome Function",
+    speakers: "All Delegates & Partners",
+    org: "Sponsored by GENENG SOLUTIONS",
+    room: "Wandiny Room & Lawn",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "GENENG SOLUTIONS",
+    desc: "The premier opening networking function. Enjoy local food stations, craft beverages, and live music with industry peers!"
+  },
+
+  // ================= DAY 2: THURSDAY, 1 OCTOBER 2026 =================
+  {
+    id: 201,
+    day: 2,
+    time: "7:30 AM – 5:00 PM",
+    timeSort: "07:30",
+    title: "Registrations Desk Open (Day 2)",
+    speakers: "Conference Secretariat",
+    org: "Sunshine Coast Convention Centre",
+    room: "Foyer",
+    stream: "General",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Delegate help desk, badges, and general conference inquiries."
+  },
+  {
+    id: 202,
+    day: 2,
+    time: "8:00 AM – 5:00 PM",
+    timeSort: "08:00",
+    title: "Public Works Exhibition (Thursday)",
+    speakers: "Exhibitors & Industry Partners",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Exhibition",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Exhibition booths open all day featuring heavy equipment, digital asset tools, water engineering, and road solutions."
+  },
+  {
+    id: 203,
+    day: 2,
+    time: "8:30 AM – 8:35 AM",
+    timeSort: "08:30",
+    title: "Day 2 Introduction & Public Works Update",
+    speakers: "MC Richard Champion",
+    org: "Master of Ceremonies",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Opening remarks and overview of the Day 2 Public Works leadership addresses."
+  },
+  {
+    id: 204,
+    day: 2,
+    time: "8:35 AM – 8:55 AM",
+    timeSort: "08:35",
+    title: "Department of Local Government, Water & Volunteers Address",
+    speakers: "Faisal Mir",
+    org: "Director Engineering and Project Services",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "State engineering priorities, water funding guidelines, and local government support initiatives."
+  },
+  {
+    id: 205,
+    day: 2,
+    time: "8:55 AM – 9:15 AM",
+    timeSort: "08:55",
+    title: "Department of Transport and Main Roads Address",
+    speakers: "Ken Jacobs",
+    org: "Acting CE, TMR Queensland",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Queensland transport network planning, funding allocations, and road resilience strategies."
+  },
+  {
+    id: 206,
+    day: 2,
+    time: "9:15 AM – 9:35 AM",
+    timeSort: "09:15",
+    title: "Queensland Reconstruction Authority (QRA) Update",
+    speakers: "Andrew Abbott AM",
+    org: "General Manager - Operations, QRA",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Disaster recovery funding arrangements, betterment projects, and rapid post-event reconstruction."
+  },
+  {
+    id: 207,
+    day: 2,
+    time: "9:35 AM – 9:55 AM",
+    timeSort: "09:35",
+    title: "Local Government Association of Queensland (LGAQ) Address",
+    speakers: "Alison Smith",
+    org: "Chief Executive Officer, LGAQ",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Advocacy priorities for Queensland councils, financial sustainability, and infrastructure investment."
+  },
+  {
+    id: 208,
+    day: 2,
+    time: "9:55 AM – 10:25 AM",
+    timeSort: "09:55",
+    title: "Morning Tea (Day 2)",
+    speakers: "Exhibition Hall Networking",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Morning tea and exhibition interaction."
+  },
+  {
+    id: 209,
+    day: 2,
+    time: "10:25 AM – 10:40 AM",
+    timeSort: "10:25",
+    title: "Board of Professional Engineers Queensland (BPEQ) Address",
+    speakers: "Timea Steptoe",
+    org: "Registrar, BPEQ",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "RPEQ statutory requirements, professional standards, and legal responsibilities for public works engineers."
+  },
+  {
+    id: 210,
+    day: 2,
+    time: "10:40 AM – 10:55 AM",
+    timeSort: "10:40",
+    title: "Queensland Water Directorate Address",
+    speakers: "Dr Georgina Davis",
+    org: "Chief Executive Officer, Qldwater",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Regional urban water & sewerage challenges, workforce capability, and asset resilience."
+  },
+  {
+    id: 211,
+    day: 2,
+    time: "10:55 AM – 11:25 AM",
+    timeSort: "10:55",
+    title: "Public Works Update Panel Discussion & Q&A",
+    speakers: "Andrew Abbott AM, Alison Smith, Timea Steptoe, Dr Georgina Davis, Ken Jacobs",
+    org: "Chaired by MC Richard Champion",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "All-star panel answering live delegate questions on engineering funding, regulatory reform, and regional infrastructure delivery."
+  },
+
+  // Day 2 – Breakout Session One (11:35 AM – 1:05 PM)
+  {
+    id: 212,
+    day: 2,
+    time: "11:35 AM – 12:05 PM",
+    timeSort: "11:35",
+    title: "Environmental Duties in Practice",
+    speakers: "Patrick O’Brien",
+    org: "McCullough Robertson",
+    room: "Breakout Room 1",
+    stream: "Legal & Compliance",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 7: Legal & Compliance. General environmental duties, executive officer liability, and risk management on capital projects."
+  },
+  {
+    id: 213,
+    day: 2,
+    time: "11:35 AM – 12:05 PM",
+    timeSort: "11:35",
+    title: "Maximising DRFA Outcomes Through Planning, Asset Mgmt & Delivery Coordination",
+    speakers: "Jade Christensen & Cate Moore",
+    org: "Queensland Reconstruction Authority (QRA)",
+    room: "Breakout Room 2",
+    stream: "Disaster Recovery",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 8: Disaster Recovery & Resilience. Optimizing funding submissions, scope compliance, and delivery timelines."
+  },
+  {
+    id: 214,
+    day: 2,
+    time: "11:35 AM – 12:05 PM",
+    timeSort: "11:35",
+    title: "Sealing Without Cutters: High Float Bitumen Emulsions for Low/Medium Traffic Roads",
+    speakers: "Kanjana Yindee",
+    org: "Colas Australia Group",
+    room: "Breakout Room 3",
+    stream: "Environment",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 9: Environment & Sustainability. Safer, low-VOC bitumen emulsion alternatives eliminating solvent cutters."
+  },
+  {
+    id: 215,
+    day: 2,
+    time: "12:05 PM – 12:20 PM",
+    timeSort: "12:05",
+    title: "The Lens of the Engineer or the Lawyer?",
+    speakers: "Tosca Goldberg",
+    org: "McCullough Robertson",
+    room: "Breakout Room 1",
+    stream: "Legal & Compliance",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 7: Legal & Compliance. Navigating contract administration, claims, and engineering liability."
+  },
+  {
+    id: 216,
+    day: 2,
+    time: "12:05 PM – 12:20 PM",
+    timeSort: "12:05",
+    title: "71 Kilometres, 71 Weeks: Time-Critical Recovery in Remote Gulf Country",
+    speakers: "Jacob Landers",
+    org: "Northlane Consulting Engineers",
+    room: "Breakout Room 2",
+    stream: "Disaster Recovery",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 8: Disaster Recovery & Resilience. Rapid road reinstatement across extreme outback flood damage."
+  },
+  {
+    id: 217,
+    day: 2,
+    time: "12:05 PM – 12:35 PM",
+    timeSort: "12:05",
+    title: "Low-Carbon Sprayed Seals Using Bio-Based Polymer Modified Binder",
+    speakers: "Hamidreza Sahebzamani",
+    org: "SAMI Bitumen Technologies",
+    room: "Breakout Room 3",
+    stream: "Environment",
+    tagClass: "tag-roads",
+    sponsor: "",
+    desc: "Stream 9: Environment & Sustainability. Laboratory performance and real-world field evaluations of renewable binders."
+  },
+  {
+    id: 218,
+    day: 2,
+    time: "12:20 PM – 12:35 PM",
+    timeSort: "12:20",
+    title: "Resilience Starts Before the Rebuild: How Early Decisions Shape Long-Term Recovery",
+    speakers: "Tanja Conners",
+    org: "AustStab Limited",
+    room: "Breakout Room 2",
+    stream: "Disaster Recovery",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 8: Disaster Recovery & Resilience. Incorporating pavement stabilization during emergency works."
+  },
+  {
+    id: 219,
+    day: 2,
+    time: "12:35 PM – 12:50 PM",
+    timeSort: "12:35",
+    title: "A Practical Guide to Improved Scope Documents",
+    speakers: "Andrew McCormack",
+    org: "McCullough Robertson",
+    room: "Breakout Room 1",
+    stream: "Legal & Compliance",
+    tagClass: "tag-safety",
+    sponsor: "",
+    desc: "Stream 7: Legal & Compliance. Drafting crystal-clear procurement scopes that prevent contract disputes."
+  },
+  {
+    id: 220,
+    day: 2,
+    time: "12:35 PM – 12:50 PM",
+    timeSort: "12:35",
+    title: "Temporary Traffic Management in Disaster Recovery",
+    speakers: "Dan Sullivan",
+    org: "Solutions in Transport Pty Ltd",
+    room: "Breakout Room 2",
+    stream: "Disaster Recovery",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 8: Disaster Recovery & Resilience. Traffic control strategies safeguarding road crews on damaged corridors."
+  },
+  {
+    id: 221,
+    day: 2,
+    time: "12:35 PM – 1:05 PM",
+    timeSort: "12:35",
+    title: "Building Resilient Waterways: Rehabilitation in Active Flood Corridors",
+    speakers: "Debbie Laporte (Orterra) & Rebecca Stephens (Ipswich City Council)",
+    org: "Orterra & City of Ipswich",
+    room: "Breakout Room 3",
+    stream: "Environment",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 9: Environment & Sustainability. Bioengineering and geomorphic stream stabilization in urban floodways."
+  },
+  {
+    id: 222,
+    day: 2,
+    time: "12:50 PM – 1:05 PM",
+    timeSort: "12:50",
+    title: "Elevating Flood Risk Analysis with LifeSim: Risk Assessment to Disaster Mgmt",
+    speakers: "Lisa Holden",
+    org: "HARC Services Pty Ltd",
+    room: "Breakout Room 2",
+    stream: "Disaster Recovery",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 8: Disaster Recovery & Resilience. Life-safety consequence modeling for dam breaches and flash floods."
+  },
+  {
+    id: 223,
+    day: 2,
+    time: "1:05 PM – 2:05 PM",
+    timeSort: "13:05",
+    title: "Lunch (Day 2)",
+    speakers: "Delegate Lunch & Exhibition",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "REDFROST PTY LTD",
+    desc: "Networking lunch sponsored by REDFROST PTY LTD in the Exhibition Area."
+  },
+
+  // Day 2 – Breakout Session Two (2:05 PM – 3:35 PM)
+  {
+    id: 224,
+    day: 2,
+    time: "2:05 PM – 2:35 PM",
+    timeSort: "14:05",
+    title: "Using LiDAR to Give Higher Accuracy to Road Condition Assessment",
+    speakers: "David Bell (Proterra) & Brian Wood (Survai Systems)",
+    org: "Proterra & Survai Systems",
+    room: "Breakout Room 1",
+    stream: "AI",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 10: Artificial Intelligence. Mobile LiDAR workflows automated by computer vision algorithms."
+  },
+  {
+    id: 225,
+    day: 2,
+    time: "2:05 PM – 2:35 PM",
+    timeSort: "14:05",
+    title: "Pittsworth Water Supply: New Bore vs. Upgrading Existing Infrastructure",
+    speakers: "Mostafizur Rahman & Sherwin Samson",
+    org: "Toowoomba Regional Council",
+    room: "Breakout Room 2",
+    stream: "Water",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 11: Water & Wastewater. Whole-of-life cost analysis, yield reliability, and water security options."
+  },
+  {
+    id: 226,
+    day: 2,
+    time: "2:05 PM – 2:35 PM",
+    timeSort: "14:05",
+    title: "Landscape Architect Services: Eumundi Streetscape Project",
+    speakers: "Erin Johnston",
+    org: "Sunshine Coast Council",
+    room: "Breakout Room 3",
+    stream: "People & Communities",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 12: People & Communities. Placemaking, heritage integration, and community-driven streetscape design."
+  },
+  {
+    id: 227,
+    day: 2,
+    time: "2:35 PM – 3:05 PM",
+    timeSort: "14:35",
+    title: "From AI Detection to Human Decision: Council & RMPC Defect Management",
+    speakers: "Angela Hanson (Toowoomba) & Sujatha Rajagopalan (SHEPHERD)",
+    org: "Toowoomba Regional Council & SHEPHERD",
+    room: "Breakout Room 1",
+    stream: "AI",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 10: Artificial Intelligence. Real-world case study transitioning automated defect detection into work orders."
+  },
+  {
+    id: 228,
+    day: 2,
+    time: "2:35 PM – 3:05 PM",
+    timeSort: "14:35",
+    title: "Using Water Balance Modelling to Optimise Regional Wastewater Effluent",
+    speakers: "Khalid Malik & Tahir Khan",
+    org: "Isaac Regional Council",
+    room: "Breakout Room 2",
+    stream: "Water",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 11: Water & Wastewater. Nebo case study on effluent recycling, storage management, and environmental compliance."
+  },
+  {
+    id: 229,
+    day: 2,
+    time: "2:35 PM – 3:05 PM",
+    timeSort: "14:35",
+    title: "Good Projects but Tough Crowds? Building Trust in Infrastructure Delivery",
+    speakers: "Tamara Allen-Canny",
+    org: "Wagtail Red Pty Ltd",
+    room: "Breakout Room 3",
+    stream: "People & Communities",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 12: People & Communities. Strategic community stakeholder engagement for high-impact capital works."
+  },
+  {
+    id: 230,
+    day: 2,
+    time: "3:05 PM – 3:20 PM",
+    timeSort: "15:05",
+    title: "AI, Defects and Strategic Asset Management",
+    speakers: "Devon Wilson",
+    org: "Noosa Council",
+    room: "Breakout Room 1",
+    stream: "AI",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 10: Artificial Intelligence. Leveraging AI data streams to forecast degradation and capital renewal triggers."
+  },
+  {
+    id: 231,
+    day: 2,
+    time: "3:05 PM – 3:35 PM",
+    timeSort: "15:05",
+    title: "Optimisation of Sewer Pumping Networks via Pump Reduction Strategies",
+    speakers: "Mostafizur Rahman & Vysakh Somasundaran Menon",
+    org: "Toowoomba Regional Council",
+    room: "Breakout Room 2",
+    stream: "Water",
+    tagClass: "tag-bridges",
+    sponsor: "",
+    desc: "Stream 11: Water & Wastewater. Hydraulic modeling and pump run-time reduction lowering energy costs and sewer surges."
+  },
+  {
+    id: 232,
+    day: 2,
+    time: "3:05 PM – 3:35 PM",
+    timeSort: "15:05",
+    title: "Building Better Community Facilities Through Practical Project Management",
+    speakers: "Kenneth Mostyn",
+    org: "Toowoomba Regional Council",
+    room: "Breakout Room 3",
+    stream: "People & Communities",
+    tagClass: "tag-asset",
+    sponsor: "",
+    desc: "Stream 12: People & Communities. Project management frameworks delivering on-time public buildings and sporting hubs."
+  },
+  {
+    id: 233,
+    day: 2,
+    time: "3:20 PM – 3:35 PM",
+    timeSort: "15:20",
+    title: "When Civil Design Software Starts to Think",
+    speakers: "Ben Hipsley",
+    org: "Civil Survey Applications",
+    room: "Breakout Room 1",
+    stream: "AI",
+    tagClass: "tag-tech",
+    sponsor: "",
+    desc: "Stream 10: Artificial Intelligence. Generative design algorithms automating road alignments, grading, and earthworks."
+  },
+  {
+    id: 234,
+    day: 2,
+    time: "3:35 PM – 4:00 PM",
+    timeSort: "15:35",
+    title: "Afternoon Tea (Day 2)",
+    speakers: "Exhibition Networking",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Afternoon tea in the exhibition hall before delegates prepare for the Gala Dinner."
+  },
+  {
+    id: 235,
+    day: 2,
+    time: "6:00 PM – 11:00 PM",
+    timeSort: "18:00",
+    title: "Excellence Awards Gala Dinner & Ceremony",
+    speakers: "Awards Ceremony & MC Richard Champion",
+    org: "Sponsored by NORTHLANE CONSULTING ENGINEERS",
+    room: "Minyama Hall 1–3",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "NORTHLANE CONSULTING ENGINEERS",
+    desc: "The annual night of celebration recognizing Queensland's best public works projects, engineers, and community assets. 6:00 PM Pre-dinner drinks, 7:00 PM – 11:00 PM Gala Dinner & Awards."
+  },
+
+  // ================= DAY 3: FRIDAY, 2 OCTOBER 2026 =================
+  {
+    id: 301,
+    day: 3,
+    time: "9:00 AM – 3:45 PM",
+    timeSort: "09:00",
+    title: "Registrations Desk Open (Day 3)",
+    speakers: "Conference Secretariat",
+    org: "Sunshine Coast Convention Centre",
+    room: "Foyer",
+    stream: "General",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Information desk, tour muster inquiries, and baggage storage."
+  },
+  {
+    id: 302,
+    day: 3,
+    time: "9:30 AM – 1:00 PM",
+    timeSort: "09:30",
+    title: "Public Works Exhibition (Friday)",
+    speakers: "Exhibitors & Industry Partners",
+    org: "Wandiny Room",
+    room: "Wandiny Room",
+    stream: "Exhibition",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Final morning of the Exhibition. Connect with suppliers before closing at 1:00 PM."
+  },
+  {
+    id: 303,
+    day: 3,
+    time: "9:30 AM – 10:30 AM",
+    timeSort: "09:30",
+    title: "Brunch (Day 3)",
+    speakers: "Delegate Brunch",
+    org: "Exhibition Area",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Hot brunch served in the Exhibition Area, Wandiny Room."
+  },
+  {
+    id: 304,
+    day: 3,
+    time: "10:35 AM – 10:40 AM",
+    timeSort: "10:35",
+    title: "Closing Plenary Introduction",
+    speakers: "MC Richard Champion",
+    org: "Master of Ceremonies",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Welcome to the final Plenary Session of the 2026 Annual Conference."
+  },
+  {
+    id: 305,
+    day: 3,
+    time: "10:40 AM – 11:25 AM",
+    timeSort: "10:40",
+    title: "The Great Debate",
+    speakers: "Affirmative vs Negative Teams",
+    org: "Moderated by Richard Champion",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "The beloved conference tradition! Rapid-fire wits, engineering banter, and lively arguments between Affirmative and Negative teams."
+  },
+  {
+    id: 306,
+    day: 3,
+    time: "11:25 AM – 11:45 AM",
+    timeSort: "11:25",
+    title: "IPWEA-QNT CEO Address & Conference Close",
+    speakers: "Jesper Jensen",
+    org: "IPWEA-QNT CEO",
+    room: "Minyama Hall 1 & 2",
+    stream: "Plenary",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Formal address summarizing conference outcomes, upcoming institute initiatives, and conference close."
+  },
+  {
+    id: 307,
+    day: 3,
+    time: "11:50 AM – 1:00 PM",
+    timeSort: "11:50",
+    title: "Lunch & President Raffle Draw (Day 3)",
+    speakers: "President Raffle Draw",
+    org: "Exhibition Area",
+    room: "Wandiny Room",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "REDFROST PTY LTD",
+    desc: "Final lunch sponsored by REDFROST PTY LTD. Join the President Raffle Draw before exhibition pack-down at 1:00 PM!"
+  },
+  {
+    id: 308,
+    day: 3,
+    time: "1:00 PM – 3:15 PM",
+    timeSort: "13:00",
+    title: "Technical Tours: Muster & Departure",
+    speakers: "Buses depart from Arrivals Lounge",
+    org: "Assemble at 1:00 PM for 1:15 PM departure",
+    room: "Arrivals Lounge",
+    stream: "Tours",
+    tagClass: "tag-tour",
+    sponsor: "",
+    desc: "Assemble at 1:00 PM in Arrivals Lounge. Air-conditioned coaches depart promptly at 1:15 PM for selected site tours."
+  },
+  {
+    id: 309,
+    day: 3,
+    time: "1:15 PM – 2:45 PM",
+    timeSort: "13:15",
+    title: "Tech Tour 1: Mooloolaba Foreshore Revitalisation Project",
+    speakers: "Hosted by Sunshine Coast Council",
+    org: "Sunshine Coast Council Engineering Team",
+    room: "Arrivals Lounge",
+    stream: "Tours",
+    tagClass: "tag-tour",
+    sponsor: "",
+    desc: "Technical site inspection of seawall construction, coastal resilience, active transport, and beachfront public realm."
+  },
+  {
+    id: 310,
+    day: 3,
+    time: "1:15 PM – 2:45 PM",
+    timeSort: "13:15",
+    title: "Tech Tour 2: Maroochydore Wastewater Treatment Plant",
+    speakers: "Hosted by Unitywater",
+    org: "Unitywater Operations Team",
+    room: "Arrivals Lounge",
+    stream: "Tours",
+    tagClass: "tag-tour",
+    sponsor: "",
+    desc: "Behind-the-scenes engineering tour of advanced secondary treatment, nutrient removal, biogas, and recycled water facilities."
+  },
+  {
+    id: 311,
+    day: 3,
+    time: "1:15 PM – 2:45 PM",
+    timeSort: "13:15",
+    title: "Tech Tour 3: Bellvista Blvd Multi-Lane Raised Pedestrian Crossing",
+    speakers: "Hosted by Sunshine Coast Council",
+    org: "Sunshine Coast Council Traffic & Transport Team",
+    room: "Arrivals Lounge",
+    stream: "Tours",
+    tagClass: "tag-tour",
+    sponsor: "",
+    desc: "On-site review of the award-winning BlackSpot-funded raised crossing design, approach geometry, and pedestrian safety data."
+  },
+  {
+    id: 312,
+    day: 3,
+    time: "2:45 PM – 3:15 PM",
+    timeSort: "14:45",
+    title: "Tech Tours Conclude & Return to Convention Centre",
+    speakers: "Tour Coaches Return",
+    org: "Arrivals Lounge",
+    room: "Arrivals Lounge",
+    stream: "Tours",
+    tagClass: "tag-tour",
+    sponsor: "",
+    desc: "All technical tour buses return to the Sunshine Coast Convention Centre."
+  },
+  {
+    id: 313,
+    day: 3,
+    time: "3:15 PM – 3:45 PM",
+    timeSort: "15:15",
+    title: "Afternoon Tea (Day 3)",
+    speakers: "Farewell Refreshments",
+    org: "Arrivals Lounge",
+    room: "Arrivals Lounge",
+    stream: "Social & Catering",
+    tagClass: "tag-social",
+    sponsor: "",
+    desc: "Farewell afternoon tea and coffee for departing delegates in the Arrivals Lounge."
+  },
+  {
+    id: 314,
+    day: 3,
+    time: "3:45 PM",
+    timeSort: "15:45",
+    title: "2026 IPWEA-QNT Annual Conference Concludes",
+    speakers: "Conference Adjourned",
+    org: "IPWEA-QNT",
+    room: "Sunshine Coast Convention Centre",
+    stream: "General",
+    tagClass: "tag-plenary",
+    sponsor: "",
+    desc: "Thank you for attending the 2026 IPWEA-QNT Annual Conference. Travel safely and see you in 2027!"
+  }
+];
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 3. VENUE SPACES DIRECTORY & DESCRIPTIONS
+ * -------------------------------------------------------------------------
+ */
+var venueSpaces = {
+  "Minyama Hall 1 & 2": {
+    name: "Minyama Hall 1 & 2",
+    level: "Ground Level",
+    desc: "Main Convention Plenary Hall for Keynotes, Opening Addresses, Futures Challenge, and Plenary Panels.",
+    layer: "ground"
+  },
+  "Minyama Hall 1–3": {
+    name: "Minyama Hall 1–3",
+    level: "Ground Level",
+    desc: "Expanded Grand Ballroom configured exclusively for the Excellence Awards Gala Dinner on Thursday evening.",
+    layer: "ground"
+  },
+  "Wandiny Room": {
+    name: "Wandiny Room",
+    level: "Ground Level",
+    desc: "Public Works Exhibition Hall, trade sponsor booths, catering, Morning Tea, Afternoon Tea, and delegate Lunches.",
+    layer: "ground"
+  },
+  "Foyer": {
+    name: "Convention Foyer",
+    level: "Ground Level",
+    desc: "Main entrance, Registration Desk, badge collection, delegate assistance, and information hub.",
+    layer: "ground"
+  },
+  "Arrivals Lounge": {
+    name: "Arrivals Lounge",
+    level: "Ground Level",
+    desc: "Transit hub and assembly point for Day 3 Technical Tour buses departing for Mooloolaba, Maroochydore WWTP, and Bellvista.",
+    layer: "ground"
+  },
+  "Breakout Room 1": {
+    name: "Breakout Room 1",
+    level: "Level 1 (Upstairs)",
+    desc: "Dedicated stream room hosting Emerging Leaders Workshop, Stream 4: Road Safety, Stream 7: Legal & Compliance, and Stream 10: Artificial Intelligence.",
+    layer: "level1"
+  },
+  "Breakout Room 2": {
+    name: "Breakout Room 2",
+    level: "Level 1 (Upstairs)",
+    desc: "Dedicated stream room hosting Stream 2: Roads, Stream 5: Asset Management, Stream 8: Disaster Recovery & Resilience, and Stream 11: Water & Wastewater.",
+    layer: "level1"
+  },
+  "Breakout Room 3": {
+    name: "Breakout Room 3",
+    level: "Level 1 (Upstairs)",
+    desc: "Dedicated stream room hosting Stream 3: Bridges & Structures, Stream 6: Innovation & Technology, Stream 9: Environment & Sustainability, and Stream 12: People & Communities.",
+    layer: "level1"
+  }
+};
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 4. APP STATE MANAGEMENT & LOCAL STORAGE
+ * -------------------------------------------------------------------------
+ */
+var appState = {
+  currentTab: 'home',
+  currentDay: 1,
+  streamFilter: 'all',
+  searchQuery: '',
+  savedOnly: false,
+  savedSessionIds: [],
+  activeModalSessionId: null,
+  profile: {
+    name: "Sabrina Dragani",
+    title: "Public Works & Asset Lead",
+    org: "IPWEA-QNT",
+    email: "sabrina.dragani@ipwea.org",
+    phone: "+61 400 123 456",
+    tier: "FULL DELEGATE",
+    badgeId: "IPW-2026-8942"
+  },
+  sessionNotes: {}
+};
+
+// Initialize State from LocalStorage
+function loadSavedState() {
+  try {
+    var savedBookmarks = localStorage.getItem('ipwea_saved_sessions');
+    if (savedBookmarks) appState.savedSessionIds = JSON.parse(savedBookmarks);
+
+    var savedProfile = localStorage.getItem('ipwea_badge_profile');
+    if (savedProfile) appState.profile = Object.assign(appState.profile, JSON.parse(savedProfile));
+
+    var savedNotes = localStorage.getItem('ipwea_session_notes');
+    if (savedNotes) appState.sessionNotes = JSON.parse(savedNotes);
+  } catch (e) {
+    console.error("Storage loading error:", e);
+  }
+}
+
+function persistBookmarks() {
+  try {
+    localStorage.setItem('ipwea_saved_sessions', JSON.stringify(appState.savedSessionIds));
+    updateSavedCounters();
+  } catch (e) {}
+}
+
+function persistProfile() {
+  try {
+    localStorage.setItem('ipwea_badge_profile', JSON.stringify(appState.profile));
+  } catch (e) {}
+}
+
+function persistNotes() {
+  try {
+    localStorage.setItem('ipwea_session_notes', JSON.stringify(appState.sessionNotes));
+  } catch (e) {}
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 5. ROUTING & TAB NAVIGATION
+ * -------------------------------------------------------------------------
+ */
+function switchTab(tabId) {
+  appState.currentTab = tabId;
+  
+  // Update view visibility
+  document.querySelectorAll('.app-view').forEach(function(view) {
+    view.classList.remove('active');
+  });
+  var targetView = document.getElementById('view-' + tabId);
+  if (targetView) targetView.classList.add('active');
+
+  // Update navigation tabs
+  document.querySelectorAll('.nav-tab').forEach(function(tab) {
+    tab.classList.remove('active');
+  });
+  var activeBtn = document.getElementById('tab-btn-' + tabId);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Scroll to top of view
+  window.scrollTo(0, 0);
+
+  // Tab-specific refreshes
+  if (tabId === 'badge') {
+    renderBadgeAndQR();
+  } else if (tabId === 'program') {
+    renderProgramList();
+  } else if (tabId === 'venue') {
+    selectRoom('Minyama Hall 1 & 2');
+  }
+}
+
+function selectDay(dayNum) {
+  appState.currentDay = dayNum;
+  document.querySelectorAll('.day-btn').forEach(function(btn, idx) {
+    btn.classList.toggle('active', (idx + 1) === dayNum);
+  });
+  renderProgramList();
+}
+
+function filterSavedOnly() {
+  switchTab('program');
+  appState.savedOnly = true;
+  appState.streamFilter = 'all';
+  updateFilterPillUI();
+  renderProgramList();
+  showToast("Showing your bookmarked schedule");
+}
+
+function viewDay3Tours() {
+  switchTab('program');
+  selectDay(3);
+  setStreamFilter('Tours');
+  showToast("Viewing Day 3 Technical Tours");
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 6. PROGRAM RENDERING, FILTERING & SEARCH
+ * -------------------------------------------------------------------------
+ */
+function setStreamFilter(filter) {
+  appState.streamFilter = filter;
+  appState.savedOnly = false;
+  updateFilterPillUI();
+  renderProgramList();
+}
+
+function toggleSavedFilter() {
+  appState.savedOnly = !appState.savedOnly;
+  if (appState.savedOnly) {
+    appState.streamFilter = 'all';
+  }
+  updateFilterPillUI();
+  renderProgramList();
+}
+
+function updateFilterPillUI() {
+  var pills = document.querySelectorAll('.stream-pill');
+  pills.forEach(function(p) {
+    if (p.id === 'pill-saved') {
+      p.classList.toggle('active', appState.savedOnly);
+    } else {
+      var text = p.innerText.trim();
+      var isActive = (!appState.savedOnly && (
+        (appState.streamFilter === 'all' && text === 'All Sessions') ||
+        (text.indexOf(appState.streamFilter) !== -1)
+      ));
+      p.classList.toggle('active', isActive);
+    }
+  });
+}
+
+function handleSearchInput() {
+  var input = document.getElementById('program-search');
+  appState.searchQuery = input ? input.value.trim().toLowerCase() : '';
+  renderProgramList();
+}
+
+function renderProgramList() {
+  var listContainer = document.getElementById('program-list');
+  if (!listContainer) return;
+
+  var filtered = conferenceProgram.filter(function(item) {
+    // Match day
+    if (item.day !== appState.currentDay) return false;
+
+    // Match saved filter
+    if (appState.savedOnly && appState.savedSessionIds.indexOf(item.id) === -1) {
+      return false;
+    }
+
+    // Match stream filter
+    if (appState.streamFilter !== 'all') {
+      if (item.stream.toLowerCase().indexOf(appState.streamFilter.toLowerCase()) === -1) {
+        return false;
+      }
+    }
+
+    // Match search query
+    if (appState.searchQuery) {
+      var q = appState.searchQuery;
+      var matchTitle = item.title.toLowerCase().indexOf(q) !== -1;
+      var matchSpeaker = item.speakers.toLowerCase().indexOf(q) !== -1;
+      var matchOrg = item.org.toLowerCase().indexOf(q) !== -1;
+      var matchRoom = item.room.toLowerCase().indexOf(q) !== -1;
+      var matchStream = item.stream.toLowerCase().indexOf(q) !== -1;
+      if (!matchTitle && !matchSpeaker && !matchOrg && !matchRoom && !matchStream) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    listContainer.innerHTML = [
+      '<div class="empty-state">',
+      '  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+      '  <p style="font-weight:700; color:var(--dark-grey);">No matching sessions found</p>',
+      '  <p style="margin-top:4px;">Try clearing filters or checking other conference days.</p>',
+      '</div>'
+    ].join('');
+    return;
+  }
+
+  // Group by time slots
+  var html = '';
+  var currentTimeSlot = '';
+
+  filtered.forEach(function(s) {
+    if (s.time !== currentTimeSlot) {
+      currentTimeSlot = s.time;
+      html += [
+        '<div class="time-divider">',
+        '  <div class="time-divider-badge">' + currentTimeSlot + '</div>',
+        '  <div class="time-divider-line"></div>',
+        '</div>'
+      ].join('');
+    }
+
+    var isBookmarked = appState.savedSessionIds.indexOf(s.id) !== -1;
+
+    html += [
+      '<div class="session-card ' + (isBookmarked ? 'bookmarked' : '') + '" onclick="openSessionDetails(' + s.id + ')">',
+      '  <div class="session-header-row">',
+      '    <span class="stream-tag ' + s.tagClass + '">' + s.stream + '</span>',
+      '    <button class="bookmark-btn ' + (isBookmarked ? 'active' : '') + '" onclick="event.stopPropagation(); toggleBookmark(' + s.id + ')" title="Save Session">',
+      '      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      '    </button>',
+      '  </div>',
+      '  <div class="session-title">' + escapeHTML(s.title) + '</div>',
+      '  <div class="session-speakers">',
+      '    <span>' + escapeHTML(s.speakers) + '</span>',
+      '    <span class="session-speaker-org">' + escapeHTML(s.org) + '</span>',
+      '  </div>',
+      '  <div class="session-footer">',
+      '    <div class="session-room">',
+      '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+      '      <span>' + escapeHTML(s.room) + '</span>',
+      '    </div>',
+      '    <div style="font-weight:700; color:var(--ipwea-red);">Details &rarr;</div>',
+      '  </div>',
+      '</div>'
+    ].join('');
+  });
+
+  listContainer.innerHTML = html;
+}
+
+function toggleBookmark(sessionId) {
+  var idx = appState.savedSessionIds.indexOf(sessionId);
+  if (idx === -1) {
+    appState.savedSessionIds.push(sessionId);
+    showToast("Session added to My Schedule");
+  } else {
+    appState.savedSessionIds.splice(idx, 1);
+    showToast("Session removed from My Schedule");
+  }
+  persistBookmarks();
+  renderProgramList();
+}
+
+function updateSavedCounters() {
+  var count = appState.savedSessionIds.length;
+  var pillCount = document.getElementById('saved-pill-count');
+  if (pillCount) pillCount.innerText = count;
+
+  var bottomCount = document.getElementById('bottom-saved-count');
+  if (bottomCount) {
+    bottomCount.innerText = count;
+    bottomCount.style.display = count > 0 ? 'inline-block' : 'none';
+  }
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 7. SESSION DETAIL MODAL & NOTES
+ * -------------------------------------------------------------------------
+ */
+function openSessionDetails(sessionId) {
+  var session = conferenceProgram.find(function(s) { return s.id === sessionId; });
+  if (!session) return;
+
+  appState.activeModalSessionId = sessionId;
+
+  document.getElementById('modal-title').innerText = session.title;
+  document.getElementById('modal-time').innerText = session.time + " (Day " + session.day + ")";
+  document.getElementById('modal-room').innerText = session.room;
+  document.getElementById('modal-stream-tag').innerText = session.stream;
+  document.getElementById('modal-stream-tag').className = 'stream-tag ' + session.tagClass;
+  document.getElementById('modal-speakers-text').innerText = session.speakers;
+  document.getElementById('modal-org-text').innerText = session.org;
+
+  // Sponsor
+  var sponsorBox = document.getElementById('modal-sponsor-box');
+  if (session.sponsor) {
+    sponsorBox.style.display = 'block';
+    document.getElementById('modal-sponsor-name').innerText = session.sponsor;
+  } else {
+    sponsorBox.style.display = 'none';
+  }
+
+  // Notes
+  var noteInput = document.getElementById('modal-session-note');
+  noteInput.value = appState.sessionNotes[sessionId] || '';
+
+  // Bookmark Button in modal
+  updateModalBookmarkUI();
+
+  document.getElementById('session-modal').classList.add('open');
+}
+
+function closeSessionModal(event) {
+  if (event && event.target && !event.target.classList.contains('modal-overlay') && !event.target.classList.contains('modal-close-btn')) {
+    return;
+  }
+  document.getElementById('session-modal').classList.remove('open');
+  appState.activeModalSessionId = null;
+}
+
+function updateModalBookmarkUI() {
+  if (!appState.activeModalSessionId) return;
+  var isBookmarked = appState.savedSessionIds.indexOf(appState.activeModalSessionId) !== -1;
+  var btnText = document.getElementById('modal-bookmark-text');
+  var btn = document.getElementById('modal-bookmark-btn');
+  if (isBookmarked) {
+    btnText.innerText = "Remove from My Schedule";
+    btn.style.background = "var(--dark-grey)";
+  } else {
+    btnText.innerText = "Save to My Schedule";
+    btn.style.background = "var(--ipwea-red)";
+  }
+}
+
+function toggleModalBookmark() {
+  if (!appState.activeModalSessionId) return;
+  toggleBookmark(appState.activeModalSessionId);
+  updateModalBookmarkUI();
+}
+
+function saveCurrentSessionNote() {
+  if (!appState.activeModalSessionId) return;
+  var note = document.getElementById('modal-session-note').value;
+  appState.sessionNotes[appState.activeModalSessionId] = note;
+  persistNotes();
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 8. BADGE RENDERING, DYNAMIC VCARD GENERATION & QR CODE
+ * -------------------------------------------------------------------------
+ */
+function renderBadgeAndQR() {
+  var p = appState.profile;
+
+  // Render text elements on digital badge
+  document.getElementById('badge-display-name').innerText = p.name;
+  document.getElementById('badge-display-title').innerText = p.title;
+  document.getElementById('badge-display-org').innerText = p.org;
+  document.getElementById('badge-display-tier').innerText = p.tier;
+  document.getElementById('badge-display-id').innerText = "ID: " + p.badgeId;
+
+  // Avatar initials
+  var initials = p.name.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('badge-display-avatar').innerText = initials || 'IP';
+
+  // Construct standard vCard 3.0 string
+  var vCard = generateVCardString(p);
+
+  // Generate SVG QR Code via pure JS MiniQR engine
+  var qrContainer = document.getElementById('qrcode-container');
+  if (qrContainer) {
+    qrContainer.innerHTML = MiniQR.generateSVG(vCard, 3);
+  }
+}
+
+function generateVCardString(p) {
+  var nameParts = p.name.split(' ');
+  var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : p.name;
+  var firstName = nameParts[0] || '';
+
+  return [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:' + lastName + ';' + firstName + ';;;',
+    'FN:' + p.name,
+    'ORG:' + p.org,
+    'TITLE:' + p.title,
+    'EMAIL;TYPE=PREF,INTERNET:' + p.email,
+    'TEL;TYPE=CELL:' + p.phone,
+    'NOTE:2026 IPWEA-QNT Annual Conference Delegate',
+    'URL:https://www.ipwea.org',
+    'END:VCARD'
+  ].join('\r\n');
+}
+
+function toggleEditProfile() {
+  var drawer = document.getElementById('edit-profile-drawer');
+  var isOpen = drawer.classList.contains('open');
+  if (!isOpen) {
+    // Populate form with current values
+    document.getElementById('input-name').value = appState.profile.name;
+    document.getElementById('input-title').value = appState.profile.title;
+    document.getElementById('input-org').value = appState.profile.org;
+    document.getElementById('input-email').value = appState.profile.email;
+    document.getElementById('input-phone').value = appState.profile.phone;
+    document.getElementById('input-tier').value = appState.profile.tier;
+    drawer.classList.add('open');
+    drawer.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    drawer.classList.remove('open');
+  }
+}
+
+function saveProfileChanges() {
+  appState.profile.name = document.getElementById('input-name').value.trim() || 'Sabrina Dragani';
+  appState.profile.title = document.getElementById('input-title').value.trim() || 'Delegate';
+  appState.profile.org = document.getElementById('input-org').value.trim() || 'IPWEA-QNT';
+  appState.profile.email = document.getElementById('input-email').value.trim() || 'sabrina.dragani@ipwea.org';
+  appState.profile.phone = document.getElementById('input-phone').value.trim() || '+61 400 123 456';
+  appState.profile.tier = document.getElementById('input-tier').value;
+
+  persistProfile();
+  renderBadgeAndQR();
+  document.getElementById('edit-profile-drawer').classList.remove('open');
+  showToast("Digital badge & QR updated!");
+}
+
+function downloadVCard() {
+  var vcardData = generateVCardString(appState.profile);
+  var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = (appState.profile.name.replace(/\s+/g, '_')) + '_IPWEA2026.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Contact card downloaded (.vcf)");
+}
+
+function testScanVCard() {
+  var vcardData = generateVCardString(appState.profile);
+  document.getElementById('vcard-preview-text').innerText = vcardData;
+  document.getElementById('vcard-modal').classList.add('open');
+}
+
+function closeVCardModal(event) {
+  if (event && event.target && !event.target.classList.contains('modal-overlay') && !event.target.classList.contains('modal-close-btn') && !event.target.classList.contains('btn-secondary')) {
+    return;
+  }
+  document.getElementById('vcard-modal').classList.remove('open');
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 9. VENUE FLOOR MAP & ROOM DIRECTORY
+ * -------------------------------------------------------------------------
+ */
+function switchFloor(floor) {
+  var isGround = floor === 'ground';
+  document.getElementById('map-layer-ground').style.display = isGround ? 'block' : 'none';
+  document.getElementById('map-layer-level1').style.display = isGround ? 'none' : 'block';
+
+  document.getElementById('btn-fl-ground').classList.toggle('active', isGround);
+  document.getElementById('btn-fl-level1').classList.toggle('active', !isGround);
+
+  if (isGround) {
+    selectRoom('Minyama Hall 1 & 2');
+  } else {
+    selectRoom('Breakout Room 1');
+  }
+}
+
+function selectRoom(roomKey) {
+  var space = venueSpaces[roomKey];
+  if (!space) return;
+
+  // Update active SVG highlight
+  document.querySelectorAll('.map-room').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  
+  var idMap = {
+    "Minyama Hall 1 & 2": "room-minyama",
+    "Wandiny Room": "room-wandiny",
+    "Foyer": "room-foyer",
+    "Arrivals Lounge": "room-arrivals",
+    "Breakout Room 1": "room-breakout1",
+    "Breakout Room 2": "room-breakout2",
+    "Breakout Room 3": "room-breakout3"
+  };
+  var targetEl = document.getElementById(idMap[roomKey]);
+  if (targetEl) targetEl.classList.add('active');
+
+  // Update room sheet
+  document.getElementById('selected-room-name').innerText = space.name + " (" + space.level + ")";
+  document.getElementById('selected-room-desc').innerText = space.desc;
+
+  // Find sessions scheduled in this room
+  var matchingSessions = conferenceProgram.filter(function(s) {
+    return s.room.toLowerCase().indexOf(roomKey.toLowerCase()) !== -1;
+  });
+
+  var listEl = document.getElementById('selected-room-sessions');
+  if (matchingSessions.length === 0) {
+    listEl.innerHTML = '<div style="font-size:10.5px; color:#9CA3AF; padding:4px 0;">No specific breakout sessions scheduled. Check general exhibition schedule.</div>';
+  } else {
+    var html = '';
+    matchingSessions.slice(0, 6).forEach(function(s) {
+      html += [
+        '<div class="room-session-item" onclick="openSessionDetails(' + s.id + ')" style="cursor:pointer;">',
+        '  <span style="font-weight:700; color:var(--dark-grey);">' + s.time + ' (Day ' + s.day + ')</span>: ',
+        '  <span>' + escapeHTML(s.title) + '</span>',
+        '</div>'
+      ].join('');
+    });
+    if (matchingSessions.length > 6) {
+      html += '<div style="font-size:10px; color:var(--ipwea-red); font-weight:700; margin-top:2px;">+ ' + (matchingSessions.length - 6) + ' more sessions scheduled in this space</div>';
+    }
+    listEl.innerHTML = html;
+  }
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 10. UTILITIES, WI-FI & COUNTDOWN TIMER
+ * -------------------------------------------------------------------------
+ */
+function openWifiModal() {
+  document.getElementById('wifi-modal').classList.add('open');
+}
+
+function closeWifiModal(event) {
+  if (event && event.target && !event.target.classList.contains('modal-overlay') && !event.target.classList.contains('modal-close-btn') && !event.target.classList.contains('btn-primary')) {
+    return;
+  }
+  document.getElementById('wifi-modal').classList.remove('open');
+}
+
+function copyWifiPassword() {
+  var pwd = "IPWEA2026";
+  navigator.clipboard.writeText(pwd).then(function() {
+    showToast("Wi-Fi password copied: " + pwd);
+  }).catch(function() {
+    showToast("Password: " + pwd);
+  });
+  closeWifiModal();
+}
+
+function showToast(msg) {
+  var toast = document.getElementById('toast-notice');
+  var msgEl = document.getElementById('toast-message');
+  if (toast && msgEl) {
+    msgEl.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2800);
+  }
+}
+
+function escapeHTML(str) {
+  if (!str) return '';
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+// Countdown to Day 1
+function initCountdown() {
+  var confDate = new Date('2026-09-30T08:30:00+10:00').getTime();
+  
+  function updateTimer() {
+    var now = new Date().getTime();
+    var diff = confDate - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').innerText = "00";
+      document.getElementById('cd-hours').innerText = "00";
+      document.getElementById('cd-mins').innerText = "00";
+      return;
+    }
+
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    var dEl = document.getElementById('cd-days');
+    var hEl = document.getElementById('cd-hours');
+    var mEl = document.getElementById('cd-mins');
+
+    if (dEl) dEl.innerText = (days < 10 ? '0' : '') + days;
+    if (hEl) hEl.innerText = (hours < 10 ? '0' : '') + hours;
+    if (mEl) mEl.innerText = (mins < 10 ? '0' : '') + mins;
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 60000);
+}
+
+
+/**
+ * -------------------------------------------------------------------------
+ * 11. INITIALIZATION ON LOAD
+ * -------------------------------------------------------------------------
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  loadSavedState();
+  updateSavedCounters();
+  initCountdown();
+  renderProgramList();
+  renderBadgeAndQR();
+});
+</script>
+</body>
+</html>
+
