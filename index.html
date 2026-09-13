@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4614,7 +4615,7 @@ function renderBadgeAndQR() {
   var initials = p.name.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
   document.getElementById('badge-display-avatar').innerText = initials || 'IP';
 
-  var vCard = generateVCardString(p);
+var vCard = generateVCardString(p);
 
   var qrContainer = document.getElementById('qrcode-container');
   if (qrContainer) {
@@ -4628,17 +4629,17 @@ function generateVCardString(p) {
   var firstName = nameParts[0] || '';
 
   return [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    'N:' + lastName + ';' + firstName + ';;;',
-    'FN:' + p.name,
-    'ORG:' + p.org,
-    'TITLE:' + p.title,
-    'EMAIL;TYPE=PREF,INTERNET:' + p.email,
-    'TEL;TYPE=CELL:' + p.phone,
-    'NOTE:2026 IPWEA-QNT Annual Conference Delegate',
-    'URL:https://www.ipwea.org',
-    'END:VCARD'
+  'BEGIN:VCARD',
+
+'VERSION:3.0',
+
+'FN:' + p.name,
+
+'TEL:' + p.phone,
+
+'EMAIL:' + p.email,
+
+'END:VCARD'
   ].join('\r\n');
 }
 
