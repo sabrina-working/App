@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -534,82 +535,6 @@
       line-height: 1.2;
       color: var(--dark-grey);
     }
-
-    /* ==========================================================================
-       DYNAMIC LIVE SCHEDULE TRACKER (WORKING & INTELLIGENT)
-       ========================================================================== */
-    .live-status-container {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      border: 1.5px solid var(--border-grey);
-      box-shadow: var(--shadow-md);
-      margin-bottom: 22px;
-      position: relative;
-    }
-
-    .live-status-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .live-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .live-badge.is-live {
-      background: #FEE2E2;
-      color: #991B1B;
-      border: 1px solid #FECACA;
-    }
-    .live-badge.is-upcoming {
-      background: #EFF6FF;
-      color: #1E40AF;
-      border: 1px solid #BFDBFE;
-    }
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
-      background: #EF4444;
-      border-radius: 50%;
-      animation: livePulse 1.2s infinite;
-    }
-    @keyframes livePulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(1.3); }
-    }
-
-    .live-time-label {
-      font-size: 12.5px;
-      font-weight: 800;
-      color: var(--ipwea-red);
-      margin-bottom: 4px;
-    }
-    .live-session-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--dark-grey);
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-    .live-meta-row {
-      font-size: 12.5px;
-      color: var(--mid-grey);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-
 
     /* Networking Highlights */
     .special-card {
@@ -1479,66 +1404,6 @@
       background: transparent;
     }
 
-    .exhibitor-filter-row {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding-bottom: 4px;
-      margin-bottom: 14px;
-    }
-    .exhibitor-filter-row::-webkit-scrollbar { display: none; }
-    .exhibitor-pill {
-      white-space: nowrap;
-      padding: 6px 13px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      background: var(--white);
-      border: 1.5px solid var(--border-grey);
-      color: var(--mid-grey);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .exhibitor-pill.active {
-      background: var(--ipwea-red);
-      border-color: var(--ipwea-red);
-      color: var(--white);
-    }
-
-    .sponsor-tier-card {
-      background: linear-gradient(135deg, var(--dark-grey) 0%, #29303D 100%);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      margin-bottom: 10px;
-      border-left: 5px solid var(--ipwea-red);
-      box-shadow: var(--shadow-sm);
-    }
-    .sponsor-tier-tag {
-      font-size: 10.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-      color: #FCA5A5;
-      margin-bottom: 4px;
-    }
-    .sponsor-tier-name {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--white);
-      margin-bottom: 2px;
-    }
-    .sponsor-tier-link {
-      font-size: 12px;
-      color: #94A3B8;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 6px;
-    }
-    .sponsor-tier-link:active { color: #CBD5E1; }
-
     .exhibitor-list {
       display: flex;
       flex-direction: column;
@@ -1649,6 +1514,106 @@
       line-height: 1.45;
     }
     .floorplan-placeholder-msg strong { color: #9CA3AF; }
+    /* ==========================================================================
+       EXHIBITORS GRID (2-COLUMN, IMAGE + BOOTH NUMBER)
+       ========================================================================== */
+    .exhibitor-section-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: var(--dark-grey);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0 4px 0;
+    }
+    .exhibitor-section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4.5px;
+      height: 15px;
+      background: var(--ipwea-red);
+      border-radius: 3px;
+    }
+    .exhibitor-section-sub {
+      font-size: 12px;
+      color: var(--mid-grey);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .exhibitor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .exhibitor-grid-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1.5px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      text-decoration: none;
+    }
+    .exhibitor-grid-card:active {
+      transform: scale(0.97);
+      border-color: var(--ipwea-red);
+    }
+    .exhibitor-grid-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--page-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1.5px solid var(--border-grey);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .exhibitor-grid-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .exhibitor-grid-img svg {
+      width: 30px;
+      height: 30px;
+      stroke: #CBD5E1;
+    }
+    .exhibitor-grid-info {
+      padding: 9px 8px 11px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .exhibitor-grid-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      line-height: 1.3;
+      min-height: 31px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .exhibitor-grid-booth {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--white);
+      background: var(--ipwea-red);
+      padding: 3px 11px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
   </style>
 
 </head>
@@ -1781,31 +1746,6 @@
           </div>
           <span class="shortcut-title">Exhibitors</span>
         </div>
-      </div>
-
-      <!-- DYNAMIC LIVE CONFERENCE TRACKER -->
-      <div class="section-head">
-        <h2>Conference Schedule Status</h2>
-        <span class="section-link" onclick="switchTab('program')">Full Program &rarr;</span>
-      </div>
-
-      <div class="live-status-container" id="live-card-container">
-        <div class="live-status-header">
-          <div class="live-badge" id="live-status-badge">
-            <span class="pulse-dot" id="live-pulse"></span>
-            <span id="live-status-badge-text">STATUS</span>
-          </div>
-          <span style="font-size:11.5px; font-weight:700; color:var(--mid-grey);" id="live-clock-text">Real Clock</span>
-        </div>
-
-        <div class="live-time-label" id="live-session-time">Time info</div>
-        <div class="live-session-title" id="live-session-title">Session title</div>
-        
-        <div class="live-meta-row" id="live-session-meta">
-          <span id="live-session-room">📍 Room</span>
-          <span id="live-session-speaker" style="color:var(--dark-grey); font-weight:700;">Speaker</span>
-        </div>
-
       </div>
 
       <!-- HIGHLIGHT NETWORKING FUNCTIONS -->
@@ -2087,20 +2027,14 @@
 
 
     <!-- ============================================== -->
-    <!-- 5. EXHIBITORS & SPONSORS VIEW                  -->
+    <!-- 5. EXHIBITORS VIEW                              -->
     <!-- ============================================== -->
     <section id="view-exhibitors" class="app-view">
 
       <!-- SEARCH -->
       <div class="exhibitor-search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="exhibitor-search" placeholder="Search exhibitors &amp; sponsors..." oninput="renderExhibitors()" />
-      </div>
-
-      <div class="exhibitor-filter-row" id="exhibitor-filter-row">
-        <button class="exhibitor-pill active" onclick="setExhibitorFilter('all')">All</button>
-        <button class="exhibitor-pill" onclick="setExhibitorFilter('sponsors')">Major Sponsors</button>
-        <button class="exhibitor-pill" onclick="setExhibitorFilter('exhibitors')">Exhibitors</button>
+        <input type="text" id="exhibitor-search" placeholder="Search exhibitors..." oninput="renderExhibitors()" />
       </div>
 
       <div id="exhibitors-content">
@@ -4046,6 +3980,51 @@ var venueSpaces = {
   }
 };
 
+/**
+ * -------------------------------------------------------------------------
+ * 3B. EXHIBITORS DIRECTORY
+ * -------------------------------------------------------------------------
+ */
+var exhibitorsData = [
+  { name: "12D Synergy", booth: "51", logo: "img/sponsors/synergy-logo-full.png" },
+  { name: "Australasian Certification Authority for Reinforcing and Structural Steels (ACRS)", booth: "13", logo: "img/sponsors/ACRS%20LOGO_trusted%20steel.png" },
+  { name: "Amey", booth: "31", logo: "img/sponsors/Amey%20logo%20RGB_master%202.png" },
+  { name: "Asset Vision", booth: "14", logo: "img/sponsors/Asset%20Vision.png" },
+  { name: "Abdri Masonry", booth: "12", logo: "img/sponsors/AdbriMasonry-L-Endorsement%20(5).png" },
+  { name: "Atlan Stormwater", booth: "26", logo: "img/sponsors/Atlan-Stormwater-Logo-RGBBlue.png" },
+  { name: "Australian Concrete Mats", booth: "5", logo: "img/sponsors/Australian%20Concrete-Mats-Logo-Socials.jpg" },
+  { name: "BASEC Engineering", booth: "26", logo: "img/sponsors/basec%20engineering.png" },
+  { name: "Board of Professional Engineers of Queensland", booth: "21", logo: "img/sponsors/BPEQ%20-%20Full%20Colour%20Positive%20Horizontal.png" },
+  { name: "COLAS", booth: "44 + 45", logo: "img/sponsors/Colas_logo_baseline.jpg" },
+  { name: "Re-Poly by Danbar", booth: "47", logo: "img/sponsors/Re-poly%20with%20Danbar%20white.png" },
+  { name: "DCPM", booth: "50" },
+  { name: "ESP Australia", booth: "48", logo: "img/sponsors/ESP_logo.jpg" },
+  { name: "Fulton Hogan", booth: "18 + 19", logo: "img/sponsors/Fulton%20Hogan%20Horizontal%20Keyline%20Orange%20RGB.png" },
+  { name: "Global Synthetics", booth: "25", logo: "img/sponsors/Global%20Synthetics.jpg" },
+  { name: "GeoHex", booth: "TBC", logo: "img/sponsors/Geohex%20Logo%20-%20RGB.PNG" },
+  { name: "Holloway Group", booth: "23" },
+  { name: "Humes", booth: "8", logo: "img/sponsors/HOLCIM_ENDORSED_HUMES_Logo_2025_Premium_Blue_sRGB%20(1).jpg" },
+  { name: "INGAL Civil Products", booth: "36", logo: "img/sponsors/Ingal%20Logo%202024%20-%20Transparent.png" },
+  { name: "Joe Wagner Group", booth: "4", logo: "img/sponsors/Joe%20Wagner.jpg" },
+  { name: "LocalBuy", booth: "11", logo: "img/sponsors/Local%20Buy.png" },
+  { name: "Mcberns", booth: "3", logo: "img/sponsors/Mcberns.jpg" },
+  { name: "McCullough Robertson", booth: "49", logo: "img/sponsors/MCR%20100%20LOGO_RGB%20BLACK.png" },
+  { name: "NorthLane Consulting Engineers", booth: "37" },
+  { name: "Pipe Management Australia", booth: "34", logo: "img/sponsors/pma-relining-primary.png" },
+  { name: "ProjexPartners", booth: "39", logo: "img/sponsors/ProjexPartner_TagRGB.jpg" },
+  { name: "Proterra Group", booth: "32 + 33", logo: "img/sponsors/Proterra%20Group%20Logo%20(1).jpg" },
+  { name: "Puma Bitumen", booth: "28 + 29", logo: "img/sponsors/PUMA_Logo_Bitumen.jpg" },
+  { name: "ReoGrip", booth: "10", logo: "img/sponsors/ReoGrip.jpg" },
+  { name: "RCPA", booth: "30", logo: "img/sponsors/RCPA%20LOGO.PNG" },
+  { name: "Saferoads", booth: "15", logo: "img/sponsors/Saferoads_HRLogo.jpg" },
+  { name: "SHEPHERD", booth: "22", logo: "img/sponsors/J024025%20Shepherd%20DD%20Logo%20Master_Primary.jpg" },
+  { name: "SIEMENS", booth: "38", logo: "img/sponsors/sie-logo-petrol-rgb.png" },
+  { name: "Stabilised Pavements of Australia", booth: "46", logo: "img/sponsors/SPA%20Logo-strap%20line%20main%20use.jpg" },
+  { name: "SuperSealing", booth: "1 + 2", logo: "img/sponsors/SuperSealing_Logo_Outlined.png" },
+  { name: "Transoft Solutions", booth: "6", logo: "img/sponsors/Transoft%20Solutions.png" },
+  { name: "Vaisala Xweather", booth: "17", logo: "img/sponsors/Vaisala_Xweather_Logo_Thunder_Blue_CMYK.png" },
+  { name: "Wagners", booth: "TBC", website: "https://www.wagner.com.au/", logo: "img/sponsors/Wagners%20Logo.jpg" }
+];
 
 /**
  * -------------------------------------------------------------------------
@@ -4060,7 +4039,6 @@ var appState = {
   savedOnly: false,
   savedSessionIds: [],
   activeModalSessionId: null,
-  exhibitorFilter: 'all',
   profile: {
     name: "Conference Delegate",
     title: "Your Job Title",
@@ -4150,8 +4128,14 @@ function switchTab(tabId) {
   appState.currentTab = tabId;
   persistNavState();
   
-  if (window.history && window.history.replaceState) {
-    window.history.replaceState(null, null, '#' + tabId);
+  try {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, null, '#' + tabId);
+    }
+  } catch (e) {
+    // Silently ignore - some sandboxed preview environments (e.g. iframe
+    // previews with a null document origin) block history.replaceState.
+    // This never affects the app when hosted normally (e.g. GitHub Pages).
   }
 
   document.querySelectorAll('.app-view').forEach(function(view) {
@@ -4175,8 +4159,8 @@ function switchTab(tabId) {
     renderProgramList();
   } else if (tabId === 'venue') {
     selectRoom('Minyama Hall 1 & 2');
-  } else if (tabId === 'home') {
-    updateLiveScheduleCard();
+  } else if (tabId === 'exhibitors') {
+    renderExhibitors();
   }
 }
 
@@ -4205,160 +4189,6 @@ function viewDay3Tours() {
   showToast("Viewing Day 3 Technical Tours");
 }
 
-
-/**
- * -------------------------------------------------------------------------
- * 6. DYNAMIC LIVE SCHEDULE TRACKER
- * Accurately determines if anything is happening right now, or lets user
- * test/simulate different conference moments.
- * -------------------------------------------------------------------------
- */
-function updateLiveScheduleCard() {
-  var now = new Date();
-  var sim = appState.simMode;
-  
-  var statusBadge = document.getElementById('live-status-badge');
-  var badgeText = document.getElementById('live-status-badge-text');
-  var pulseDot = document.getElementById('live-pulse');
-  var timeLabel = document.getElementById('live-session-time');
-  var titleEl = document.getElementById('live-session-title');
-  var roomEl = document.getElementById('live-session-room');
-  var speakerEl = document.getElementById('live-session-speaker');
-  var clockText = document.getElementById('live-clock-text');
-
-  var activeSession = null;
-  var nextSession = null;
-  var isLiveNow = false;
-
-  // Evaluate time depending on Simulation Mode or Real Clock
-  if (sim === 'd1_opening') {
-    // 30 Sep 2026, 9:15 AM
-    clockText.innerText = "Simulated: Day 1 (9:15 AM)";
-    activeSession = conferenceProgram.find(function(s) { return s.id === 105; }); // Official Opening
-    nextSession = conferenceProgram.find(function(s) { return s.id === 107; });
-    isLiveNow = true;
-  } else if (sim === 'd1_breakout') {
-    // 30 Sep 2026, 1:45 PM
-    clockText.innerText = "Simulated: Day 1 (1:45 PM)";
-    activeSession = conferenceProgram.find(function(s) { return s.id === 114; }); // 3D Pavement Data
-    nextSession = conferenceProgram.find(function(s) { return s.id === 116; });
-    isLiveNow = true;
-  } else if (sim === 'd2_plenary') {
-    // 1 Oct 2026, 8:40 AM
-    clockText.innerText = "Simulated: Day 2 (8:40 AM)";
-    activeSession = conferenceProgram.find(function(s) { return s.id === 204; }); // Dept of Local Gov
-    nextSession = conferenceProgram.find(function(s) { return s.id === 205; });
-    isLiveNow = true;
-  } else if (sim === 'd2_gala') {
-    // 1 Oct 2026, 7:00 PM
-    clockText.innerText = "Simulated: Day 2 (7:00 PM)";
-    activeSession = conferenceProgram.find(function(s) { return s.id === 235; }); // Gala Dinner
-    isLiveNow = true;
-  } else if (sim === 'd3_tours') {
-    // 2 Oct 2026, 1:15 PM
-    clockText.innerText = "Simulated: Day 3 (1:15 PM)";
-    activeSession = conferenceProgram.find(function(s) { return s.id === 309; }); // Tech Tour 1
-    nextSession = conferenceProgram.find(function(s) { return s.id === 312; });
-    isLiveNow = true;
-  } else {
-    // REAL CLOCK MODE
-    var y = now.getFullYear();
-    var m = String(now.getMonth() + 1).padStart(2, '0');
-    var d = String(now.getDate()).padStart(2, '0');
-    var todayStr = y + '-' + m + '-' + d;
-    var currentMins = now.getHours() * 60 + now.getMinutes();
-
-    clockText.innerText = "Real Clock: " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    // Check if today matches any conference day
-    var todaysSessions = conferenceProgram.filter(function(s) { return s.dateStr === todayStr; });
-
-    if (todaysSessions.length > 0) {
-      // Find session where currentMins falls inside [startMin, endMin]
-      activeSession = todaysSessions.find(function(s) {
-        return currentMins >= s.startMin && currentMins < s.endMin;
-      });
-
-      if (activeSession) {
-        isLiveNow = true;
-      } else {
-        // Find next upcoming session today
-        nextSession = todaysSessions.find(function(s) { return s.startMin > currentMins; });
-      }
-    }
-  }
-
-  // Render UI according to status
-  if (isLiveNow && activeSession) {
-    statusBadge.className = "live-badge is-live";
-    badgeText.innerText = "HAPPENING NOW";
-    pulseDot.style.display = "inline-block";
-    timeLabel.innerText = activeSession.time + " • Day " + activeSession.day;
-    titleEl.innerText = activeSession.title;
-    roomEl.innerText = "📍 " + activeSession.room;
-    speakerEl.innerText = activeSession.speakers;
-
-    var container = document.getElementById('live-card-container');
-    container.onclick = function(e) {
-      if (e.target.closest('.simulation-drawer')) return;
-      openSessionDetails(activeSession.id);
-    };
-  } else if (nextSession) {
-    statusBadge.className = "live-badge is-upcoming";
-    badgeText.innerText = "UP NEXT TODAY";
-    pulseDot.style.display = "none";
-    timeLabel.innerText = nextSession.time + " • Day " + nextSession.day;
-    titleEl.innerText = nextSession.title;
-    roomEl.innerText = "📍 " + nextSession.room;
-    speakerEl.innerText = nextSession.speakers;
-
-    var container = document.getElementById('live-card-container');
-    container.onclick = function(e) {
-      if (e.target.closest('.simulation-drawer')) return;
-      openSessionDetails(nextSession.id);
-    };
-  } else {
-    // Outside conference days or before event starts
-    statusBadge.className = "live-badge is-upcoming";
-    badgeText.innerText = "UPCOMING EVENT";
-    pulseDot.style.display = "none";
-    timeLabel.innerText = "Wednesday 30 September 2026 • 8:30 AM Opening";
-    titleEl.innerText = "Opening Address & Public Works Exhibition";
-    roomEl.innerText = "📍 Sunshine Coast Convention Centre";
-    speakerEl.innerText = "MC Richard Champion & Mayor Rosanna Natoli";
-
-    var container = document.getElementById('live-card-container');
-    container.onclick = function(e) {
-      if (e.target.closest('.simulation-drawer')) return;
-      openSessionDetails(101);
-    };
-  }
-}
-
-function setSimMode(mode) {
-  appState.simMode = mode;
-  document.querySelectorAll('.sim-btn').forEach(function(b) {
-    b.classList.remove('active');
-  });
-  
-  var idMap = {
-    'auto': 'sim-btn-auto',
-    'd1_opening': 'sim-btn-d1am',
-    'd1_breakout': 'sim-btn-d1pm',
-    'd2_plenary': 'sim-btn-d2plen',
-    'd2_gala': 'sim-btn-d2gala',
-    'd3_tours': 'sim-btn-d3tours'
-  };
-  var targetBtn = document.getElementById(idMap[mode]);
-  if (targetBtn) targetBtn.classList.add('active');
-
-  updateLiveScheduleCard();
-  if (mode !== 'auto') {
-    showToast("Live simulation updated: " + mode.replace('_', ' ').toUpperCase());
-  } else {
-    showToast("Switched back to real-time clock");
-  }
-}
 
 
 /**
@@ -4592,11 +4422,17 @@ function saveCurrentSessionNote() {
  * -------------------------------------------------------------------------
  */
 function handleProfileInput() {
-  appState.profile.name = document.getElementById('input-name').value.trim() || 'Sabrina Dragani';
-  appState.profile.title = document.getElementById('input-title').value.trim() || 'Public Works Lead';
-  appState.profile.org = document.getElementById('input-org').value.trim() || 'IPWEA-QNT';
-  appState.profile.email = document.getElementById('input-email').value.trim() || 'sabrina.dragani@ipwea.org';
-  appState.profile.phone = document.getElementById('input-phone').value.trim() || '+61 400 123 456';
+  // IMPORTANT: Save exactly what the user has typed (including temporarily
+  // blank fields while they're mid-edit). Never force a hardcoded fallback
+  // here - doing so would overwrite the real saved value the instant a field
+  // is cleared, permanently wiping the user's details before they finish
+  // retyping. Fallback/placeholder text is applied only at display time in
+  // renderBadgeAndQR(), never written back to storage.
+  appState.profile.name = document.getElementById('input-name').value.trim();
+  appState.profile.title = document.getElementById('input-title').value.trim();
+  appState.profile.org = document.getElementById('input-org').value.trim();
+  appState.profile.email = document.getElementById('input-email').value.trim();
+  appState.profile.phone = document.getElementById('input-phone').value.trim();
   appState.profile.tier = document.getElementById('input-tier').value;
 
   persistProfile();
@@ -4606,13 +4442,16 @@ function handleProfileInput() {
 function renderBadgeAndQR() {
   var p = appState.profile;
 
-  document.getElementById('badge-display-name').innerText = p.name;
-  document.getElementById('badge-display-title').innerText = p.title;
-  document.getElementById('badge-display-org').innerText = p.org;
+  // Display-only fallbacks: shown on the badge/QR if a field is genuinely
+  // empty, but never saved over the real stored value.
+  document.getElementById('badge-display-name').innerText = p.name || 'Conference Delegate';
+  document.getElementById('badge-display-title').innerText = p.title || 'Your Job Title';
+  document.getElementById('badge-display-org').innerText = p.org || 'Your Council / Organisation';
   document.getElementById('badge-display-tier').innerText = p.tier;
   document.getElementById('badge-display-id').innerText = "ID: " + p.badgeId;
 
-  var initials = p.name.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+  var nameForInitials = p.name || 'Conference Delegate';
+  var initials = nameForInitials.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
   document.getElementById('badge-display-avatar').innerText = initials || 'IP';
 
 var vCard = generateVCardString(p);
@@ -4624,8 +4463,9 @@ var vCard = generateVCardString(p);
 }
 
 function generateVCardString(p) {
-  var nameParts = p.name.split(' ');
-  var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : p.name;
+  var safeName = p.name || 'Conference Delegate';
+  var nameParts = safeName.split(' ');
+  var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
 
   return [
@@ -4633,7 +4473,7 @@ function generateVCardString(p) {
 
 'VERSION:3.0',
 
-'FN:' + p.name,
+'FN:' + safeName,
 
 'TEL:' + p.phone,
 
@@ -4749,6 +4589,53 @@ function selectRoom(roomKey) {
   }
 }
 
+/**
+ * -------------------------------------------------------------------------
+ * 10B. EXHIBITORS RENDERING
+ * -------------------------------------------------------------------------
+ */
+function renderExhibitors() {
+  var container = document.getElementById('exhibitors-content');
+  if (!container) return;
+  var searchInput = document.getElementById('exhibitor-search');
+  var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  var filteredExhibitors = exhibitorsData.filter(function(ex) {
+    if (!query) return true;
+    return ex.name.toLowerCase().indexOf(query) !== -1 || ('booth ' + ex.booth).toLowerCase().indexOf(query) !== -1;
+  });
+  var html = '';
+  if (filteredExhibitors.length > 0) {
+    html += '<div class="exhibitor-section-title">Exhibitors</div>';
+    html += '<div class="exhibitor-section-sub">Visit our exhibitors on the trade floor in the Wandiny Room.</div>';
+    html += '<div class="exhibitor-grid">';
+    filteredExhibitors.forEach(function(ex) {
+      var tag = ex.website ? 'a' : 'div';
+      var linkAttrs = ex.website ? ' href="' + ex.website + '" target="_blank" rel="noopener noreferrer"' : '';
+      var logoSrc = ex.logo || 'img/exhibitors/placeholder.png';
+      html += [
+        '<' + tag + ' class="exhibitor-grid-card"' + linkAttrs + '>',
+        '  <div class="exhibitor-grid-img">',
+        '    <img src="' + logoSrc + '" alt="' + escapeHTML(ex.name) + ' logo" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';" />',
+        '    <svg style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+        '  </div>',
+        '  <div class="exhibitor-grid-info">',
+        '    <div class="exhibitor-grid-name">' + escapeHTML(ex.name) + '</div>',
+        '    <div class="exhibitor-grid-booth">Booth ' + escapeHTML(ex.booth) + '</div>',
+        '  </div>',
+        '</' + tag + '>'
+      ].join('');
+    });
+    html += '</div>';
+  } else {
+    html = [
+      '<div class="exhibitor-empty">',
+      '  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+      '  <p>No matching exhibitors found.</p>',
+      '</div>'
+    ].join('');
+  }
+  container.innerHTML = html;
+}
 
 /**
  * -------------------------------------------------------------------------
@@ -4825,14 +4712,6 @@ document.addEventListener('DOMContentLoaded', function() {
   selectDay(appState.currentDay);
   switchTab(appState.currentTab);
   updateSavedCounters();
-  updateLiveScheduleCard();
-
-  // Periodic check for real clock schedule tracker
-  setInterval(function() {
-    if (appState.simMode === 'auto') {
-      updateLiveScheduleCard();
-    }
-  }, 30000);
 });
 </script>
 </body>
