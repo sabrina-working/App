@@ -1992,8 +1992,7 @@
             </div>
           </div>
 
-          <div class="badge-footer">
-            <span id="badge-display-id">ID: IPW-2026-8942</span>
+          <div class="badge-footer" style="justify-content:center;">
             <span>30 SEP – 02 OCT 2026</span>
           </div>
         </div>
@@ -4122,8 +4121,7 @@ var appState = {
     title: "Your Job Title",
     org: "Your Council / Organisation",
     email: "delegate@example.com",
-    phone: "+61 400 000 000",
-    badgeId: "IPW-2026-" + (Math.floor(Math.random() * 9000) + 1000)
+    phone: "+61 400 000 000"
   },
   sessionNotes: {},
   scannedContacts: []
@@ -4541,7 +4539,6 @@ function renderBadgeAndQR() {
   document.getElementById('badge-display-name').innerText = p.name || 'Conference Delegate';
   document.getElementById('badge-display-title').innerText = p.title || 'Your Job Title';
   document.getElementById('badge-display-org').innerText = p.org || 'Your Council / Organisation';
-  document.getElementById('badge-display-id').innerText = "ID: " + p.badgeId;
 
   var nameForInitials = p.name || 'Conference Delegate';
   var initials = nameForInitials.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
