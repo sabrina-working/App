@@ -881,19 +881,6 @@
       opacity: 0.85;
       margin-top: 2px;
     }
-    .badge-type-pill {
-      display: inline-block;
-      margin-top: 8px;
-      background: var(--dark-grey);
-      color: var(--white);
-      font-size: 10.5px;
-      font-weight: 900;
-      padding: 3px 12px;
-      border-radius: 14px;
-      letter-spacing: 0.8px;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
     .badge-body {
       padding: 20px 16px 16px 16px;
       display: flex;
@@ -1987,7 +1974,6 @@
           <div class="badge-header">
             <div class="badge-conference-title">IPWEA-QNT 2026 Annual Conference</div>
             <div class="badge-conference-sub">Sunshine Coast Convention Centre</div>
-            <div class="badge-type-pill" id="badge-display-tier">FULL DELEGATE</div>
           </div>
 
           <div class="badge-body">
@@ -2057,17 +2043,6 @@
           <div class="form-group">
             <label>Mobile Number</label>
             <input type="tel" id="input-phone" oninput="handleProfileInput()" placeholder="e.g. +61 400 123 456" />
-          </div>
-
-          <div class="form-group">
-            <label>Delegate Pass Category</label>
-            <select id="input-tier" onchange="handleProfileInput()">
-              <option value="FULL DELEGATE">Full Delegate</option>
-              <option value="KEYNOTE SPEAKER">Keynote Speaker</option>
-              <option value="PRESENTER">Presenter</option>
-              <option value="IPWEA COMMITTEE">IPWEA Committee</option>
-              <option value="EXHIBITOR">Exhibitor / Sponsor</option>
-            </select>
           </div>
 
           <button class="btn-primary" style="margin-top:12px;" onclick="toggleEditProfile(); showToast('Profile details saved & QR updated!');">
@@ -4148,7 +4123,6 @@ var appState = {
     org: "Your Council / Organisation",
     email: "delegate@example.com",
     phone: "+61 400 000 000",
-    tier: "FULL DELEGATE",
     badgeId: "IPW-2026-" + (Math.floor(Math.random() * 9000) + 1000)
   },
   sessionNotes: {},
@@ -4200,7 +4174,6 @@ function loadAllPersistedData() {
     document.getElementById('input-org').value = appState.profile.org;
     document.getElementById('input-email').value = appState.profile.email;
     document.getElementById('input-phone').value = appState.profile.phone;
-    document.getElementById('input-tier').value = appState.profile.tier;
 
   } catch (e) {
     console.warn("Storage loading warning:", e);
@@ -4555,7 +4528,6 @@ function handleProfileInput() {
   appState.profile.org = document.getElementById('input-org').value.trim();
   appState.profile.email = document.getElementById('input-email').value.trim();
   appState.profile.phone = document.getElementById('input-phone').value.trim();
-  appState.profile.tier = document.getElementById('input-tier').value;
 
   persistProfile();
   renderBadgeAndQR();
@@ -4569,7 +4541,6 @@ function renderBadgeAndQR() {
   document.getElementById('badge-display-name').innerText = p.name || 'Conference Delegate';
   document.getElementById('badge-display-title').innerText = p.title || 'Your Job Title';
   document.getElementById('badge-display-org').innerText = p.org || 'Your Council / Organisation';
-  document.getElementById('badge-display-tier').innerText = p.tier;
   document.getElementById('badge-display-id').innerText = "ID: " + p.badgeId;
 
   var nameForInitials = p.name || 'Conference Delegate';
@@ -4590,9 +4561,12 @@ function generateVCardString(p) {
   var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
 
+  // Kept deliberately minimal (name, phone, email only). Extra fields like
+  // job title and organisation significantly increase the QR code's data
+  // density/version, making it noticeably harder for phone cameras to
+  // scan reliably - especially in venue lighting. If you want richer
+  // contact info exchanged, it's better added manually after scanning.
   var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
-  if (p.title) lines.push('TITLE:' + p.title);
-  if (p.org) lines.push('ORG:' + p.org);
   if (p.phone) lines.push('TEL:' + p.phone);
   if (p.email) lines.push('EMAIL:' + p.email);
   lines.push('END:VCARD');
