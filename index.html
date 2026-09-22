@@ -16,7 +16,10 @@
   <meta name="theme-color" content="#1E2228" />
 
   <!-- EMBEDDED WEB APP MANIFEST FOR GITHUB PAGES / HOMESCREEN (ZERO EXTRA FILES NEEDED) -->
-  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22IPWEA-QNT%202026%20Annual%20Conference%22%2C%22short_name%22%3A%22IPWEA%202026%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231E2228%22%2C%22theme_color%22%3A%22%239E1B32%22%2C%22description%22%3A%22IPWEA-QNT%202026%20Annual%20Conference%20App%22%7D" />
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22IPWEA-QNT%202026%20Annual%20Conference%22%2C%22short_name%22%3A%22IPWEA%202026%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231E2228%22%2C%22theme_color%22%3A%22%239E1B32%22%2C%22description%22%3A%22IPWEA-QNT%202026%20Annual%20Conference%20App%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22img/icon-192.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image/png%22%7D%2C%7B%22src%22%3A%22img/icon-512.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image/png%22%7D%5D%7D" />
+  <!-- Home Screen icon for iOS Safari (Android/Chrome uses the manifest icons above) -->
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  <link rel="icon" href="img/icon-192.png" />
 
   <!-- GOOGLE FONTS (WITH SYSTEM FALLBACKS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2265,7 +2268,7 @@
 </div>
 
 <!-- QR BADGE SCANNER MODAL -->
-<div class="modal-overlay" id="scanner-modal">
+<div class="modal-overlay" id="scanner-modal" onclick="closeScannerModal(event)">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="sheet-handle"></div>
     <div class="modal-header">
@@ -4272,8 +4275,6 @@ function switchTab(tabId) {
     renderScannedContacts();
   } else if (tabId === 'program') {
     renderProgramList();
-  } else if (tabId === 'venue') {
-    selectRoom('Minyama Hall 1 & 2');
   } else if (tabId === 'exhibitors') {
     renderExhibitors();
   }
@@ -4873,74 +4874,15 @@ function downloadScannedContact(index) {
 /**
  * -------------------------------------------------------------------------
  * 10. VENUE FLOOR MAP
+ * NOTE: An earlier interactive SVG floor-map UI (room-by-room selector) was
+ * replaced by the static floor plan image now shown on the Venue tab, but
+ * the JS that powered it (switchFloor/selectRoom) was left behind and was
+ * being called on every Venue tab visit, throwing a runtime error because
+ * it targeted DOM elements that no longer exist. Removed as dead code.
+ * The "venueSpaces" data object above is kept as reference data in case
+ * a future update wants to reintroduce room-specific session lookups.
  * -------------------------------------------------------------------------
  */
-function switchFloor(floor) {
-  var isGround = floor === 'ground';
-  document.getElementById('map-layer-ground').style.display = isGround ? 'block' : 'none';
-  document.getElementById('map-layer-level1').style.display = isGround ? 'none' : 'block';
-
-  document.getElementById('btn-fl-ground').classList.toggle('active', isGround);
-  document.getElementById('btn-fl-level1').classList.toggle('active', !isGround);
-
-  if (isGround) {
-    selectRoom('Minyama Hall 1 & 2');
-  } else {
-    selectRoom('Breakout Room 1');
-  }
-}
-
-function selectRoom(roomKey) {
-  var space = venueSpaces[roomKey];
-  if (!space) return;
-
-  document.querySelectorAll('.map-room').forEach(function(el) {
-    el.classList.remove('active');
-  });
-  
-  var idMap = {
-    "Minyama Hall 1 & 2": "room-minyama",
-    "Wandiny Room": "room-wandiny",
-    "Foyer": "room-foyer",
-    "Arrivals Lounge": "room-arrivals",
-    "Breakout Room 1": "room-breakout1",
-    "Breakout Room 2": "room-breakout2",
-    "Breakout Room 3": "room-breakout3"
-  };
-  var targetEl = document.getElementById(idMap[roomKey]);
-  if (targetEl) targetEl.classList.add('active');
-
-  document.getElementById('selected-room-name').innerText = space.name + " (" + space.level + ")";
-  document.getElementById('selected-room-desc').innerText = space.desc;
-
-  // Note: "Plenary Room" is Minyama Hall 1 & 2 repurposed for Day 1
-  // breakout streams, so clicking Minyama Hall also surfaces those sessions.
-  var matchingSessions = conferenceProgram.filter(function(s) {
-    var roomLower = s.room.toLowerCase();
-    if (roomLower.indexOf(roomKey.toLowerCase()) !== -1) return true;
-    if (roomKey === "Minyama Hall 1 & 2" && roomLower === "plenary room") return true;
-    return false;
-  });
-
-  var listEl = document.getElementById('selected-room-sessions');
-  if (matchingSessions.length === 0) {
-    listEl.innerHTML = '<div style="font-size:11.5px; color:#9CA3AF; padding:4px 0;">No specific breakout sessions scheduled. Check general exhibition schedule.</div>';
-  } else {
-    var html = '';
-    matchingSessions.slice(0, 6).forEach(function(s) {
-      html += [
-        '<div class="room-session-item" onclick="openSessionDetails(' + s.id + ')" style="cursor:pointer;">',
-        '  <span style="font-weight:800; color:var(--dark-grey);">' + s.time + ' (Day ' + s.day + ')</span>: ',
-        '  <span>' + escapeHTML(s.title) + '</span>',
-        '</div>'
-      ].join('');
-    });
-    if (matchingSessions.length > 6) {
-      html += '<div style="font-size:11px; color:var(--ipwea-red); font-weight:800; margin-top:2px;">+ ' + (matchingSessions.length - 6) + ' more sessions scheduled in this space</div>';
-    }
-    listEl.innerHTML = html;
-  }
-}
 
 /**
  * -------------------------------------------------------------------------
