@@ -1087,6 +1087,170 @@
     }
 
     /* ==========================================================================
+       QR BADGE SCANNER MODAL
+       ========================================================================== */
+    .scanner-video-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #000;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .scanner-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .scanner-frame {
+      position: absolute;
+      top: 14%;
+      left: 14%;
+      right: 14%;
+      bottom: 14%;
+      border: 3px solid rgba(255,255,255,0.85);
+      border-radius: 16px;
+      box-shadow: 0 0 0 999px rgba(0,0,0,0.35);
+      pointer-events: none;
+    }
+    .scanner-status {
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--mid-grey);
+      margin-top: 10px;
+      min-height: 16px;
+    }
+    .scanner-status.error {
+      color: var(--ipwea-red);
+    }
+    .scanner-status.success {
+      color: #15803D;
+    }
+
+    /* ==========================================================================
+       SCANNED CONTACTS HISTORY (BELOW BADGE)
+       ========================================================================== */
+    .scanned-contacts-section {
+      width: 100%;
+      margin-top: 6px;
+    }
+    .scanned-contacts-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .scanned-contacts-header h3 {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--dark-grey);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .scanned-contacts-header h3 span {
+      color: var(--ipwea-red);
+      font-weight: 800;
+    }
+    .scanned-clear-link {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ipwea-red);
+      cursor: pointer;
+      display: none;
+    }
+    .scanned-clear-link.visible {
+      display: inline-block;
+    }
+    .scanned-contact-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 13px 14px;
+      border: 1.5px solid var(--border-grey);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .scanned-contact-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--dark-grey);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .scanned-contact-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .scanned-contact-name {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--dark-grey);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .scanned-contact-meta {
+      font-size: 11.5px;
+      color: var(--mid-grey);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .scanned-contact-time {
+      font-size: 10px;
+      color: #9CA3AF;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .scanned-contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .scanned-contact-actions button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-grey);
+      background: var(--page-bg);
+      color: var(--mid-grey);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .scanned-contact-actions button svg {
+      width: 15px;
+      height: 15px;
+    }
+    .scanned-contact-actions button.delete-btn:active {
+      background: var(--ipwea-red-soft);
+      color: var(--ipwea-red);
+      border-color: var(--ipwea-red-border);
+    }
+    .scanned-contacts-empty {
+      text-align: center;
+      padding: 22px 16px;
+      color: var(--mid-grey);
+      font-size: 12.5px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      border: 1.5px dashed var(--border-grey);
+    }
+
+    /* ==========================================================================
        VENUE VIEW COMPONENTS (LARGER UI)
        ========================================================================== */
     .venue-card {
@@ -1854,6 +2018,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             Edit My Badge Info
           </button>
+          <button class="btn-secondary" onclick="openScannerModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+            Scan a Contact's Badge
+          </button>
         </div>
 
         <!-- EDIT PROFILE DRAWER (AUTO-SAVED IN REAL TIME) -->
@@ -1905,6 +2073,17 @@
           <button class="btn-primary" style="margin-top:12px;" onclick="toggleEditProfile(); showToast('Profile details saved & QR updated!');">
             Done &amp; Close Form
           </button>
+        </div>
+
+        <!-- SCANNED CONTACTS HISTORY -->
+        <div class="scanned-contacts-section">
+          <div class="scanned-contacts-header">
+            <h3>Scanned Contacts <span id="scanned-count-pill">(0)</span></h3>
+            <span class="scanned-clear-link" id="scanned-clear-link" onclick="clearAllScannedContacts()">Clear All</span>
+          </div>
+          <div id="scanned-contacts-list">
+            <!-- Rendered dynamically via JavaScript -->
+          </div>
         </div>
 
       </div>
@@ -2110,6 +2289,32 @@
     <button class="btn-primary" onclick="closeHomescreenModal()">Got It!</button>
   </div>
 </div>
+
+<!-- QR BADGE SCANNER MODAL -->
+<div class="modal-overlay" id="scanner-modal">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <h2 style="font-size:16px; font-weight:900; color:var(--dark-grey);">Scan a Contact's Badge</h2>
+      <button class="modal-close-btn" onclick="closeScannerModal()">&times;</button>
+    </div>
+    <p style="font-size:12px; color:var(--mid-grey); margin-bottom:12px; line-height:1.4;">
+      Point your camera at another delegate's QR code on their badge. Once detected, their details are saved automatically below your badge.
+    </p>
+    <div class="scanner-video-box" id="scanner-video-box">
+      <video id="scanner-video" autoplay playsinline muted></video>
+      <div class="scanner-frame"></div>
+    </div>
+    <canvas id="scanner-canvas" style="display:none;"></canvas>
+    <div class="scanner-status" id="scanner-status">Requesting camera access…</div>
+    <button class="btn-secondary" style="margin-top:12px;" onclick="closeScannerModal()">Close Scanner</button>
+  </div>
+</div>
+
+<!-- jsQR: lightweight pure-JS QR CODE READER/DECODER, used only for the
+     "Scan a Contact's Badge" camera feature. (Our own QR code displayed on
+     the badge is still generated locally below with zero dependencies.) -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 
 <!-- ========================================================================
      JAVASCRIPT LOGIC & EMBEDDED PURE QR GENERATOR
@@ -3946,9 +4151,17 @@ var appState = {
     tier: "FULL DELEGATE",
     badgeId: "IPW-2026-" + (Math.floor(Math.random() * 9000) + 1000)
   },
-  sessionNotes: {}
+  sessionNotes: {},
+  scannedContacts: []
 };
 
+// Runtime-only state for the live camera scanner (never persisted).
+var scannerState = {
+  stream: null,
+  rafId: null,
+  lastCode: '',
+  lastCodeTime: 0
+};
 
 function loadAllPersistedData() {
   try {
@@ -3963,6 +4176,10 @@ function loadAllPersistedData() {
     // Session Notes
     var n = localStorage.getItem('ipwea_session_notes');
     if (n) appState.sessionNotes = JSON.parse(n);
+
+    // Scanned Contacts History
+    var sc = localStorage.getItem('ipwea_scanned_contacts');
+    if (sc) appState.scannedContacts = JSON.parse(sc);
 
     // Last selected day
     var d = localStorage.getItem('ipwea_active_day');
@@ -4006,6 +4223,12 @@ function persistBookmarks() {
 function persistNotes() {
   try {
     localStorage.setItem('ipwea_session_notes', JSON.stringify(appState.sessionNotes));
+  } catch (e) {}
+}
+
+function persistScannedContacts() {
+  try {
+    localStorage.setItem('ipwea_scanned_contacts', JSON.stringify(appState.scannedContacts));
   } catch (e) {}
 }
 
@@ -4053,6 +4276,7 @@ function switchTab(tabId) {
 
   if (tabId === 'badge') {
     renderBadgeAndQR();
+    renderScannedContacts();
   } else if (tabId === 'program') {
     renderProgramList();
   } else if (tabId === 'venue') {
@@ -4366,19 +4590,36 @@ function generateVCardString(p) {
   var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
 
-  return [
-  'BEGIN:VCARD',
+  var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
+  if (p.title) lines.push('TITLE:' + p.title);
+  if (p.org) lines.push('ORG:' + p.org);
+  if (p.phone) lines.push('TEL:' + p.phone);
+  if (p.email) lines.push('EMAIL:' + p.email);
+  lines.push('END:VCARD');
 
-'VERSION:3.0',
+  return lines.join('\r\n');
+}
 
-'FN:' + safeName,
-
-'TEL:' + p.phone,
-
-'EMAIL:' + p.email,
-
-'END:VCARD'
-  ].join('\r\n');
+// Parses a scanned vCard text block back into a plain contact object.
+// Returns null if the text doesn't look like a valid vCard.
+function parseVCardString(text) {
+  if (!text || text.indexOf('BEGIN:VCARD') === -1) return null;
+  var lines = text.split(/\r\n|\n|\r/);
+  var contact = { name: '', title: '', org: '', phone: '', email: '' };
+  lines.forEach(function(line) {
+    var idx = line.indexOf(':');
+    if (idx === -1) return;
+    var key = line.substring(0, idx).trim().toUpperCase();
+    var value = line.substring(idx + 1).trim();
+    if (!value) return;
+    if (key === 'FN') contact.name = value;
+    else if (key === 'TITLE') contact.title = value;
+    else if (key === 'ORG') contact.org = value;
+    else if (key === 'TEL') contact.phone = value;
+    else if (key === 'EMAIL') contact.email = value;
+  });
+  if (!contact.name && !contact.phone && !contact.email) return null;
+  return contact;
 }
 
 function toggleEditProfile() {
@@ -4390,6 +4631,250 @@ function toggleEditProfile() {
   } else {
     drawer.classList.remove('open');
   }
+}
+
+/**
+ * -------------------------------------------------------------------------
+ * 9B. QR BADGE SCANNER (CAMERA) & SCANNED CONTACTS HISTORY
+ * Uses jsQR (loaded via CDN <script> tag above) to decode QR codes from a
+ * live camera stream. Successfully scanned vCards are parsed and saved to
+ * a persisted "Scanned Contacts" history list rendered below the badge.
+ * -------------------------------------------------------------------------
+ */
+function openScannerModal() {
+  var modal = document.getElementById('scanner-modal');
+  var statusEl = document.getElementById('scanner-status');
+  modal.classList.add('open');
+  statusEl.className = 'scanner-status';
+  statusEl.innerText = 'Requesting camera access…';
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    statusEl.className = 'scanner-status error';
+    statusEl.innerText = "Camera access isn't supported on this browser/device.";
+    return;
+  }
+  if (typeof jsQR === 'undefined') {
+    statusEl.className = 'scanner-status error';
+    statusEl.innerText = 'Scanner library failed to load. Check your internet connection and try again.';
+    return;
+  }
+
+  navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: { facingMode: { ideal: 'environment' } }
+  }).then(function(stream) {
+    scannerState.stream = stream;
+    var video = document.getElementById('scanner-video');
+    video.srcObject = stream;
+    video.setAttribute('playsinline', 'true');
+    video.play();
+    statusEl.innerText = 'Point your camera at a QR code…';
+    scannerState.rafId = requestAnimationFrame(scannerTick);
+  }).catch(function(err) {
+    statusEl.className = 'scanner-status error';
+    if (err && err.name === 'NotAllowedError') {
+      statusEl.innerText = 'Camera permission denied. Please allow camera access in your browser settings and try again.';
+    } else if (err && err.name === 'NotFoundError') {
+      statusEl.innerText = 'No camera was found on this device.';
+    } else {
+      statusEl.innerText = "Couldn't access the camera. Please try again.";
+    }
+  });
+}
+
+function closeScannerModal() {
+  var modal = document.getElementById('scanner-modal');
+  modal.classList.remove('open');
+  if (scannerState.rafId) {
+    cancelAnimationFrame(scannerState.rafId);
+    scannerState.rafId = null;
+  }
+  if (scannerState.stream) {
+    scannerState.stream.getTracks().forEach(function(track) { track.stop(); });
+    scannerState.stream = null;
+  }
+  var video = document.getElementById('scanner-video');
+  if (video) video.srcObject = null;
+  scannerState.lastCode = '';
+  scannerState.lastCodeTime = 0;
+}
+
+function scannerTick() {
+  var video = document.getElementById('scanner-video');
+  var canvas = document.getElementById('scanner-canvas');
+
+  if (video && video.readyState === video.HAVE_ENOUGH_DATA) {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+
+    if (code && code.data) {
+      handleScannedCode(code.data);
+    }
+  }
+
+  if (scannerState.stream) {
+    scannerState.rafId = requestAnimationFrame(scannerTick);
+  }
+}
+
+function handleScannedCode(text) {
+  var now = Date.now();
+  // Ignore re-triggering on the exact same code within a short cooldown
+  // window (the same physical QR code will be seen in many consecutive
+  // video frames while the camera is held steady).
+  if (text === scannerState.lastCode && (now - scannerState.lastCodeTime) < 3000) {
+    return;
+  }
+  scannerState.lastCode = text;
+  scannerState.lastCodeTime = now;
+
+  var statusEl = document.getElementById('scanner-status');
+  var contact = parseVCardString(text);
+
+  if (!contact) {
+    statusEl.className = 'scanner-status error';
+    statusEl.innerText = "That QR code isn't a recognised conference badge contact.";
+    return;
+  }
+
+  var savedResult = saveScannedContact(contact);
+  statusEl.className = 'scanner-status success';
+  statusEl.innerText = (savedResult.isNew ? 'Saved: ' : 'Already saved, updated: ') + (contact.name || 'Contact');
+  showToast((savedResult.isNew ? 'Contact saved: ' : 'Contact updated: ') + (contact.name || 'Unknown'));
+  renderScannedContacts();
+}
+
+// Adds a scanned contact to history, or updates the timestamp if this same
+// person (matched by email, or phone if no email) was already scanned.
+function saveScannedContact(contact) {
+  var matchIndex = -1;
+  for (var i = 0; i < appState.scannedContacts.length; i++) {
+    var existing = appState.scannedContacts[i];
+    if (contact.email && existing.email && existing.email.toLowerCase() === contact.email.toLowerCase()) {
+      matchIndex = i;
+      break;
+    }
+    if (!contact.email && contact.phone && existing.phone && existing.phone === contact.phone) {
+      matchIndex = i;
+      break;
+    }
+  }
+
+  var record = {
+    name: contact.name || 'Unknown Contact',
+    title: contact.title || '',
+    org: contact.org || '',
+    phone: contact.phone || '',
+    email: contact.email || '',
+    scannedAt: Date.now()
+  };
+
+  var isNew = matchIndex === -1;
+  if (isNew) {
+    appState.scannedContacts.unshift(record);
+  } else {
+    appState.scannedContacts[matchIndex] = record;
+    // Move the freshly re-scanned contact to the top of the list.
+    appState.scannedContacts.splice(matchIndex, 1);
+    appState.scannedContacts.unshift(record);
+  }
+
+  persistScannedContacts();
+  return { isNew: isNew };
+}
+
+function renderScannedContacts() {
+  var listEl = document.getElementById('scanned-contacts-list');
+  var countPill = document.getElementById('scanned-count-pill');
+  var clearLink = document.getElementById('scanned-clear-link');
+  if (!listEl) return;
+
+  var contacts = appState.scannedContacts;
+  countPill.innerText = '(' + contacts.length + ')';
+  clearLink.classList.toggle('visible', contacts.length > 0);
+
+  if (contacts.length === 0) {
+    listEl.innerHTML = '<div class="scanned-contacts-empty">No contacts scanned yet. Tap "Scan a Contact\'s Badge" above to save people you meet at the conference.</div>';
+    return;
+  }
+
+  var html = '';
+  contacts.forEach(function(c, idx) {
+    var initials = (c.name || '?').split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+    var metaParts = [];
+    if (c.title) metaParts.push(c.title);
+    if (c.org) metaParts.push(c.org);
+    var meta = metaParts.join(' · ') || c.email || c.phone || '';
+    var timeStr = formatScannedTime(c.scannedAt);
+
+    html += [
+      '<div class="scanned-contact-card">',
+      '  <div class="scanned-contact-avatar">' + escapeHTML(initials || 'IP') + '</div>',
+      '  <div class="scanned-contact-info">',
+      '    <div class="scanned-contact-name">' + escapeHTML(c.name) + '</div>',
+      '    <div class="scanned-contact-meta">' + escapeHTML(meta) + '</div>',
+      '    <div class="scanned-contact-time">Scanned ' + timeStr + '</div>',
+      '  </div>',
+      '  <div class="scanned-contact-actions">',
+      '    <button title="Save to phone contacts" onclick="downloadScannedContact(' + idx + ')">',
+      '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+      '    </button>',
+      '    <button class="delete-btn" title="Remove" onclick="deleteScannedContact(' + idx + ')">',
+      '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>',
+      '    </button>',
+      '  </div>',
+      '</div>'
+    ].join('');
+  });
+  listEl.innerHTML = html;
+}
+
+function formatScannedTime(timestamp) {
+  if (!timestamp) return '';
+  var d = new Date(timestamp);
+  var now = new Date();
+  var isToday = d.toDateString() === now.toDateString();
+  var timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (isToday) return 'today at ' + timeStr;
+  var dateStr = d.toLocaleDateString([], { day: 'numeric', month: 'short' });
+  return 'on ' + dateStr + ' at ' + timeStr;
+}
+
+function deleteScannedContact(index) {
+  var removed = appState.scannedContacts.splice(index, 1);
+  persistScannedContacts();
+  renderScannedContacts();
+  if (removed && removed[0]) {
+    showToast('Removed ' + (removed[0].name || 'contact') + ' from scanned contacts');
+  }
+}
+
+function clearAllScannedContacts() {
+  if (appState.scannedContacts.length === 0) return;
+  appState.scannedContacts = [];
+  persistScannedContacts();
+  renderScannedContacts();
+  showToast('Scanned contacts history cleared');
+}
+
+function downloadScannedContact(index) {
+  var c = appState.scannedContacts[index];
+  if (!c) return;
+  var vcardData = generateVCardString(c);
+  var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = (c.name || 'contact').replace(/\s+/g, '_') + '.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Contact card downloaded for ' + (c.name || 'contact'));
 }
 
 /**
