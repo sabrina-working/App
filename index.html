@@ -4675,12 +4675,13 @@ function generateVCardString(p) {
   var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
 
-  // Kept deliberately minimal (name, phone, email only). Extra fields like
-  // job title and organisation significantly increase the QR code's data
-  // density/version, making it noticeably harder for phone cameras to
-  // scan reliably - especially in venue lighting. If you want richer
-  // contact info exchanged, it's better added manually after scanning.
+  // Includes job title and organisation so that scanned contacts show this
+  // info in the "Scanned Contacts" history. This does increase the QR
+  // code's data density/version slightly, but remains comfortably
+  // scannable by phone cameras at normal badge-scanning distances.
   var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
+  if (p.title) lines.push('TITLE:' + p.title);
+  if (p.org) lines.push('ORG:' + p.org);
   if (p.phone) lines.push('TEL:' + p.phone);
   if (p.email) lines.push('EMAIL:' + p.email);
   lines.push('END:VCARD');
@@ -4743,6 +4744,25 @@ function openScannerModal() {
     scannerState.closeTimeoutId = null;
   }
   modal.classList.add('open');
+
+  // Reuse an already-granted camera stream if one is still live from a
+  // previous scan in this session, instead of calling getUserMedia()
+  // again. Re-requesting getUserMedia repeatedly is what was causing the
+  // "Allow camera access?" prompt to reappear on every single scan
+  // (especially on iOS Safari / Home Screen apps). This way, camera
+  // permission is only ever requested once per app session.
+  var video = document.getElementById('scanner-video');
+  var existingTrack = scannerState.stream && scannerState.stream.getVideoTracks()[0];
+  if (existingTrack && existingTrack.readyState === 'live') {
+    video.srcObject = scannerState.stream;
+    video.setAttribute('playsinline', 'true');
+    video.play();
+    statusEl.className = 'scanner-status';
+    statusEl.innerText = 'Point your camera at a QR code…';
+    scannerState.rafId = requestAnimationFrame(scannerTick);
+    return;
+  }
+
   statusEl.className = 'scanner-status';
   statusEl.innerText = 'Requesting camera access…';
 
@@ -4762,7 +4782,6 @@ function openScannerModal() {
     video: { facingMode: { ideal: 'environment' } }
   }).then(function(stream) {
     scannerState.stream = stream;
-    var video = document.getElementById('scanner-video');
     video.srcObject = stream;
     video.setAttribute('playsinline', 'true');
     video.play();
@@ -4792,12 +4811,20 @@ function closeScannerModal() {
     cancelAnimationFrame(scannerState.rafId);
     scannerState.rafId = null;
   }
-  if (scannerState.stream) {
-    scannerState.stream.getTracks().forEach(function(track) { track.stop(); });
-    scannerState.stream = null;
-  }
+  // IMPORTANT: We deliberately do NOT call track.stop() here. Stopping
+  // the track fully releases the camera hardware, which forces the
+  // browser to treat the next scan as a brand-new camera request -
+  // that's what was triggering a fresh "Allow camera access?" prompt
+  // every single time. Instead we just detach/pause the video element
+  // and keep the already-granted stream alive in the background so it
+  // can be instantly reused next time the scanner is opened (see
+  // openScannerModal). The stream is only released automatically by the
+  // OS/browser when the app is fully closed.
   var video = document.getElementById('scanner-video');
-  if (video) video.srcObject = null;
+  if (video) {
+    video.pause();
+    video.srcObject = null;
+  }
   scannerState.lastCode = '';
   scannerState.lastCodeTime = 0;
 }
