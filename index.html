@@ -5117,25 +5117,47 @@ function openScannedContactCard(index) {
   setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
 }
 
-// Exports every scanned contact at once as a single combined vCard file
-// (multiple BEGIN:VCARD...END:VCARD blocks back-to-back), which most
-// phone Contacts apps can bulk-import in one go after downloading.
+// Wraps a single CSV field in quotes and escapes any internal quotes,
+// per the standard CSV spec - needed since names/orgs can contain commas.
+function csvEscape(value) {
+  var str = (value === null || value === undefined) ? '' : String(value);
+  return '"' + str.replace(/"/g, '""') + '"';
+}
+
+// Exports every scanned contact at once as a single Excel-compatible CSV
+// spreadsheet (opens directly in Excel/Numbers/Google Sheets - no special
+// app or native "add contact" handling required, unlike the vCard format
+// used for individual contacts). A UTF-8 BOM is included so Excel renders
+// any special characters correctly rather than showing garbled text.
 function exportAllScannedContacts() {
   if (appState.scannedContacts.length === 0) return;
-  var allVcards = appState.scannedContacts.map(function(c) {
-    return generateVCardString(c);
-  }).join('\r\n');
-  var blob = new Blob([allVcards], { type: 'text/vcard;charset=utf-8;' });
+  var headers = ['Name', 'Job Title', 'Organisation', 'Email', 'Phone', 'Scanned At'];
+  var rows = [headers.map(csvEscape).join(',')];
+
+  appState.scannedContacts.forEach(function(c) {
+    var scannedAtStr = c.scannedAt ? new Date(c.scannedAt).toLocaleString() : '';
+    rows.push([
+      csvEscape(c.name || ''),
+      csvEscape(c.title || ''),
+      csvEscape(c.org || ''),
+      csvEscape(c.email || ''),
+      csvEscape(c.phone || ''),
+      csvEscape(scannedAtStr)
+    ].join(','));
+  });
+
+  var csvContent = '\uFEFF' + rows.join('\r\n');
+  var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = 'AC26_Scanned_Contacts.vcf';
+  a.download = 'AC26_Scanned_Contacts.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
   var count = appState.scannedContacts.length;
-  showToast('Exported ' + count + ' contact' + (count === 1 ? '' : 's'));
+  showToast('Exported ' + count + ' contact' + (count === 1 ? '' : 's') + ' as CSV');
 }
 
 /**
