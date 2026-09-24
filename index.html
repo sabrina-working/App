@@ -1215,16 +1215,6 @@
       color: var(--ipwea-red);
       font-weight: 800;
     }
-    .scanned-clear-link {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--ipwea-red);
-      cursor: pointer;
-      display: none;
-    }
-    .scanned-clear-link.visible {
-      display: inline-block;
-    }
     .scanned-contact-card {
       background: var(--white);
       border-radius: var(--radius-md);
@@ -2131,7 +2121,6 @@
         <div class="scanned-contacts-section">
           <div class="scanned-contacts-header">
             <h3>Scanned Contacts <span id="scanned-count-pill">(0)</span></h3>
-            <span class="scanned-clear-link" id="scanned-clear-link" onclick="clearAllScannedContacts()">Clear All</span>
           </div>
           <div id="scanned-contacts-list">
             <!-- Rendered dynamically via JavaScript -->
@@ -2721,16 +2710,20 @@ var MiniQR = (function() {
     generateSVG: function(text, margin) {
       if (margin === undefined) margin = 3;
       var len = text.length;
-      var ver = 4;
-      if (len > 250) ver = 9;
-      else if (len > 180) ver = 8;
-      else if (len > 140) ver = 7;
-      else if (len > 105) ver = 6;
-      else if (len > 78) ver = 5;
-      else if (len > 50) ver = 4;
-      else if (len > 32) ver = 3;
-      else if (len > 17) ver = 2;
-      else ver = 1;
+      // Accurate byte-mode data capacities for QR versions 1-9, matching
+      // the Reed-Solomon block table above exactly (19,34,55,80,108,136,
+      // 156,194,232 bytes respectively). The previous length thresholds
+      // here didn't match these real capacities - e.g. picking version 8
+      // (194-byte capacity) for any text up to 250 characters long. Any
+      // text over a version's true capacity silently corrupts/overflows
+      // the QR code, making it completely unreadable by any scanner. This
+      // now always picks the smallest version that can actually fit the
+      // data, guaranteeing a valid, scannable QR code.
+      var capacities = [19, 34, 55, 80, 108, 136, 156, 194, 232];
+      var ver = capacities.length;
+      for (var vi = 0; vi < capacities.length; vi++) {
+        if (len <= capacities[vi]) { ver = vi + 1; break; }
+      }
 
       var qr = new QRCodeModel(ver);
       qr.addData(text);
@@ -4675,13 +4668,13 @@ function generateVCardString(p) {
   var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
 
-  // Includes job title and organisation so that scanned contacts show this
-  // info in the "Scanned Contacts" history. This does increase the QR
-  // code's data density/version slightly, but remains comfortably
-  // scannable by phone cameras at normal badge-scanning distances.
+  // Kept deliberately minimal (name, phone, email only). Job title and
+  // organisation were tried here but made the QR code too data-dense for
+  // this app's hand-written QR generator/scanner to handle reliably in
+  // real-world testing - so this reverts to the simple, proven-reliable
+  // format. If richer contact info is needed, it's best added manually
+  // after scanning.
   var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
-  if (p.title) lines.push('TITLE:' + p.title);
-  if (p.org) lines.push('ORG:' + p.org);
   if (p.phone) lines.push('TEL:' + p.phone);
   if (p.email) lines.push('EMAIL:' + p.email);
   lines.push('END:VCARD');
@@ -4938,12 +4931,10 @@ function saveScannedContact(contact) {
 function renderScannedContacts() {
   var listEl = document.getElementById('scanned-contacts-list');
   var countPill = document.getElementById('scanned-count-pill');
-  var clearLink = document.getElementById('scanned-clear-link');
   if (!listEl) return;
 
   var contacts = appState.scannedContacts;
   countPill.innerText = '(' + contacts.length + ')';
-  clearLink.classList.toggle('visible', contacts.length > 0);
 
   if (contacts.length === 0) {
     listEl.innerHTML = '<div class="scanned-contacts-empty">No contacts scanned yet. Tap "Scan a Contact\'s Badge" above to save people you meet at the conference.</div>';
@@ -4999,14 +4990,6 @@ function deleteScannedContact(index) {
   if (removed && removed[0]) {
     showToast('Removed ' + (removed[0].name || 'contact') + ' from scanned contacts');
   }
-}
-
-function clearAllScannedContacts() {
-  if (appState.scannedContacts.length === 0) return;
-  appState.scannedContacts = [];
-  persistScannedContacts();
-  renderScannedContacts();
-  showToast('Scanned contacts history cleared');
 }
 
 function downloadScannedContact(index) {
