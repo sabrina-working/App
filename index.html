@@ -1140,6 +1140,40 @@
       border-radius: 16px;
       box-shadow: 0 0 0 999px rgba(0,0,0,0.35);
       pointer-events: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .scanner-frame.success {
+      border-color: #10B981;
+      box-shadow: 0 0 0 999px rgba(0,0,0,0.35), 0 0 26px 6px rgba(16, 185, 129, 0.65);
+    }
+    .scanner-success-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 72px;
+      height: 72px;
+      transform: translate(-50%, -50%) scale(0.3);
+      opacity: 0;
+      background: #10B981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.55);
+      z-index: 2;
+    }
+    .scanner-success-badge.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    .scanner-success-badge svg {
+      width: 38px;
+      height: 38px;
+      stroke: #fff;
+      stroke-width: 3;
+      fill: none;
     }
     .scanner-status {
       text-align: center;
@@ -2335,7 +2369,10 @@
     </p>
     <div class="scanner-video-box" id="scanner-video-box">
       <video id="scanner-video" autoplay playsinline muted></video>
-      <div class="scanner-frame"></div>
+      <div class="scanner-frame" id="scanner-frame"></div>
+      <div class="scanner-success-badge" id="scanner-success-badge">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
     </div>
     <canvas id="scanner-canvas" style="display:none;"></canvas>
     <div class="scanner-status" id="scanner-status">Requesting camera access…</div>
@@ -4212,7 +4249,9 @@ var scannerState = {
   stream: null,
   rafId: null,
   lastCode: '',
-  lastCodeTime: 0
+  lastCodeTime: 0,
+  locked: false,
+  closeTimeoutId: null
 };
 
 function loadAllPersistedData() {
@@ -4693,6 +4732,16 @@ function toggleEditProfile() {
 function openScannerModal() {
   var modal = document.getElementById('scanner-modal');
   var statusEl = document.getElementById('scanner-status');
+  var frameEl = document.getElementById('scanner-frame');
+  var badgeEl = document.getElementById('scanner-success-badge');
+  // Reset any leftover success visuals from a previous scan before starting fresh.
+  if (frameEl) frameEl.classList.remove('success');
+  if (badgeEl) badgeEl.classList.remove('show');
+  scannerState.locked = false;
+  if (scannerState.closeTimeoutId) {
+    clearTimeout(scannerState.closeTimeoutId);
+    scannerState.closeTimeoutId = null;
+  }
   modal.classList.add('open');
   statusEl.className = 'scanner-status';
   statusEl.innerText = 'Requesting camera access…';
@@ -4734,6 +4783,11 @@ function openScannerModal() {
 function closeScannerModal() {
   var modal = document.getElementById('scanner-modal');
   modal.classList.remove('open');
+  if (scannerState.closeTimeoutId) {
+    clearTimeout(scannerState.closeTimeoutId);
+    scannerState.closeTimeoutId = null;
+  }
+  scannerState.locked = false;
   if (scannerState.rafId) {
     cancelAnimationFrame(scannerState.rafId);
     scannerState.rafId = null;
@@ -4765,7 +4819,10 @@ function scannerTick() {
     }
   }
 
-  if (scannerState.stream) {
+  // Stop scheduling further frames once a badge has been successfully
+  // scanned (locked) - the modal is about to auto-close, so there's no
+  // need to keep decoding video frames in the background.
+  if (scannerState.stream && !scannerState.locked) {
     scannerState.rafId = requestAnimationFrame(scannerTick);
   }
 }
@@ -4795,6 +4852,21 @@ function handleScannedCode(text) {
   statusEl.innerText = (savedResult.isNew ? 'Saved: ' : 'Already saved, updated: ') + (contact.name || 'Contact');
   showToast((savedResult.isNew ? 'Contact saved: ' : 'Contact updated: ') + (contact.name || 'Unknown'));
   renderScannedContacts();
+
+  // Make the successful scan obvious: turn the frame green, pop in a big
+  // checkmark badge, and automatically close the scanner shortly after -
+  // so the user doesn't have to manually dismiss it themselves.
+  scannerState.locked = true;
+  var frameEl = document.getElementById('scanner-frame');
+  var badgeEl = document.getElementById('scanner-success-badge');
+  if (frameEl) frameEl.classList.add('success');
+  if (badgeEl) badgeEl.classList.add('show');
+  if (scannerState.closeTimeoutId) {
+    clearTimeout(scannerState.closeTimeoutId);
+  }
+  scannerState.closeTimeoutId = setTimeout(function() {
+    closeScannerModal();
+  }, 1100);
 }
 
 // Adds a scanned contact to history, or updates the timestamp if this same
