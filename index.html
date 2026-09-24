@@ -976,8 +976,8 @@
     }
 
     #qrcode-container {
-      width: 128px;
-      height: 128px;
+      width: 158px;
+      height: 158px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -4705,15 +4705,28 @@ var vCard = generateVCardString(p);
 
 function generateVCardString(p) {
   var safeName = p.name || 'Conference Delegate';
-  var nameParts = safeName.split(' ');
-  var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
-  var firstName = nameParts[0] || '';
   var org = p.org || '';
   var phone = p.phone || '';
   var email = p.email || '';
 
   function buildVCard(o) {
-    var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
+    // Splits the CURRENT value of safeName (recomputed on every call,
+    // since the truncation logic below can shorten safeName in rare
+    // extreme cases). Per the vCard 3.0 spec, N (structured name:
+    // Family;Given;Additional;Prefix;Suffix) is the field phones actually
+    // read to populate the individual "Name" input box on their native
+    // Add Contact screen - FN (formatted name) is only used for the
+    // display title/header. Without N, the Name field was showing up
+    // blank even though the contact's name clearly appeared elsewhere.
+    var nameParts = safeName.split(' ');
+    var firstName = nameParts[0] || '';
+    var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+    var lines = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:' + lastName + ';' + firstName + ';;;',
+      'FN:' + safeName
+    ];
     if (o) lines.push('ORG:' + o);
     if (phone) lines.push('TEL:' + phone);
     if (email) lines.push('EMAIL:' + email);
@@ -4726,17 +4739,22 @@ function generateVCardString(p) {
   // capacity) for spec-compliance/reliability reasons (see generateSVG).
   // To guarantee the whole vCard ALWAYS fits within that ceiling - no
   // matter how long someone's name/org/email happen to be - fields are
-  // progressively shortened with an ellipsis in priority order: first
-  // organisation (shrunk, then dropped entirely), then (only in genuinely
-  // extreme cases, e.g. an unusually long name plus a long email) the
-  // name and email themselves. Phone is never touched, since a broken
-  // phone number is useless. This staged fallback means a real QR is
-  // produced 100% of the time, however unusual the input.
-  var SAFE_BYTE_LIMIT = 125; // safe margin under the 136-byte version-6 ceiling
+  // shrunk ONE CHARACTER AT A TIME (rather than in large chunks) so as
+  // much real information survives as possible, in priority order:
+  // organisation first (only dropped entirely as an absolute last
+  // resort), then - only in genuinely extreme cases, e.g. an unusually
+  // long name plus a long email - name and email themselves. Phone is
+  // never touched, since a broken phone number is useless. This staged,
+  // fine-grained fallback means a real QR is produced 100% of the time,
+  // however unusual the input, while keeping as much of a short/medium
+  // organisation name intact as possible (e.g. "IPWEA-QNT" survives fully
+  // rather than being dropped just because the name+phone+email base is
+  // already close to the byte ceiling).
+  var SAFE_BYTE_LIMIT = 134; // 2-byte safety margin under the 136-byte hard ceiling
   var result = buildVCard(org);
 
-  while (result.length > SAFE_BYTE_LIMIT && org.length > 8) {
-    org = org.slice(0, org.length - 6) + '…';
+  while (result.length > SAFE_BYTE_LIMIT && org.length > 1) {
+    org = org.slice(0, org.length - 2) + '…';
     result = buildVCard(org);
   }
   if (result.length > SAFE_BYTE_LIMIT && org) {
@@ -4745,16 +4763,16 @@ function generateVCardString(p) {
   }
   // Extremely rare fallback: only reached if name+phone+email alone
   // already exceed the safe budget even with organisation fully removed.
-  while (result.length > SAFE_BYTE_LIMIT && safeName.length > 12) {
-    safeName = safeName.slice(0, safeName.length - 6) + '…';
+  while (result.length > SAFE_BYTE_LIMIT && safeName.length > 1) {
+    safeName = safeName.slice(0, safeName.length - 2) + '…';
     result = buildVCard(org);
   }
-  while (result.length > SAFE_BYTE_LIMIT && email.length > 12) {
+  while (result.length > SAFE_BYTE_LIMIT && email.length > 1) {
     var atIdx = email.indexOf('@');
-    if (atIdx > 4) {
-      email = email.slice(0, atIdx - 4) + '…' + email.slice(atIdx);
+    if (atIdx > 2) {
+      email = email.slice(0, atIdx - 2) + '…' + email.slice(atIdx);
     } else {
-      email = email.slice(0, email.length - 6) + '…';
+      email = email.slice(0, email.length - 2) + '…';
     }
     result = buildVCard(org);
   }
