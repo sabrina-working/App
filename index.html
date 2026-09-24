@@ -1215,6 +1215,16 @@
       color: var(--ipwea-red);
       font-weight: 800;
     }
+    .scanned-export-link {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ipwea-red);
+      cursor: pointer;
+      display: none;
+    }
+    .scanned-export-link.visible {
+      display: inline-block;
+    }
     .scanned-contact-card {
       background: var(--white);
       border-radius: var(--radius-md);
@@ -1225,6 +1235,11 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .scanned-contact-card:active {
+      background: var(--page-bg);
     }
     .scanned-contact-avatar {
       width: 40px;
@@ -2121,6 +2136,7 @@
         <div class="scanned-contacts-section">
           <div class="scanned-contacts-header">
             <h3>Scanned Contacts <span id="scanned-count-pill">(0)</span></h3>
+            <span class="scanned-export-link" id="scanned-export-link" onclick="exportAllScannedContacts()">Export All</span>
           </div>
           <div id="scanned-contacts-list">
             <!-- Rendered dynamically via JavaScript -->
@@ -4983,10 +4999,12 @@ function saveScannedContact(contact) {
 function renderScannedContacts() {
   var listEl = document.getElementById('scanned-contacts-list');
   var countPill = document.getElementById('scanned-count-pill');
+  var exportLink = document.getElementById('scanned-export-link');
   if (!listEl) return;
 
   var contacts = appState.scannedContacts;
   countPill.innerText = '(' + contacts.length + ')';
+  if (exportLink) exportLink.classList.toggle('visible', contacts.length > 0);
 
   if (contacts.length === 0) {
     listEl.innerHTML = '<div class="scanned-contacts-empty">No contacts scanned yet. Tap "Scan a Contact\'s Badge" above to save people you meet at the conference.</div>';
@@ -4996,24 +5014,30 @@ function renderScannedContacts() {
   var html = '';
   contacts.forEach(function(c, idx) {
     var initials = (c.name || '?').split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
-    var metaParts = [];
-    if (c.title) metaParts.push(c.title);
-    if (c.org) metaParts.push(c.org);
-    var meta = metaParts.join(' · ') || c.email || c.phone || '';
+    // Shows job title/organisation, email, and phone as their own separate
+    // lines (each only if actually present), so the full set of details a
+    // scanned badge carries is visible at a glance in the history list.
+    var titleOrgParts = [];
+    if (c.title) titleOrgParts.push(c.title);
+    if (c.org) titleOrgParts.push(c.org);
+    var metaLines = [];
+    if (titleOrgParts.length) metaLines.push(titleOrgParts.join(' · '));
+    if (c.email) metaLines.push(c.email);
+    if (c.phone) metaLines.push(c.phone);
+    var metaHtml = metaLines.map(function(line) {
+      return '    <div class="scanned-contact-meta">' + escapeHTML(line) + '</div>';
+    }).join('');
     var timeStr = formatScannedTime(c.scannedAt);
 
     html += [
-      '<div class="scanned-contact-card">',
+      '<div class="scanned-contact-card" onclick="openScannedContactCard(' + idx + ')">',
       '  <div class="scanned-contact-avatar">' + escapeHTML(initials || 'IP') + '</div>',
       '  <div class="scanned-contact-info">',
       '    <div class="scanned-contact-name">' + escapeHTML(c.name) + '</div>',
-      '    <div class="scanned-contact-meta">' + escapeHTML(meta) + '</div>',
+      metaHtml,
       '    <div class="scanned-contact-time">Scanned ' + timeStr + '</div>',
       '  </div>',
       '  <div class="scanned-contact-actions">',
-      '    <button title="Save to phone contacts" onclick="downloadScannedContact(' + idx + ')">',
-      '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
-      '    </button>',
       '    <button class="delete-btn" title="Remove" onclick="event.stopPropagation(); requestDeleteScannedContact(' + idx + ')">',
       '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>',
       '    </button>',
@@ -5070,7 +5094,13 @@ function confirmDeleteScannedContact() {
   }
 }
 
-function downloadScannedContact(index) {
+// Tapping anywhere on a scanned contact's card opens their details in the
+// phone's native "Add Contact" screen, rather than just silently saving a
+// raw .vcf file. Deliberately NOT setting a "download" attribute on the
+// link is what makes this work: without it, iOS Safari and Android Chrome
+// both hand the vCard off to the system's native contact-add UI instead of
+// treating it as a plain file download.
+function openScannedContactCard(index) {
   var c = appState.scannedContacts[index];
   if (!c) return;
   var vcardData = generateVCardString(c);
@@ -5078,12 +5108,34 @@ function downloadScannedContact(index) {
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = (c.name || 'contact').replace(/\s+/g, '_') + '.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // Revoking is delayed slightly (rather than done immediately) to give
+  // the OS's native contact-add handler enough time to actually read the
+  // blob's data before the URL is invalidated.
+  setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
+}
+
+// Exports every scanned contact at once as a single combined vCard file
+// (multiple BEGIN:VCARD...END:VCARD blocks back-to-back), which most
+// phone Contacts apps can bulk-import in one go after downloading.
+function exportAllScannedContacts() {
+  if (appState.scannedContacts.length === 0) return;
+  var allVcards = appState.scannedContacts.map(function(c) {
+    return generateVCardString(c);
+  }).join('\r\n');
+  var blob = new Blob([allVcards], { type: 'text/vcard;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'AC26_Scanned_Contacts.vcf';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast('Contact card downloaded for ' + (c.name || 'contact'));
+  var count = appState.scannedContacts.length;
+  showToast('Exported ' + count + ' contact' + (count === 1 ? '' : 's'));
 }
 
 /**
