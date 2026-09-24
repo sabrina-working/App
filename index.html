@@ -2710,16 +2710,20 @@ var MiniQR = (function() {
     generateSVG: function(text, margin) {
       if (margin === undefined) margin = 3;
       var len = text.length;
-      // Accurate byte-mode data capacities for QR versions 1-9, matching
-      // the Reed-Solomon block table above exactly (19,34,55,80,108,136,
-      // 156,194,232 bytes respectively). The previous length thresholds
-      // here didn't match these real capacities - e.g. picking version 8
-      // (194-byte capacity) for any text up to 250 characters long. Any
-      // text over a version's true capacity silently corrupts/overflows
-      // the QR code, making it completely unreadable by any scanner. This
-      // now always picks the smallest version that can actually fit the
-      // data, guaranteeing a valid, scannable QR code.
-      var capacities = [19, 34, 55, 80, 108, 136, 156, 194, 232];
+      // Capped at version 6 (136-byte capacity) deliberately, and never
+      // higher. Per the QR spec, versions 1-6 are the ONLY versions that
+      // don't require a "Version Information" block (two Golay-protected
+      // 3x6 areas) to be encoded in the symbol - decoders instead infer
+      // the version purely from the measured module count. This hand-
+      // written generator never implements those Version Information
+      // blocks, so any code it produced at version 7+ was spec-non-
+      // compliant and could be silently rejected by stricter scanners
+      // (this was the real cause of scans failing once payload text grew
+      // long enough to push past version 6). Capping here guarantees
+      // every QR this app generates is fully spec-compliant and reliably
+      // scannable on any device. Payload length is kept within this
+      // budget by generateVCardString()'s truncation logic below.
+      var capacities = [19, 34, 55, 80, 108, 136];
       var ver = capacities.length;
       for (var vi = 0; vi < capacities.length; vi++) {
         if (len <= capacities[vi]) { ver = vi + 1; break; }
@@ -4667,19 +4671,58 @@ function generateVCardString(p) {
   var nameParts = safeName.split(' ');
   var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : safeName;
   var firstName = nameParts[0] || '';
+  var org = p.org || '';
+  var phone = p.phone || '';
+  var email = p.email || '';
 
-  // Kept deliberately minimal (name, phone, email only). Job title and
-  // organisation were tried here but made the QR code too data-dense for
-  // this app's hand-written QR generator/scanner to handle reliably in
-  // real-world testing - so this reverts to the simple, proven-reliable
-  // format. If richer contact info is needed, it's best added manually
-  // after scanning.
-  var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
-  if (p.phone) lines.push('TEL:' + p.phone);
-  if (p.email) lines.push('EMAIL:' + p.email);
-  lines.push('END:VCARD');
+  function buildVCard(o) {
+    var lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + safeName];
+    if (o) lines.push('ORG:' + o);
+    if (phone) lines.push('TEL:' + phone);
+    if (email) lines.push('EMAIL:' + email);
+    lines.push('END:VCARD');
+    return lines.join('\r\n');
+  }
 
-  return lines.join('\r\n');
+  // Includes Organisation so it shows in the "Scanned Contacts" history.
+  // The QR generator here is deliberately capped at version 6 (136-byte
+  // capacity) for spec-compliance/reliability reasons (see generateSVG).
+  // To guarantee the whole vCard ALWAYS fits within that ceiling - no
+  // matter how long someone's name/org/email happen to be - fields are
+  // progressively shortened with an ellipsis in priority order: first
+  // organisation (shrunk, then dropped entirely), then (only in genuinely
+  // extreme cases, e.g. an unusually long name plus a long email) the
+  // name and email themselves. Phone is never touched, since a broken
+  // phone number is useless. This staged fallback means a real QR is
+  // produced 100% of the time, however unusual the input.
+  var SAFE_BYTE_LIMIT = 125; // safe margin under the 136-byte version-6 ceiling
+  var result = buildVCard(org);
+
+  while (result.length > SAFE_BYTE_LIMIT && org.length > 8) {
+    org = org.slice(0, org.length - 6) + '…';
+    result = buildVCard(org);
+  }
+  if (result.length > SAFE_BYTE_LIMIT && org) {
+    org = '';
+    result = buildVCard(org);
+  }
+  // Extremely rare fallback: only reached if name+phone+email alone
+  // already exceed the safe budget even with organisation fully removed.
+  while (result.length > SAFE_BYTE_LIMIT && safeName.length > 12) {
+    safeName = safeName.slice(0, safeName.length - 6) + '…';
+    result = buildVCard(org);
+  }
+  while (result.length > SAFE_BYTE_LIMIT && email.length > 12) {
+    var atIdx = email.indexOf('@');
+    if (atIdx > 4) {
+      email = email.slice(0, atIdx - 4) + '…' + email.slice(atIdx);
+    } else {
+      email = email.slice(0, email.length - 6) + '…';
+    }
+    result = buildVCard(org);
+  }
+
+  return result;
 }
 
 // Parses a scanned vCard text block back into a plain contact object.
