@@ -2369,6 +2369,24 @@
   </div>
 </div>
 
+<!-- DELETE SCANNED CONTACT CONFIRMATION MODAL -->
+<div class="modal-overlay" id="delete-contact-modal" onclick="closeDeleteContactModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="modal-header">
+      <h2 style="font-size:16px; font-weight:900; color:var(--dark-grey);">Remove This Contact?</h2>
+      <button class="modal-close-btn" onclick="closeDeleteContactModal()">&times;</button>
+    </div>
+    <p style="font-size:13px; color:var(--mid-grey); margin-bottom:18px; line-height:1.45;">
+      Are you sure you want to remove <strong id="delete-contact-name" style="color:var(--dark-grey);">this contact</strong> from your Scanned Contacts? This can't be undone.
+    </p>
+    <div style="display:flex; gap:10px;">
+      <button class="btn-secondary" style="flex:1;" onclick="closeDeleteContactModal()">Cancel</button>
+      <button class="btn-primary" style="flex:1;" onclick="confirmDeleteScannedContact()">Remove</button>
+    </div>
+  </div>
+</div>
+
 <!-- jsQR: lightweight pure-JS QR CODE READER/DECODER, used only for the
      "Scan a Contact's Badge" camera feature. (Our own QR code displayed on
      the badge is still generated locally below with zero dependencies.) -->
@@ -4250,6 +4268,9 @@ var scannerState = {
   locked: false,
   closeTimeoutId: null
 };
+// Tracks which scanned contact (by index) is currently pending deletion
+// while the "Are you sure?" confirmation modal is open.
+var pendingDeleteContactIndex = null;
 
 function loadAllPersistedData() {
   try {
@@ -4780,28 +4801,16 @@ function openScannerModal() {
     scannerState.closeTimeoutId = null;
   }
   modal.classList.add('open');
-
-  // Reuse an already-granted camera stream if one is still live from a
-  // previous scan in this session, instead of calling getUserMedia()
-  // again. Re-requesting getUserMedia repeatedly is what was causing the
-  // "Allow camera access?" prompt to reappear on every single scan
-  // (especially on iOS Safari / Home Screen apps). This way, camera
-  // permission is only ever requested once per app session.
-  var video = document.getElementById('scanner-video');
-  var existingTrack = scannerState.stream && scannerState.stream.getVideoTracks()[0];
-  if (existingTrack && existingTrack.readyState === 'live') {
-    video.srcObject = scannerState.stream;
-    video.setAttribute('playsinline', 'true');
-    video.play();
-    statusEl.className = 'scanner-status';
-    statusEl.innerText = 'Point your camera at a QR code…';
-    scannerState.rafId = requestAnimationFrame(scannerTick);
-    return;
-  }
-
   statusEl.className = 'scanner-status';
   statusEl.innerText = 'Requesting camera access…';
 
+  // The camera is only ever turned on here, while this scanner modal is
+  // actually open, and is fully released the moment it closes (see
+  // closeScannerModal) - it never keeps recording in the background.
+  // This means the browser may ask for camera permission again each time
+  // the scanner is reopened, but that's the correct/expected trade-off:
+  // a permission prompt is far better than leaving the camera silently
+  // active when it's not being used.
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     statusEl.className = 'scanner-status error';
     statusEl.innerText = "Camera access isn't supported on this browser/device.";
@@ -4818,6 +4827,7 @@ function openScannerModal() {
     video: { facingMode: { ideal: 'environment' } }
   }).then(function(stream) {
     scannerState.stream = stream;
+    var video = document.getElementById('scanner-video');
     video.srcObject = stream;
     video.setAttribute('playsinline', 'true');
     video.play();
@@ -4847,15 +4857,14 @@ function closeScannerModal() {
     cancelAnimationFrame(scannerState.rafId);
     scannerState.rafId = null;
   }
-  // IMPORTANT: We deliberately do NOT call track.stop() here. Stopping
-  // the track fully releases the camera hardware, which forces the
-  // browser to treat the next scan as a brand-new camera request -
-  // that's what was triggering a fresh "Allow camera access?" prompt
-  // every single time. Instead we just detach/pause the video element
-  // and keep the already-granted stream alive in the background so it
-  // can be instantly reused next time the scanner is opened (see
-  // openScannerModal). The stream is only released automatically by the
-  // OS/browser when the app is fully closed.
+  // Fully stop and release the camera hardware the instant the scanner
+  // closes, so it is never left silently recording in the background
+  // between scans. The camera indicator/light should only ever be on
+  // while this modal is actually open and in use.
+  if (scannerState.stream) {
+    scannerState.stream.getTracks().forEach(function(track) { track.stop(); });
+    scannerState.stream = null;
+  }
   var video = document.getElementById('scanner-video');
   if (video) {
     video.pause();
@@ -5005,7 +5014,7 @@ function renderScannedContacts() {
       '    <button title="Save to phone contacts" onclick="downloadScannedContact(' + idx + ')">',
       '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
       '    </button>',
-      '    <button class="delete-btn" title="Remove" onclick="deleteScannedContact(' + idx + ')">',
+      '    <button class="delete-btn" title="Remove" onclick="event.stopPropagation(); requestDeleteScannedContact(' + idx + ')">',
       '      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>',
       '    </button>',
       '  </div>',
@@ -5026,10 +5035,36 @@ function formatScannedTime(timestamp) {
   return 'on ' + dateStr + ' at ' + timeStr;
 }
 
-function deleteScannedContact(index) {
+// Opens the "Are you sure?" confirmation modal before actually deleting a
+// scanned contact, so an accidental tap on the delete button can no
+// longer silently and permanently remove someone from the list.
+function requestDeleteScannedContact(index) {
+  var c = appState.scannedContacts[index];
+  if (!c) return;
+  pendingDeleteContactIndex = index;
+  var nameEl = document.getElementById('delete-contact-name');
+  if (nameEl) nameEl.innerText = c.name || 'this contact';
+  document.getElementById('delete-contact-modal').classList.add('open');
+}
+
+function closeDeleteContactModal(event) {
+  if (event && event.target && !event.target.classList.contains('modal-overlay') && !event.target.classList.contains('modal-close-btn')) {
+    return;
+  }
+  document.getElementById('delete-contact-modal').classList.remove('open');
+  pendingDeleteContactIndex = null;
+}
+
+// Only actually deletes the contact once the user has explicitly
+// confirmed via the "Remove" button in the confirmation modal.
+function confirmDeleteScannedContact() {
+  if (pendingDeleteContactIndex === null) return;
+  var index = pendingDeleteContactIndex;
   var removed = appState.scannedContacts.splice(index, 1);
   persistScannedContacts();
   renderScannedContacts();
+  document.getElementById('delete-contact-modal').classList.remove('open');
+  pendingDeleteContactIndex = null;
   if (removed && removed[0]) {
     showToast('Removed ' + (removed[0].name || 'contact') + ' from scanned contacts');
   }
