@@ -1852,7 +1852,7 @@
         <div class="homescreen-text">
           <strong>Tip:</strong> Add this app to your Phone Home Screen for quick offline access!
         </div>
-        <button class="homescreen-btn" onclick="openHomescreenGuide()">How-To</button>
+        <button class="homescreen-btn" id="homescreen-action-btn" onclick="openHomescreenGuide()">Add to Home Screen</button>
       </div>
 
       <!-- HERO BANNER -->
@@ -2301,12 +2301,8 @@
     <div style="font-size:13.5px; color:var(--dark-grey); line-height:1.45; display:flex; flex-direction:column; gap:12px; margin-bottom:18px;">
       <div style="background:#F9FAFB; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
         <strong style="color:var(--ipwea-red);">On iPhone / iPad (Safari):</strong>
-        <p style="margin-top:4px; font-size:12.5px;">1. Look for the <strong>Share</strong> icon — it can appear in different spots depending on your iPhone/iOS version, so check for any of these:</p>
-        <p style="font-size:12.5px; margin-left:10px;">• A <strong>square with an arrow pointing up</strong> (usually at the bottom of the screen)</p>
-        <p style="font-size:12.5px; margin-left:10px;">• <strong>Three dots</strong> (•••) at the bottom or top of the screen</p>
-        <p style="font-size:12.5px; margin-left:10px;">• <strong>Three lines</strong> (☰) menu, usually top-right</p>
-        <p style="font-size:12.5px;">Tap whichever one you see — they all open the same <strong>Share</strong> menu.</p>
-        <p style="font-size:12.5px; margin-top:6px;">2. In the Share menu, scroll down and tap <strong>"Add to Home Screen"</strong>.</p>
+        <p style="margin-top:4px; font-size:12.5px;">1. Tap the <strong>Share</strong> icon (square with arrow pointing up) at bottom of screen.</p>
+        <p style="font-size:12.5px;">2. Scroll down and tap <strong>"Add to Home Screen"</strong>.</p>
         <p style="font-size:12.5px;">3. Tap <strong>Add</strong> in the top-right corner. It will now launch like a native full-screen app!</p>
       </div>
 
@@ -4992,7 +4988,45 @@ function renderExhibitors() {
  * 11. HOMESCREEN & WI-FI UTILITIES
  * -------------------------------------------------------------------------
  */
+
+// Captures the browser's native "install this app" prompt, if the current
+// browser/platform supports it (Android Chrome/Edge). iOS Safari never
+// fires this event - Apple does not allow websites to trigger Add to Home
+// Screen programmatically, so on iPhone/iPad this stays null and the
+// button below simply falls back to opening the manual instructions.
+var deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+});
+
+// Fires once the app has actually been installed/added to the home screen
+// (currently only reliably supported on Android Chrome/Edge). Hides the
+// "Add to Home Screen" button immediately, since it's no longer needed.
+window.addEventListener('appinstalled', function() {
+  deferredInstallPrompt = null;
+  var promptEl = document.getElementById('homescreen-prompt');
+  if (promptEl) promptEl.style.display = 'none';
+  showToast('Added to your Home Screen!');
+});
+
 function openHomescreenGuide() {
+  // If the browser supports a real native install prompt (e.g. Android
+  // Chrome/Edge), trigger that directly instead of showing manual
+  // instructions - this is a genuine one-tap install for those users.
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(function(choice) {
+      // The browser only allows the prompt to be used once, so we clear
+      // our reference either way - if declined, the button remains visible
+      // and falls back to the manual instructions modal on next tap.
+      deferredInstallPrompt = null;
+    });
+    return;
+  }
+  // iOS Safari (and any other browser without native install support)
+  // falls back to the step-by-step manual instructions.
   document.getElementById('homescreen-modal').classList.add('open');
 }
 
